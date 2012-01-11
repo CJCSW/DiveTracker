@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView android:id="@+id/user_edit_label_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/user_edit_label_name"/>
+    <EditText android:id="@+id/user_edit_field_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/user_edit_field_name_hint"
+        android:imeOptions="actionNext"/>
+
+    <TextView android:id="@+id/user_edit_label_surname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/user_edit_label_surname"/>
+    <EditText android:id="@+id/user_edit_field_surname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/user_edit_field_surname_hint"
+        android:imeOptions="actionNext"/>
+    
+    <TextView android:id="@+id/user_edit_label_profilepic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/user_edit_label_profilepic"/>
+    <ImageView android:id="@+id/user_edit_field_profilepic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+	
+    <LinearLayout 
+	  	android:id="@+id/user_edit_buttons"
+	  	android:layout_width="fill_parent"
+	  	android:layout_height="wrap_content"
+	  	android:orientation="horizontal">
+		<Button
+	  		android:id="@+id/user_edit_button_confirm"
+	  		android:layout_width="wrap_content"
+	  		android:layout_height="wrap_content"
+	  		android:text="@string/user_edit_button_confirm"/>
+		<Button
+	  		android:id="@+id/user_edit_button_cancel"
+	  		android:layout_width="wrap_content"
+	  		android:layout_height="wrap_content"
+	  		android:text="@string/user_edit_button_cancel" />
+	</LinearLayout>
+</LinearLayout>
