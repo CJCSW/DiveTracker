@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.cjc.mydives.divetracker.db;
 
 import android.content.ContentValues;
