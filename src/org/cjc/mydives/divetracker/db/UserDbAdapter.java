@@ -3,42 +3,20 @@ package org.cjc.mydives.divetracker.db;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
 
 /**
  * User database adapter
  * @author JuanCarlos
  *
  */
-public class UserDbAdapter {
+public class UserDbAdapter extends DbAdapter {
 
-	// Table fields
-	private Context context;
-	private SQLiteDatabase db;
-	private DbHelper dbHelper;
-	
 	/**
 	 * Constructor
 	 * @param context Context
 	 */
 	public UserDbAdapter (Context context) {
-		this.context = context;
-	}
-	
-	/**
-	 * Opens the database for write operations
-	 * @return Database adapter for the User entity
-	 * @throws SQLException if failed to create a new database helper or to get a writable database 
-	 */
-	public UserDbAdapter open() throws SQLException{
-		dbHelper = new DbHelper(context);
-		db = dbHelper.getWritableDatabase();
-		return this;
-	}
-	
-	public void close() {
-		dbHelper.close();
+		super(context);
 	}
 	
 	/**

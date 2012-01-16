@@ -17,7 +17,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- User activities -->
         <activity android:name="UserDetailsActivity">
+        </activity>
+        <!-- Certification activities -->
+        <activity android:name="CertificationListActivity">
+        </activity>
+        <activity android:name="CertificationDetailsActivity">
         </activity>
     </application>
 

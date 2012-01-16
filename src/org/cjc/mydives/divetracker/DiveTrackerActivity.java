@@ -5,6 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+/**
+ * Launch activity
+ * @author JuanCarlos
+ *
+ */
 public class DiveTrackerActivity extends Activity {	
     /** Called when the activity is first created. */
     @Override
@@ -13,7 +18,7 @@ public class DiveTrackerActivity extends Activity {
         setContentView(R.layout.main);
     }
     
-    public void onUserClick(View view) {
+    public void onClick_user_button(View view) {
     	Intent userDetailsIntent = new Intent(this, UserDetailsActivity.class);
     	startActivity(userDetailsIntent);
     }

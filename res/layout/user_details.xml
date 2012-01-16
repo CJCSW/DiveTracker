@@ -3,35 +3,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+	    <ImageView
+	        android:id="@+id/user_details_field_profilepic"
+	        android:layout_width="100dp"
+	        android:layout_height="100dp"
+	        android:src="@drawable/ic_launcher"
+	        android:contentDescription="@string/user_details_contentdesc_profilepic"/>
+	    <LinearLayout 
+	        android:layout_width="150dp"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical">
+	        <TextView 
+	            android:id="@+id/user_details_field_name"
+	            android:layout_width="200dp"
+	            android:layout_height="wrap_content"
+	            android:lines="2"
+	            android:text="@string/user_details_defval_name"	            
+	            android:textSize="25dp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-        <TextView 
-            android:id="@+id/user_details_label_name"
-            android:text="@string/user_details_label_name"
-            android:layout_width="200px"
-            android:layout_height="wrap_content"/>
-        <TextView 
-            android:id="@+id/user_details_field_name"
-            android:text=""
-            android:layout_width="200px"
-            android:layout_height="wrap_content"/>
+	        <TextView
+	            android:id="@+id/user_details_field_surname"
+	            android:layout_width="200dp"
+	            android:layout_height="wrap_content"
+	            android:lines="2"
+	            android:text="@string/user_details_defval_surname"
+	            android:textSize="25dp" />
+	        
+	    </LinearLayout>       
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-        <TextView 
-            android:id="@+id/user_details_label_surname"
-            android:text="@string/user_details_label_surname"
-            android:layout_width="200px"
-            android:layout_height="wrap_content"/>
-        <TextView 
-            android:id="@+id/user_details_field_surname"
-            android:text=""
-            android:layout_width="200px"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+    
+    <Button
+        android:id="@+id/user_details_button_edit"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/user_details_button_edit"
+        android:textSize="25dp"
+        android:onClick="onClick_button_edit"/>
+    <Button
+        android:id="@+id/user_details_button_equipment"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/user_details_button_equipment"
+        android:textSize="25dp"
+        android:onClick="onClick_button_equipment"/>
+    <Button
+        android:id="@+id/user_details_button_certifications"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/user_details_button_certifications"
+        android:textSize="25dp"
+        android:onClick="onClick_button_certifications"/>
 </LinearLayout>

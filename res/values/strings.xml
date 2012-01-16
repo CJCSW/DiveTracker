@@ -7,14 +7,47 @@
     <!-- MAIN MENU -->
     <string name="main_menu_button_user">User</string>
     
+    <!-- CERTIFICATION -->
+    <!-- Certification List -->
+    <string name="certification_list_button_add">Add</string>
+    <string name="certification_list_menu_delete">Delete</string>
+    <string name="no_certifications">Tap \'Add\' to add certifications</string>
+    <!-- Certification Details -->
+    <string name="certification_details_label_type">Type</string>
+    <string name="certification_details_hint_type">OWD, Rescue Diver &#8230;</string>
+    <string name="certification_details_label_number">Number</string>
+    <string name="certification_details_hint_number">Certification number</string>
+    <string name="certification_details_label_organization">Organization</string>
+    <string name="certification_details_hint_organization">PADI, SSI, CMAS &#8230;</string>
+    <string name="certification_details_label_date">Date</string>
+    <string name="certification_details_hint_date">Enter the date of certification</string>
+    <string name="certification_details_label_instructor">Instructor</string>
+    <string name="certification_details_hint_instructor">Name of certification instructor</string>
+    <string name="certification_details_button_confirm">Confirm</string>
+    <string name="certification_details_button_cancel">Cancel</string>
+    <!-- Certification Details -->
+    
     <!-- USER -->
+    <!-- User Details -->
     <string name="user_details_label_name">Name</string>
-    <string name="user_details_label_surname">Name</string>
+    <string name="user_details_defval_name">John</string>
+    <string name="user_details_label_surname">Surname</string>
+    <string name="user_details_defval_surname">Bubble Maker</string>
+    <string name="user_details_contentdesc_profilepic">Profile picture</string>
+    <string name="user_details_button_edit">Edit</string>
+	<string name="user_details_button_equipment">Equipment</string>
+	<string name="user_details_button_certifications">Certifications</string>
+    <!-- User Edit -->
     <string name="user_edit_label_name">Name</string>
-    <string name="user_edit_field_name_hint">Enter your name</string>
+    <string name="user_edit_hint_name">Enter your name</string>
     <string name="user_edit_label_surname">Surname</string>
-    <string name="user_edit_field_surname_hint">Enter your surname</string>
+    <string name="user_edit_hint_surname">Enter your surname</string>
     <string name="user_edit_label_profilepic">Profile picture</string>
+    <string name="user_edit_contentdesc_profilepic">Profile picture</string>
     <string name="user_edit_button_confirm">Confirm</string>
     <string name="user_edit_button_cancel">Cancel</string>
+    
+    <!-- COLORS -->
+    <color name="listcolor">#2987BA</color>
+    <color name="black">#000000</color>
 </resources>

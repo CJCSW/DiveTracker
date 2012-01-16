@@ -10,46 +10,100 @@ package org.cjc.mydives.divetracker;
 public final class R {
     public static final class attr {
     }
+    public static final class color {
+        public static final int black=0x7f050001;
+        /**  COLORS 
+         */
+        public static final int listcolor=0x7f050000;
+    }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int main_menu_button_user=0x7f050000;
-        public static final int user_details_field_name=0x7f050002;
-        public static final int user_details_field_surname=0x7f050004;
-        public static final int user_details_label_name=0x7f050001;
-        public static final int user_details_label_surname=0x7f050003;
-        public static final int user_edit_button_cancel=0x7f05000d;
-        public static final int user_edit_button_confirm=0x7f05000c;
-        public static final int user_edit_buttons=0x7f05000b;
-        public static final int user_edit_field_name=0x7f050006;
-        public static final int user_edit_field_profilepic=0x7f05000a;
-        public static final int user_edit_field_surname=0x7f050008;
-        public static final int user_edit_label_name=0x7f050005;
-        public static final int user_edit_label_profilepic=0x7f050009;
-        public static final int user_edit_label_surname=0x7f050007;
+        public static final int certification_details_button_cancel=0x7f060007;
+        public static final int certification_details_button_confirm=0x7f060006;
+        public static final int certification_details_buttons=0x7f060005;
+        public static final int certification_details_field_date=0x7f060003;
+        public static final int certification_details_field_instructor=0x7f060004;
+        public static final int certification_details_field_number=0x7f060001;
+        public static final int certification_details_field_organization=0x7f060002;
+        public static final int certification_details_field_type=0x7f060000;
+        public static final int certification_list_button_add=0x7f060008;
+        public static final int certification_row_date=0x7f06000b;
+        public static final int certification_row_organization=0x7f06000a;
+        public static final int certification_row_type=0x7f060009;
+        public static final int main_menu_button_user=0x7f06000c;
+        public static final int user_details_button_certifications=0x7f060012;
+        public static final int user_details_button_edit=0x7f060010;
+        public static final int user_details_button_equipment=0x7f060011;
+        public static final int user_details_field_name=0x7f06000e;
+        public static final int user_details_field_profilepic=0x7f06000d;
+        public static final int user_details_field_surname=0x7f06000f;
+        public static final int user_edit_button_cancel=0x7f06001b;
+        public static final int user_edit_button_confirm=0x7f06001a;
+        public static final int user_edit_buttons=0x7f060019;
+        public static final int user_edit_field_name=0x7f060014;
+        public static final int user_edit_field_profilepic=0x7f060018;
+        public static final int user_edit_field_surname=0x7f060016;
+        public static final int user_edit_label_name=0x7f060013;
+        public static final int user_edit_label_profilepic=0x7f060017;
+        public static final int user_edit_label_surname=0x7f060015;
     }
     public static final class layout {
-        public static final int main=0x7f030000;
-        public static final int user_details=0x7f030001;
-        public static final int user_edit=0x7f030002;
+        public static final int certification_details=0x7f030000;
+        public static final int certification_list=0x7f030001;
+        public static final int certification_row=0x7f030002;
+        public static final int main=0x7f030003;
+        public static final int user_details=0x7f030004;
+        public static final int user_edit=0x7f030005;
     }
     public static final class string {
         public static final int app_name=0x7f040001;
+        public static final int certification_details_button_cancel=0x7f040011;
+        public static final int certification_details_button_confirm=0x7f040010;
+        public static final int certification_details_hint_date=0x7f04000d;
+        public static final int certification_details_hint_instructor=0x7f04000f;
+        public static final int certification_details_hint_number=0x7f040009;
+        public static final int certification_details_hint_organization=0x7f04000b;
+        public static final int certification_details_hint_type=0x7f040007;
+        public static final int certification_details_label_date=0x7f04000c;
+        public static final int certification_details_label_instructor=0x7f04000e;
+        public static final int certification_details_label_number=0x7f040008;
+        public static final int certification_details_label_organization=0x7f04000a;
+        /**  Certification Details 
+         */
+        public static final int certification_details_label_type=0x7f040006;
+        /**  CERTIFICATION 
+ Certification List 
+         */
+        public static final int certification_list_button_add=0x7f040003;
+        public static final int certification_list_menu_delete=0x7f040004;
         public static final int hello=0x7f040000;
         /**  MAIN MENU 
          */
         public static final int main_menu_button_user=0x7f040002;
-        /**  USER 
+        public static final int no_certifications=0x7f040005;
+        public static final int user_details_button_certifications=0x7f040019;
+        public static final int user_details_button_edit=0x7f040017;
+        public static final int user_details_button_equipment=0x7f040018;
+        public static final int user_details_contentdesc_profilepic=0x7f040016;
+        public static final int user_details_defval_name=0x7f040013;
+        public static final int user_details_defval_surname=0x7f040015;
+        /**  Certification Details 
+ USER 
+ User Details 
          */
-        public static final int user_details_label_name=0x7f040003;
-        public static final int user_details_label_surname=0x7f040004;
-        public static final int user_edit_button_cancel=0x7f04000b;
-        public static final int user_edit_button_confirm=0x7f04000a;
-        public static final int user_edit_field_name_hint=0x7f040006;
-        public static final int user_edit_field_surname_hint=0x7f040008;
-        public static final int user_edit_label_name=0x7f040005;
-        public static final int user_edit_label_profilepic=0x7f040009;
-        public static final int user_edit_label_surname=0x7f040007;
+        public static final int user_details_label_name=0x7f040012;
+        public static final int user_details_label_surname=0x7f040014;
+        public static final int user_edit_button_cancel=0x7f040021;
+        public static final int user_edit_button_confirm=0x7f040020;
+        public static final int user_edit_contentdesc_profilepic=0x7f04001f;
+        public static final int user_edit_hint_name=0x7f04001b;
+        public static final int user_edit_hint_surname=0x7f04001d;
+        /**  User Edit 
+         */
+        public static final int user_edit_label_name=0x7f04001a;
+        public static final int user_edit_label_profilepic=0x7f04001e;
+        public static final int user_edit_label_surname=0x7f04001c;
     }
 }
