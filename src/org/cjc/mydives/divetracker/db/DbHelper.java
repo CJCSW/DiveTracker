@@ -17,11 +17,12 @@ public class DbHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase database) {
 		UserTable.onCreate(database);
+		DiveTable.onCreate(database);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
 		UserTable.onUpdate(database, oldVersion, newVersion);
+		DiveTable.onUpdate(database, oldVersion, newVersion);
 	}
-
 }

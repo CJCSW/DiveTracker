@@ -47,6 +47,9 @@
     <string name="user_edit_button_confirm">Confirm</string>
     <string name="user_edit_button_cancel">Cancel</string>
     
+    <!-- DIVE -->
+    <string name="dive_list_activity">Dive List</string>
+        
     <!-- COLORS -->
     <color name="listcolor">#2987BA</color>
     <color name="black">#000000</color>
