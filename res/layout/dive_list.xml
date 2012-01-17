@@ -12,11 +12,10 @@
       android:orientation="horizontal"
       android:gravity="right">
 	<Button 
-      android:id="@+id/certification_list_button_add"
+      android:id="@+id/dive_list_button_add"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="@string/certification_list_button_add"
-      android:onClick="onClick_button_add"/>
+      android:text="@string/dive_list_button_add" />
   </LinearLayout>
   
   <ListView 
@@ -30,5 +29,5 @@
   	android:id="@android:id/empty"
   	android:layout_width="wrap_content"
   	android:layout_height="wrap_content"
-  	android:text="@string/no_certifications"/>    
+  	android:text="@string/dive_no_dives"/>    
 </LinearLayout>

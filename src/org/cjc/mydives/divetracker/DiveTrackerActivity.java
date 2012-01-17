@@ -22,5 +22,9 @@ public class DiveTrackerActivity extends Activity {
     	Intent userDetailsIntent = new Intent(this, UserDetailsActivity.class);
     	startActivity(userDetailsIntent);
     }
+
+    public void onClick_button_dives(View view) {
+    	startActivity(new Intent(this, DiveListActivity.class));
+    }
     
 }
