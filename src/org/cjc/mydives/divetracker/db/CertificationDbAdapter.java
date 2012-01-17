@@ -6,6 +6,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import static org.cjc.mydives.divetracker.db.CertificationConstants.*;
+
 /**
  * Certification database adapter
  * @author JuanCarlos
@@ -18,6 +20,7 @@ public class CertificationDbAdapter extends DbAdapter {
 	 */
 	public CertificationDbAdapter (Context context) {
 		super(context);
+		init(DB_TABLE, fields());
 	}
 	
 	/**
@@ -31,7 +34,7 @@ public class CertificationDbAdapter extends DbAdapter {
 	 */
 	public long create(String type, Date date, String number, String organization, String instructor) {
 		ContentValues contentValues = createContentValues(type, date, number, organization, instructor);
-		return db.insert(CertificationConstants.DB_TABLE, null, contentValues);
+		return insert(contentValues);
 	}
 	
 	/**
@@ -46,7 +49,7 @@ public class CertificationDbAdapter extends DbAdapter {
 	 */
 	public boolean update(long rowId, String type, Date date, String number, String organization, String instructor) {
 		ContentValues contentValues = createContentValues(type, date, number, organization, instructor);
-		return db.update(CertificationConstants.DB_TABLE, contentValues, CertificationConstants.FIELD_ROWID + "= " + rowId, null) > 0;
+		return update(rowId, contentValues);
 	}
 	
 	/**
@@ -55,7 +58,7 @@ public class CertificationDbAdapter extends DbAdapter {
 	 * @return True if successfully deleted, false otherwise
 	 */
 	public boolean delete(long rowId) {
-		return db.delete(CertificationConstants.DB_TABLE, CertificationConstants.FIELD_ROWID + " = " + rowId, null) > 0;
+		return super.delete(rowId);
 	}
 	
 	/**
@@ -64,11 +67,7 @@ public class CertificationDbAdapter extends DbAdapter {
 	 * @return Cursor resulting from the query
 	 */
 	public Cursor fetchById(long rowId) {
-		Cursor cursor = db.query(CertificationConstants.DB_TABLE, CertificationConstants.fields(), CertificationConstants.FIELD_ROWID + " = " + rowId, null, null, null, null);
-		if (cursor != null) {
-			cursor.moveToFirst();
-		}
-		return cursor;
+		return super.fetchById(rowId);
 	}
 
 	/**
@@ -76,8 +75,7 @@ public class CertificationDbAdapter extends DbAdapter {
 	 * @return Cursor resulting from the query
 	 */
 	public Cursor fetchAll() {
-		Cursor cursor = db.query(CertificationConstants.DB_TABLE, CertificationConstants.fields(), null, null, null, null, null);
-		return cursor;
+		return super.fetchAll();
 	}
 
 	
