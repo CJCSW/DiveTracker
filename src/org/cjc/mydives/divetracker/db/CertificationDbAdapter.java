@@ -1,6 +1,6 @@
 package org.cjc.mydives.divetracker.db;
 
-import java.sql.Date;
+import java.util.Date;
 
 import android.content.ContentValues;
 import android.content.Context;

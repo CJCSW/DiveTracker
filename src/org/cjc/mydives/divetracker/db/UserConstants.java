@@ -21,5 +21,5 @@ public class UserConstants {
 			+ "(" + UserConstants.FIELD_ROWID + " integer primary key autoincrement, "
 			+ UserConstants.FIELD_NAME + " text not null, "
 			+ UserConstants.FIELD_SURNAME + " text not null, "
-			+ UserConstants.FIELD_PROFILEPIC + " text not null)";
+			+ UserConstants.FIELD_PROFILEPIC + " text null)";
 }
