@@ -29,19 +29,19 @@ public class DiveDbAdapter extends DbAdapter {
 	 * @param rating 0...5
 	 * @return dive _id if success, -1 otherwise
 	 */
-	public long insert(String name, Integer enterDate, Integer enterTime,
+	public long insert(String name, Long enterDate, Long enterTime,
 			Integer duration, Double tempAir, Double tempWater, String waterType,
 			Integer rating) {
-		ContentValues initialValues = new ContentValues();
-		initialValues.put(FIELD_NAME, name);
-		initialValues.put(FIELD_ENTERDATE, enterDate);
-		initialValues.put(FIELD_ENTERTIME, enterTime);
-		initialValues.put(FIELD_DURATION, duration);
-		initialValues.put(FIELD_TEMP_AIR, tempAir);
-		initialValues.put(FIELD_TEMP_WATER, tempWater);
-		initialValues.put(FIELD_WATER_TYPE, waterType);
-		initialValues.put(FIELD_RATING, rating);
-		return insert(initialValues);
+		ContentValues values = new ContentValues();
+		values.put(FIELD_NAME, name);
+		values.put(FIELD_ENTERDATE, enterDate);
+		values.put(FIELD_ENTERTIME, enterTime);
+		values.put(FIELD_DURATION, duration);
+		values.put(FIELD_TEMP_AIR, tempAir);
+		values.put(FIELD_TEMP_WATER, tempWater);
+		values.put(FIELD_WATER_TYPE, waterType);
+		values.put(FIELD_RATING, rating);
+		return insert(values);
 	}
 	
 	/**
@@ -60,15 +60,15 @@ public class DiveDbAdapter extends DbAdapter {
 	public boolean update(long rowId, String name, Integer enterDate, Integer enterTime,
 			Integer duration, Double tempAir, Double tempWater, String waterType,
 			Integer rating) {
-		ContentValues initialValues = new ContentValues();
-		initialValues.put(FIELD_NAME, name);
-		initialValues.put(FIELD_ENTERDATE, enterDate);
-		initialValues.put(FIELD_ENTERTIME, enterTime);
-		initialValues.put(FIELD_DURATION, duration);
-		initialValues.put(FIELD_TEMP_AIR, tempAir);
-		initialValues.put(FIELD_TEMP_WATER, tempWater);
-		initialValues.put(FIELD_WATER_TYPE, waterType);
-		initialValues.put(FIELD_RATING, rating);
-		return update(rowId, initialValues);
+		ContentValues values = new ContentValues();
+		values.put(FIELD_NAME, name);
+		values.put(FIELD_ENTERDATE, enterDate);
+		values.put(FIELD_ENTERTIME, enterTime);
+		values.put(FIELD_DURATION, duration);
+		values.put(FIELD_TEMP_AIR, tempAir);
+		values.put(FIELD_TEMP_WATER, tempWater);
+		values.put(FIELD_WATER_TYPE, waterType);
+		values.put(FIELD_RATING, rating);
+		return update(rowId, values);
 	}
 }

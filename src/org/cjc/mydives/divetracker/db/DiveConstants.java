@@ -28,11 +28,11 @@ public class DiveConstants {
 			+ FIELD_NAME + " text not null,"
 			+ FIELD_ENTERDATE + " integer not null,"
 			+ FIELD_ENTERTIME + " integer not null,"
-			+ FIELD_DURATION + " integer not null,"
-			+ FIELD_MAX_DEEP + " real not null,"
-			+ FIELD_TEMP_AIR + " real not null,"
-			+ FIELD_TEMP_WATER + " real not null,"
-			+ FIELD_WATER_TYPE + " text not null,"
+			+ FIELD_DURATION + " integer null,"
+			+ FIELD_MAX_DEEP + " real null,"
+			+ FIELD_TEMP_AIR + " real null,"
+			+ FIELD_TEMP_WATER + " real null,"
+			+ FIELD_WATER_TYPE + " text null,"
 			+ FIELD_RATING + " integer not null,"
 			+ ");";
 }

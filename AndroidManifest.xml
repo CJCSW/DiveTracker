@@ -30,10 +30,6 @@
         <activity
             android:name=".DiveListActivity"
             android:label="@string/dive_list_activity">
-            <intent-filter>
-                <action android:name="org.cjc.mydives.divetracker.DIVE_LIST_ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
     </application>
 

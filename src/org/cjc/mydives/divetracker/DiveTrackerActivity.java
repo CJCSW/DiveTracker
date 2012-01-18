@@ -1,5 +1,7 @@
 package org.cjc.mydives.divetracker;
 
+import org.cjc.mydives.divetracker.db.DiveDbAdapter;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ public class DiveTrackerActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        populateDB();
     }
     
     public void onClick_user_button(View view) {
@@ -27,4 +30,11 @@ public class DiveTrackerActivity extends Activity {
     	startActivity(new Intent(this, DiveListActivity.class));
     }
     
+    public void populateDB() {
+    	// Dives
+    	DiveDbAdapter diveAdapter = new DiveDbAdapter(this.getBaseContext());
+    	if (diveAdapter.open() != null) {
+    		diveAdapter.insert("Las catedrales", System.currentTimeMillis(), System.currentTimeMillis(), null, null, null, null, 0);
+    	}
+    }
 }

@@ -33,7 +33,7 @@ public class DbAdapter {
 	 * @param tableName the name of the database table.
 	 * @param fields the fields in the database table.
 	 */
-	protected void init(String tableName, String[] fields) {
+	public void init(String tableName, String[] fields) {
 		this.tableName = tableName;
 		this.fields = fields;
 	}
@@ -98,7 +98,7 @@ public class DbAdapter {
 	/**
 	 * Fetch all the rows in the DB
 	 */
-	public Cursor fecthAll() {
+	public Cursor fetchAll() {
 		return db.query(tableName, fields, null, null, null, null, null);
 	}
 }
