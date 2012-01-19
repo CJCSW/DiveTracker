@@ -1,10 +1,10 @@
 package org.cjc.mydives.divetracker.db;
 
+import static org.cjc.mydives.divetracker.db.UserConstants.DB_TABLE;
+import static org.cjc.mydives.divetracker.db.UserConstants.fields;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-
-import static org.cjc.mydives.divetracker.db.UserConstants.*;
 
 /**
  * User database adapter

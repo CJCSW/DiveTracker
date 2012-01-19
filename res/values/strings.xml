@@ -6,7 +6,8 @@
 
     <!-- MAIN MENU -->
     <string name="main_menu_button_user">User</string>
-    
+    <string name="main_menu_button_dives">Dives</string>
+        
     <!-- CERTIFICATION -->
     <!-- Certification List -->
     <string name="certification_list_button_add">Add</string>
@@ -47,7 +48,11 @@
     <string name="user_edit_button_confirm">Confirm</string>
     <string name="user_edit_button_cancel">Cancel</string>
     
-    <!-- COLORS -->
+    <!-- DIVE -->
+    <string name="dive_list_activity">Dive List</string>
+    <string name="dive_list_button_add">Add dive</string>
+    <string name="dive_no_dives">Go out and bring some good dives!</string>
+        <!-- COLORS -->
     <color name="listcolor">#2987BA</color>
     <color name="black">#000000</color>
 </resources>
