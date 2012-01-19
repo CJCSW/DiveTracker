@@ -18,7 +18,7 @@ public class DiveTrackerActivity extends Activity {
         setContentView(R.layout.main);
     }
     
-    public void onClick_user_button(View view) {
+    public void onClick_button_user(View view) {
     	Intent userDetailsIntent = new Intent(this, UserDetailsActivity.class);
     	startActivity(userDetailsIntent);
     }

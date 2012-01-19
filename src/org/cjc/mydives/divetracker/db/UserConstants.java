@@ -15,4 +15,11 @@ public class UserConstants {
 	public static String[] fields(){
 		return new String[]{FIELD_ROWID, FIELD_NAME, FIELD_SURNAME, FIELD_PROFILEPIC};
 	}
+	
+	// Database creation statement
+	public static final String DATABASE_CREATE = "create table " + UserConstants.DB_TABLE + " "
+			+ "(" + UserConstants.FIELD_ROWID + " integer primary key autoincrement, "
+			+ UserConstants.FIELD_NAME + " text not null, "
+			+ UserConstants.FIELD_SURNAME + " text not null, "
+			+ UserConstants.FIELD_PROFILEPIC + " text null)";
 }

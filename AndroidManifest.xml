@@ -20,6 +20,8 @@
         <!-- User activities -->
         <activity android:name="UserDetailsActivity">
         </activity>
+        <activity android:name="UserEditActivity">
+        </activity>
         <!-- Certification activities -->
         <activity android:name="CertificationListActivity">
         </activity>

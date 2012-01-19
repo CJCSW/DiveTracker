@@ -11,54 +11,52 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 /**
- * This activity will display the user profile
- * along with buttons to edit it and navigate
- * to the equipment and certificates
  * @author JuanCarlos
  *
  */
-public class UserDetailsActivity extends Activity {
+public class UserEditActivity extends Activity {
 	private UserDbAdapter userDbAdapter;
 	
 	private Long rowId;
-	private TextView name;
-	private TextView surname;
+	private EditText name;
+	private EditText surname;
 	private ImageView profilepic;
 	
-	private static int ACTION_EDIT = 10;
+	private boolean isCanceled;
+
 	
 	/** Called when the activity is first created */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.user_details);
-		
-        name = (TextView)findViewById(R.id.user_details_field_name);
-        surname = (TextView)findViewById(R.id.user_details_field_surname);
-        profilepic = (ImageView)findViewById(R.id.user_details_field_profilepic);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.user_edit);
+        
+        name = (EditText)findViewById(R.id.user_edit_field_name);
+        surname = (EditText)findViewById(R.id.user_edit_field_surname);
+        profilepic = (ImageView)findViewById(R.id.user_edit_field_profilepic);
         
         userDbAdapter = new UserDbAdapter(this);
 
         rowId = null;
         Bundle extras = getIntent().getExtras();
 		
-		// Set the rowId (in case the intent is for the edition of an existing todo item)
+		// Set the rowId (in case the intent is for the edition of an existing User)
 		rowId = (savedInstanceState == null) ? null : (Long) savedInstanceState.getSerializable(FIELD_ROWID);
 		if (extras != null) {
 			rowId = extras.getLong(FIELD_ROWID); 
 		}
 		
 		populateFields();
-	}
+    }
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
+		saveState();
 		outState.putSerializable(FIELD_ROWID, rowId);
 	}
 	
@@ -72,53 +70,62 @@ public class UserDetailsActivity extends Activity {
 	@Override
 	public void onPause() {
 		super.onPause();
+		saveState();
 	}
 	
 	@Override
 	public void onResume() {
 		super.onResume();
+		isCanceled = false;
 		populateFields();
 	}
     
-	@Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	if (requestCode == ACTION_EDIT && resultCode == RESULT_OK) {
-    		if (data.hasExtra(FIELD_ROWID)) {
-    			rowId = data.getExtras().getLong(FIELD_ROWID);
-    			populateFields();
-    		}
-    	}
-    }
-	
     public void populateFields() {
     	userDbAdapter.open();
     	Cursor userCursor = (rowId == null) ? userDbAdapter.fetchAll() : userDbAdapter.fetchById(rowId);
     	
     	if (userCursor.moveToFirst()) {
-    		rowId = userCursor.getLong(userCursor.getColumnIndexOrThrow(FIELD_ROWID));
     		name.setText(userCursor.getString(userCursor.getColumnIndexOrThrow(FIELD_NAME)));
     		surname.setText(userCursor.getString(userCursor.getColumnIndexOrThrow(FIELD_SURNAME)));
     		// TODO : How do we set the image of an ImageView?
     		//profilepic = userCursor.getBlob(userCursor.getColumnIndexOrThrow(FIELD_PROFILEPIC));
     	}
-    	userCursor.close();
     	userDbAdapter.close();
     }
-	
-	public void onClick_button_edit(View view){
-		Intent userEditIntent = new Intent(this, UserEditActivity.class);
-		if (rowId != null) {
-			userEditIntent.putExtra(FIELD_ROWID, rowId);
-		}
-		startActivityForResult(userEditIntent, ACTION_EDIT);
-	}
-	
-	public void onClick_button_equipment(View view){
-		// TODO: Implement when EquipmentListActivity is part of the project
-	}
-	
-	public void onClick_button_certifications(View view){
-		Intent certificationListIntent = new Intent(this, CertificationListActivity.class);
-		startActivity(certificationListIntent);
-	}
+    
+    public void saveState() {
+    	userDbAdapter.open();
+    	if (!isCanceled) {
+    		String name = this.name.getText().toString();
+    		String surname = this.surname.getText().toString();
+    		// TODO: How do we get the image in the ImageView?
+    		//byte[] profilepic = this.profilepic.getDrawable();
+    		byte[] profilepic = null;
+    		if (rowId == null) {
+    			long id = userDbAdapter.create(name, surname, profilepic);
+    			if (id > 0) {
+    				rowId = id;
+    			}
+    		} else {
+    			userDbAdapter.update(rowId, name, surname, profilepic);
+    		}
+    	}
+    	userDbAdapter.close();
+    }
+    
+    public void onClick_button_confirm(View view) {
+    	Intent resultData = new Intent();
+		resultData.putExtra(FIELD_ROWID, rowId);
+    	setResult(RESULT_OK, resultData);
+    	isCanceled = false;
+    	finish();
+    }
+    
+    public void onClick_button_cancel(View view) {
+    	Intent resultData = new Intent();
+		resultData.putExtra(FIELD_ROWID, rowId);
+    	setResult(RESULT_CANCELED, resultData);
+    	isCanceled = true;
+    	finish();
+    }
 }
