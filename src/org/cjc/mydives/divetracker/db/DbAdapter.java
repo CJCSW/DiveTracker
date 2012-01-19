@@ -19,7 +19,7 @@ public class DbAdapter {
 	
 	private String tableName;
 	private String[] fields;
-	
+
 	/**
 	 * Constructor
 	 * @param context Context
@@ -33,11 +33,10 @@ public class DbAdapter {
 	 * @param tableName the name of the database table.
 	 * @param fields the fields in the database table.
 	 */
-	protected void init(String tableName, String[] fields) {
+	public void init(String tableName, String[] fields) {
 		this.tableName = tableName;
 		this.fields = fields;
 	}
-	
 	/**
 	 * Opens the database for write operations
 	 * @return Database adapter
