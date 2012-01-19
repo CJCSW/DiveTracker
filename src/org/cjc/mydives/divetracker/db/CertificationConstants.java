@@ -18,4 +18,12 @@ public class CertificationConstants {
 		return new String[]{FIELD_ROWID, FIELD_TYPE, FIELD_DATE, FIELD_NUMBER, FIELD_ORGANIZATION, FIELD_INSTRUCTOR};
 	}
 
+	// Database creation statement
+	public static final String DATABASE_CREATE = "create table " + CertificationConstants.DB_TABLE + " "
+			+ "(" + CertificationConstants.FIELD_ROWID + " integer primary key autoincrement, "
+			+ CertificationConstants.FIELD_TYPE + " text not null, "
+			+ CertificationConstants.FIELD_DATE + " numeric not null, "
+			+ CertificationConstants.FIELD_NUMBER + " text not null, "
+			+ CertificationConstants.FIELD_ORGANIZATION + " text not null, "
+			+ CertificationConstants.FIELD_INSTRUCTOR + " text null)";
 }

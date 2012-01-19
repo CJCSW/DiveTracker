@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import static org.cjc.mydives.divetracker.db.UserConstants.*;
+
 /**
  * User database adapter
  * @author JuanCarlos
@@ -17,6 +19,7 @@ public class UserDbAdapter extends DbAdapter {
 	 */
 	public UserDbAdapter (Context context) {
 		super(context);
+		init(DB_TABLE, fields());
 	}
 	
 	/**
@@ -28,7 +31,7 @@ public class UserDbAdapter extends DbAdapter {
 	 */
 	public long create(String name, String surname, byte[] profilePic) {
 		ContentValues userContentValues = createContentValues(name, surname, profilePic);
-		return db.insert(UserConstants.DB_TABLE, null, userContentValues);
+		return insert(userContentValues);
 	}
 	
 	/**
@@ -41,7 +44,7 @@ public class UserDbAdapter extends DbAdapter {
 	 */
 	public boolean update(long rowId, String name, String surname, byte[] profilePic) {
 		ContentValues userContentValues = createContentValues(name, surname, profilePic);
-		return db.update(UserConstants.DB_TABLE, userContentValues, UserConstants.FIELD_ROWID + " = " + rowId, null) > 0;
+		return update(rowId, userContentValues);
 	}
 	
 	/**
@@ -50,7 +53,7 @@ public class UserDbAdapter extends DbAdapter {
 	 * @return True if successfully deleted, false otherwise
 	 */
 	public boolean delete(long rowId) {
-		return db.delete(UserConstants.DB_TABLE, UserConstants.FIELD_ROWID + " = " + rowId, null) > 0;
+		return super.delete(rowId);
 	}
 	
 	/**
@@ -59,11 +62,7 @@ public class UserDbAdapter extends DbAdapter {
 	 * @return Cursor resulting from the query
 	 */
 	public Cursor fetchById(long rowId) {
-		Cursor cursor = db.query(UserConstants.DB_TABLE, UserConstants.fields(), UserConstants.FIELD_ROWID + " = " + rowId, null, null, null, null);
-		if (cursor != null) {
-			cursor.moveToFirst();
-		}
-		return cursor;
+		return super.fetchById(rowId);
 	}
 
 	/**
@@ -71,8 +70,7 @@ public class UserDbAdapter extends DbAdapter {
 	 * @return Cursor resulting from the query
 	 */
 	public Cursor fetchAll() {
-		Cursor cursor = db.query(UserConstants.DB_TABLE, UserConstants.fields(), null, null, null, null, null);
-		return cursor;
+		return super.fetchAll();
 	}
 	
 	/**
