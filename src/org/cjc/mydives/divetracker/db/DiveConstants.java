@@ -12,7 +12,7 @@ public class DiveConstants {
 	public static final String FIELD_TEMP_AIR   = "temp_air";	// In C
 	public static final String FIELD_TEMP_WATER = "temp_water";	// In C
 	public static final String FIELD_WATER_TYPE = "water_type";	// [freshwater, saltwater]
-	public static final String FIELD_RATING     = "water_type";	// 0 - 5
+	public static final String FIELD_RATING     = "rating";		// 0 - 5
 	
 	/* Field list */
 	public static final String[] FIELDS = new String[] {
@@ -33,6 +33,6 @@ public class DiveConstants {
 			+ FIELD_TEMP_AIR + " real null,"
 			+ FIELD_TEMP_WATER + " real null,"
 			+ FIELD_WATER_TYPE + " text null,"
-			+ FIELD_RATING + " integer not null,"
+			+ FIELD_RATING + " integer not null"
 			+ ");";
 }

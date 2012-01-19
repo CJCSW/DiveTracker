@@ -32,9 +32,11 @@ public class DiveTrackerActivity extends Activity {
     
     public void populateDB() {
     	// Dives
-    	DiveDbAdapter diveAdapter = new DiveDbAdapter(this.getBaseContext());
+    	DiveDbAdapter diveAdapter = new DiveDbAdapter(this);
     	if (diveAdapter.open() != null) {
-    		diveAdapter.insert("Las catedrales", System.currentTimeMillis(), System.currentTimeMillis(), null, null, null, null, 0);
+    		diveAdapter.insert("Las Catedrales", System.currentTimeMillis(), System.currentTimeMillis(), null, null, null, null, 0);
+    		diveAdapter.insert("LAs Rotas", System.currentTimeMillis(), System.currentTimeMillis(), null, null, null, null, 3);
+    		diveAdapter.close();
     	}
     }
 }
