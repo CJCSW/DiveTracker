@@ -27,6 +27,12 @@
         </activity>
         <activity android:name="CertificationDetailsActivity">
         </activity>
+
+        <!-- Dive activities -->
+        <activity
+            android:name=".DiveListActivity"
+            android:label="@string/dive_list_activity">
+        </activity>
     </application>
 
 </manifest>
