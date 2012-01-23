@@ -8,9 +8,12 @@ import org.cjc.mydives.divetracker.db.DiveDbAdapter;
 import org.cjc.mydives.divetracker.db.FormatterHelper;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
@@ -39,11 +42,11 @@ public class DiveListActivity extends Activity {
 	public void initialize() {
 		diveDbAdapter.open();	// Open the DB
 		
-		Cursor cursor = diveDbAdapter.fetchAll();	// Fetch all the instance
+		Cursor cursor = diveDbAdapter.fetchAll();	// Fetch all the instances
 		if (cursor.moveToFirst()) {
 			// Hide the text for empty lists
 			tvEmptyList.setVisibility(TextView.INVISIBLE);
-			
+
 			// Populate the list
 			SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(this, R.layout.dive_row, cursor, 
 					new String[] {FIELD_ENTERDATE,FIELD_ENTERTIME, FIELD_NAME}, 
@@ -70,5 +73,13 @@ public class DiveListActivity extends Activity {
 
 		// Close the DB
 		diveDbAdapter.close();
+		
+		lvDives.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
+				Intent i = new Intent(getBaseContext(), DiveDetailsActivity.class);
+				i.putExtra("_ID", id);
+		    	startActivity(i);
+			}
+		});
 	}
 }

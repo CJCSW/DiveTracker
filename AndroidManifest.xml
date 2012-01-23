@@ -33,6 +33,10 @@
             android:name=".DiveListActivity"
             android:label="@string/dive_list_activity">
         </activity>
+        <activity 
+            android:name=".DiveDetailsActivity"
+            android:label="@string/dive_details_activity">
+        </activity>
     </application>
 
 </manifest>
