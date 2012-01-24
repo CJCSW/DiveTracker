@@ -38,5 +38,6 @@ public class DiveTrackerActivity extends Activity {
     		diveAdapter.insert("LAs Rotas", System.currentTimeMillis(), System.currentTimeMillis(), null, null, null, null, 3);
     		diveAdapter.close();
     	}
+    	
     }
 }

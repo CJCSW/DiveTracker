@@ -19,11 +19,11 @@ public class CertificationConstants {
 	}
 
 	// Database creation statement
-	public static final String DATABASE_CREATE = "create table " + CertificationConstants.DB_TABLE + " "
-			+ "(" + CertificationConstants.FIELD_ROWID + " integer primary key autoincrement, "
-			+ CertificationConstants.FIELD_TYPE + " text not null, "
-			+ CertificationConstants.FIELD_DATE + " numeric not null, "
-			+ CertificationConstants.FIELD_NUMBER + " text not null, "
-			+ CertificationConstants.FIELD_ORGANIZATION + " text not null, "
-			+ CertificationConstants.FIELD_INSTRUCTOR + " text null)";
+	public static final String DATABASE_CREATE = "create table " + DB_TABLE + " "
+			+ "(" + FIELD_ROWID + " integer primary key autoincrement, "
+			+ FIELD_TYPE + " text not null, "
+			+ FIELD_DATE + " numeric not null, "
+			+ FIELD_NUMBER + " text not null, "
+			+ FIELD_ORGANIZATION + " text not null, "
+			+ FIELD_INSTRUCTOR + " text null)";
 }

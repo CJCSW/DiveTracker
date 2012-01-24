@@ -49,8 +49,6 @@ public class UserEditActivity extends Activity {
 		if (extras != null) {
 			rowId = extras.getLong(FIELD_ROWID); 
 		}
-		
-		populateFields();
     }
 	
 	@Override
@@ -64,7 +62,6 @@ public class UserEditActivity extends Activity {
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 		rowId = (Long) savedInstanceState.getSerializable(FIELD_ROWID);
-		populateFields();
 	}
 	
 	@Override
@@ -115,7 +112,7 @@ public class UserEditActivity extends Activity {
     
     public void onClick_button_confirm(View view) {
     	Intent resultData = new Intent();
-		resultData.putExtra(FIELD_ROWID, rowId);
+    	resultData.putExtra(FIELD_ROWID, rowId);
     	setResult(RESULT_OK, resultData);
     	isCanceled = false;
     	finish();
@@ -123,7 +120,7 @@ public class UserEditActivity extends Activity {
     
     public void onClick_button_cancel(View view) {
     	Intent resultData = new Intent();
-		resultData.putExtra(FIELD_ROWID, rowId);
+    	resultData.putExtra(FIELD_ROWID, rowId);
     	setResult(RESULT_CANCELED, resultData);
     	isCanceled = true;
     	finish();

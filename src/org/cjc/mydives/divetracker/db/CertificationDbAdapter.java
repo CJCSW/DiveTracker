@@ -1,12 +1,13 @@
 package org.cjc.mydives.divetracker.db;
 
+import static org.cjc.mydives.divetracker.db.CertificationConstants.DB_TABLE;
+import static org.cjc.mydives.divetracker.db.CertificationConstants.fields;
+
 import java.util.Date;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-
-import static org.cjc.mydives.divetracker.db.CertificationConstants.*;
 
 /**
  * Certification database adapter
@@ -82,7 +83,7 @@ public class CertificationDbAdapter extends DbAdapter {
 	private ContentValues createContentValues(String type, Date date, String number, String organization, String instructor) {
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(CertificationConstants.FIELD_TYPE, type);
-		contentValues.put(CertificationConstants.FIELD_DATE, date.getTime());
+		contentValues.put(CertificationConstants.FIELD_DATE, FormatterHelper.packDate(date));
 		contentValues.put(CertificationConstants.FIELD_NUMBER, number);
 		contentValues.put(CertificationConstants.FIELD_ORGANIZATION, organization);
 		contentValues.put(CertificationConstants.FIELD_INSTRUCTOR, instructor);

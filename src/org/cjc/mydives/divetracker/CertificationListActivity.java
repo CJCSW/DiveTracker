@@ -61,7 +61,7 @@ public class CertificationListActivity extends ListActivity {
 	    }
 	    
 	    // Creation of items via clicking the Add button
-	    public void onClick_button_add(){
+	    public void onClick_button_add(View view){
 	    	Intent createCertificationIntent = new Intent(this, CertificationDetailsActivity.class);
 	    	startActivityForResult(createCertificationIntent, ACTIVITY_CREATE);
 	    }
