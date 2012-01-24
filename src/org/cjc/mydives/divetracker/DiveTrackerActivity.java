@@ -1,5 +1,7 @@
 package org.cjc.mydives.divetracker;
 
+import java.util.Date;
+
 import org.cjc.mydives.divetracker.db.DiveDbAdapter;
 
 import android.app.Activity;
@@ -34,8 +36,8 @@ public class DiveTrackerActivity extends Activity {
     	// Dives
     	DiveDbAdapter diveAdapter = new DiveDbAdapter(this);
     	if (diveAdapter.open() != null) {
-    		diveAdapter.insert("Las Catedrales", System.currentTimeMillis(), System.currentTimeMillis(), null, null, null, null, 0);
-    		diveAdapter.insert("LAs Rotas", System.currentTimeMillis(), System.currentTimeMillis(), null, null, null, null, 3);
+    		diveAdapter.insert("Las Catedrales", new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), null, null, null, null, 0);
+    		diveAdapter.insert("LAs Rotas", new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), null, null, null, null, 3);
     		diveAdapter.close();
     	}
     }
