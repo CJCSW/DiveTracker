@@ -11,7 +11,7 @@ import java.util.Date;
  */
 public abstract class FormatterHelper {
 	
-	// Databse formats
+	// Database formats
 	public static final String DATE_FORMAT_DB = "yyyyMMdd";
 	public static final String TIME_FORMAT_DB = "HHmm";
 	public static final String DATETIME_FORMATDB = "yyyyMMddHHmm";

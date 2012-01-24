@@ -13,7 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 /**
  * This activity will display the user profile
@@ -52,8 +52,6 @@ public class UserDetailsActivity extends Activity {
 		if (extras != null) {
 			rowId = extras.getLong(FIELD_ROWID); 
 		}
-		
-		populateFields();
 	}
 	
 	@Override

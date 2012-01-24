@@ -17,9 +17,9 @@ public class UserConstants {
 	}
 	
 	// Database creation statement
-	public static final String DATABASE_CREATE = "create table " + UserConstants.DB_TABLE + " "
-			+ "(" + UserConstants.FIELD_ROWID + " integer primary key autoincrement, "
-			+ UserConstants.FIELD_NAME + " text not null, "
-			+ UserConstants.FIELD_SURNAME + " text not null, "
-			+ UserConstants.FIELD_PROFILEPIC + " text null)";
+	public static final String DATABASE_CREATE = "create table " + DB_TABLE + " "
+			+ "(" + FIELD_ROWID + " integer primary key autoincrement, "
+			+ FIELD_NAME + " text not null, "
+			+ FIELD_SURNAME + " text not null, "
+			+ FIELD_PROFILEPIC + " text null)";
 }
