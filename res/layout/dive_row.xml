@@ -12,15 +12,19 @@
 	    android:id="@+id/dive_row_date"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_marginTop = "6dp"
+	    android:layout_weight="0.6"
+	    android:layout_marginTop = "4dp"
 	    android:layout_marginLeft="8dp"
+	    android:textSize="30dp"
 	    android:text="dd/mm/yyyy"/>
 	<TextView 
 	    android:id="@+id/dive_row_time"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_marginTop = "6dp"
+	    android:layout_weight="0.4"
+	    android:layout_marginTop = "4dp"
 	    android:layout_marginLeft="8dp"
+	    android:textSize="30dp"
 	    android:text="HH:MM"/>
     </LinearLayout>
     
@@ -28,7 +32,8 @@
 	    android:id="@+id/dive_row_name"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    android:layout_marginTop = "6dp"
+	    android:layout_marginTop = "4dp"
 	    android:layout_marginLeft="8dp"
+	    android:textSize="20dp"
 	    android:text="Dive name"/>	
 </LinearLayout>

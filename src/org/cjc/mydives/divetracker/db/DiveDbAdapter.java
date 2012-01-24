@@ -1,5 +1,7 @@
 package org.cjc.mydives.divetracker.db;
 
+import java.util.Date;
+
 import android.content.ContentValues;
 import android.content.Context;
 
@@ -29,13 +31,13 @@ public class DiveDbAdapter extends DbAdapter {
 	 * @param rating 0...5
 	 * @return dive _id if success, -1 otherwise
 	 */
-	public long insert(String name, Long enterDate, Long enterTime,
+	public long insert(String name, Date enterDate, Date enterTime,
 			Integer duration, Double tempAir, Double tempWater, String waterType,
 			Integer rating) {
 		ContentValues values = new ContentValues();
 		values.put(FIELD_NAME, name);
-		values.put(FIELD_ENTERDATE, enterDate);
-		values.put(FIELD_ENTERTIME, enterTime);
+		values.put(FIELD_ENTERDATE, FormatterHelper.packDate(enterDate));
+		values.put(FIELD_ENTERTIME, FormatterHelper.packTime(enterTime));
 		values.put(FIELD_DURATION, duration);
 		values.put(FIELD_TEMP_AIR, tempAir);
 		values.put(FIELD_TEMP_WATER, tempWater);
@@ -57,13 +59,13 @@ public class DiveDbAdapter extends DbAdapter {
 	 * @param rating 0...5
 	 * @return dive _id if success, -1 otherwise
 	 */
-	public boolean update(long rowId, String name, Integer enterDate, Integer enterTime,
+	public boolean update(long rowId, String name, Date enterDateTime,
 			Integer duration, Double tempAir, Double tempWater, String waterType,
 			Integer rating) {
 		ContentValues values = new ContentValues();
 		values.put(FIELD_NAME, name);
-		values.put(FIELD_ENTERDATE, enterDate);
-		values.put(FIELD_ENTERTIME, enterTime);
+		values.put(FIELD_ENTERDATE, FormatterHelper.packDate(enterDateTime));
+		values.put(FIELD_ENTERTIME, FormatterHelper.packTime(enterDateTime));
 		values.put(FIELD_DURATION, duration);
 		values.put(FIELD_TEMP_AIR, tempAir);
 		values.put(FIELD_TEMP_WATER, tempWater);

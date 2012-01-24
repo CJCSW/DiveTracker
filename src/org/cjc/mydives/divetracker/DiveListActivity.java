@@ -5,13 +5,15 @@ import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_ENTERTIME;
 import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_NAME;
 
 import org.cjc.mydives.divetracker.db.DiveDbAdapter;
+import org.cjc.mydives.divetracker.db.FormatterHelper;
 
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.widget.ListAdapter;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 
 public class DiveListActivity extends Activity {
@@ -43,9 +45,26 @@ public class DiveListActivity extends Activity {
 			tvEmptyList.setVisibility(TextView.INVISIBLE);
 			
 			// Populate the list
-			ListAdapter listAdapter = new SimpleCursorAdapter(this, R.layout.dive_row, cursor, 
+			SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(this, R.layout.dive_row, cursor, 
 					new String[] {FIELD_ENTERDATE,FIELD_ENTERTIME, FIELD_NAME}, 
 					new int[] {R.id.dive_row_date, R.id.dive_row_time, R.id.dive_row_name});
+			
+			// Columns Conversion
+			listAdapter.setViewBinder(new ViewBinder() {
+				public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
+					String strValue = cursor.getString(columnIndex);
+					TextView tView = (TextView) view;
+
+					if (columnIndex == 2) {			// DATE
+						tView.setText(FormatterHelper.db2ScrDateFormat(strValue));
+						return true;
+					} else if (columnIndex == 3) {	// TIME
+						tView.setText(FormatterHelper.db2ScrTimeFormat(strValue));
+						return true;
+					}
+					return false;
+				}
+			});
 			lvDives.setAdapter(listAdapter);
 		}
 
