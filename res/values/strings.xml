@@ -4,6 +4,8 @@
     <string name="hello">Hello World, DiveTrackerActivity!</string>
     <string name="app_name">DiveTracker</string>
 
+	<string name="header_title">Dive Tracker</string>
+
     <!-- MAIN MENU -->
     <string name="main_menu_button_user">User</string>
     <string name="main_menu_button_dives">Dives</string>
@@ -51,10 +53,13 @@
     <!-- DIVE -->
     <!-- Dive list -->
     <string name="dive_list_activity">My dives</string>
+    <string name="dive_list_title">My dives</string>
     <string name="dive_list_button_add">Add dive</string>
     <string name="dive_no_dives">Go out and bring some good dives!</string>
     <!-- Dive details -->
     <string name="dive_details_activity">Dive</string>
+    <string name="dive_details_title">Dive</string>
+
         <!-- COLORS -->
     <color name="listcolor">#2987BA</color>
     <color name="black">#000000</color>

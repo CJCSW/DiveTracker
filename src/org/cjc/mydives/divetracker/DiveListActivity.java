@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -27,6 +28,7 @@ public class DiveListActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.dive_list);
 
 		diveDbAdapter = new DiveDbAdapter(this);
@@ -40,6 +42,12 @@ public class DiveListActivity extends Activity {
 	 * Initializes the activity.
 	 */
 	public void initialize() {
+		// Title
+		((TextView) findViewById(R.id.header_title)).setText(R.string.dive_list_title);
+		
+		//////////////////////////////////
+		//  LOAD DATA
+		//////////////////////////////////
 		diveDbAdapter.open();	// Open the DB
 		
 		Cursor cursor = diveDbAdapter.fetchAll();	// Fetch all the instances
