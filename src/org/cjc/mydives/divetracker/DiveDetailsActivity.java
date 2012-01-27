@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 public class DiveDetailsActivity extends Activity {
 	private DiveDbAdapter diveDbAdapter = new DiveDbAdapter(this);
+
+	long diveId;
+
 	private TextView tvName;
 	private TextView tvDate;
 	private TextView tvTime;
@@ -27,21 +30,19 @@ public class DiveDetailsActivity extends Activity {
 		tvDate = (TextView) this.findViewById(R.id.dive_details_date);
 		tvTime = (TextView) this.findViewById(R.id.dive_details_time);
 
-		initialize();
-	}
-	
-	private void initialize() {
+		diveId = getIntent().getExtras().getLong("_ID");
+
 		// Title
 		((TextView) findViewById(R.id.header_title)).setText(R.string.dive_details_title);
-		
-		//////////////////////////////////
-		//  LOAD DATA
-		//////////////////////////////////
-		long id = getIntent().getExtras().getLong("_ID");
-		
+
+		populateFields();
+	}
+	
+	private void populateFields() {
+
 		// Get the data
 		diveDbAdapter.open();	// Open the DB
-		Cursor cursor = diveDbAdapter.fetchById(id);
+		Cursor cursor = diveDbAdapter.fetchById(diveId);
 		if (cursor.moveToFirst()) {
 			tvName.setText(cursor.getString(cursor.getColumnIndex(FIELD_NAME)));
 			tvDate.setText(FormatterHelper.db2ScrDateFormat(cursor.getString(cursor.getColumnIndex(FIELD_ENTERDATE))));

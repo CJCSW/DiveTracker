@@ -37,6 +37,10 @@
             android:name=".DiveDetailsActivity"
             android:label="@string/dive_details_activity">
         </activity>
-    </application>
+        <activity 
+            android:name=".DiveEditActivity"
+            android:label="@string/dive_edit_activity">
+        </activity>
+        </application>
 
 </manifest>

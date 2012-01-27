@@ -4,6 +4,8 @@ import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_ENTERDATE;
 import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_ENTERTIME;
 import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_NAME;
 
+import java.util.Date;
+
 import org.cjc.mydives.divetracker.db.DiveDbAdapter;
 import org.cjc.mydives.divetracker.db.FormatterHelper;
 
@@ -12,9 +14,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
@@ -24,6 +28,7 @@ public class DiveListActivity extends Activity {
 	private DiveDbAdapter diveDbAdapter;
 	private TextView tvEmptyList;
 	private ListView lvDives;
+	private ImageView ivNewDive;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -31,23 +36,45 @@ public class DiveListActivity extends Activity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.dive_list);
 
+		// Get the controls
 		diveDbAdapter = new DiveDbAdapter(this);
 		lvDives   = (ListView) this.findViewById(R.id.dive_list);
 		tvEmptyList = (TextView) this.findViewById(R.id.dive_list_tv_empty);
+		ivNewDive = (ImageView) this.findViewById(R.id.header_button_add);
 		
-		initialize();
+		// Title
+		((TextView) findViewById(R.id.header_title)).setText(R.string.dive_list_title);
+
+		// DiveList OnClick 
+		lvDives.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
+				Intent i = new Intent(getBaseContext(), DiveDetailsActivity.class);
+				i.putExtra("_ID", id);
+		    	startActivity(i);
+			}
+		});
+		
+		// NewDive OnClick
+		ivNewDive.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				// Create a new Dive
+				diveDbAdapter.open();	// Open the DB
+				Date currentDateTime = new Date(System.currentTimeMillis());
+				long newId = diveDbAdapter.insert("", currentDateTime, currentDateTime, null, null, null, null, null);
+				diveDbAdapter.close();	// Close the DB
+
+				// Edit the new dive
+				Intent i = new Intent(getBaseContext(), DiveEditActivity.class);
+				i.putExtra("_ID", newId);
+				startActivity(i);
+			}
+		});
 	}
 	
 	/**
 	 * Initializes the activity.
 	 */
-	public void initialize() {
-		// Title
-		((TextView) findViewById(R.id.header_title)).setText(R.string.dive_list_title);
-		
-		//////////////////////////////////
-		//  LOAD DATA
-		//////////////////////////////////
+	public void populateFields() {		
 		diveDbAdapter.open();	// Open the DB
 		
 		Cursor cursor = diveDbAdapter.fetchAll();	// Fetch all the instances
@@ -81,13 +108,14 @@ public class DiveListActivity extends Activity {
 
 		// Close the DB
 		diveDbAdapter.close();
-		
-		lvDives.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
-				Intent i = new Intent(getBaseContext(), DiveDetailsActivity.class);
-				i.putExtra("_ID", id);
-		    	startActivity(i);
-			}
-		});
+	}
+
+	////////////////
+	// LIFECYCLE  //
+	////////////////
+	@Override
+	public void onResume() {
+		super.onResume();
+		populateFields();
 	}
 }

@@ -59,8 +59,20 @@
     <!-- Dive details -->
     <string name="dive_details_activity">Dive</string>
     <string name="dive_details_title">Dive</string>
+    <!-- Dive edit -->
+    <string name="dive_edit_activity">Dive edition</string>
+    <string name="dive_edit_title">Dive edition</string>
+    <string name="dive_edit_hint_name">Location name</string>
+    <string name="dive_edit_label_name">Name</string>
+    <string name="dive_edit_hint_date">Enter date</string>
+    <string name="dive_edit_label_date">Date</string>
+    <string name="dive_edit_hint_time">Enter time</string>
+    <string name="dive_edit_label_time">Time</string>
+    
+    <!-- General -->
+    <string name="btn_save">Save</string>
 
-        <!-- COLORS -->
+    <!-- COLORS -->
     <color name="listcolor">#2987BA</color>
     <color name="black">#000000</color>
 </resources>

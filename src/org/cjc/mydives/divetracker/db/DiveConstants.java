@@ -25,7 +25,7 @@ public class DiveConstants {
 	public static final String DATABASE_CREATE = 
 			"create table " + TABLE_NAME
 			+ " (" + FIELD_ROWID + " integer primary key autoincrement,"
-			+ FIELD_NAME + " text not null,"
+			+ FIELD_NAME + " text null,"
 			+ FIELD_ENTERDATE + " integer not null,"
 			+ FIELD_ENTERTIME + " integer not null,"
 			+ FIELD_DURATION + " integer null,"
@@ -33,6 +33,6 @@ public class DiveConstants {
 			+ FIELD_TEMP_AIR + " real null,"
 			+ FIELD_TEMP_WATER + " real null,"
 			+ FIELD_WATER_TYPE + " text null,"
-			+ FIELD_RATING + " integer not null"
+			+ FIELD_RATING + " integer null"
 			+ ");";
 }

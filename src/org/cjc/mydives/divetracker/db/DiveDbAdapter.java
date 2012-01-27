@@ -34,15 +34,8 @@ public class DiveDbAdapter extends DbAdapter {
 	public long insert(String name, Date enterDate, Date enterTime,
 			Integer duration, Double tempAir, Double tempWater, String waterType,
 			Integer rating) {
-		ContentValues values = new ContentValues();
-		values.put(FIELD_NAME, name);
-		values.put(FIELD_ENTERDATE, FormatterHelper.packDate(enterDate));
-		values.put(FIELD_ENTERTIME, FormatterHelper.packTime(enterTime));
-		values.put(FIELD_DURATION, duration);
-		values.put(FIELD_TEMP_AIR, tempAir);
-		values.put(FIELD_TEMP_WATER, tempWater);
-		values.put(FIELD_WATER_TYPE, waterType);
-		values.put(FIELD_RATING, rating);
+		ContentValues values = createContentValues(name, enterDate, enterTime,
+				duration, tempAir, tempWater, waterType, rating);
 		return insert(values);
 	}
 	
@@ -59,18 +52,26 @@ public class DiveDbAdapter extends DbAdapter {
 	 * @param rating 0...5
 	 * @return dive _id if success, -1 otherwise
 	 */
-	public boolean update(long rowId, String name, Date enterDateTime,
+	public boolean update(long rowId, String name, Date enterDate, Date enterTime,
+			Integer duration, Double tempAir, Double tempWater, String waterType,
+			Integer rating) {
+		ContentValues values = createContentValues(name, enterDate, enterTime,
+				duration, tempAir, tempWater, waterType, rating);
+		return update(rowId, values);
+	}
+	
+	private ContentValues createContentValues(String name, Date enterDate, Date enterTime,
 			Integer duration, Double tempAir, Double tempWater, String waterType,
 			Integer rating) {
 		ContentValues values = new ContentValues();
 		values.put(FIELD_NAME, name);
-		values.put(FIELD_ENTERDATE, FormatterHelper.packDate(enterDateTime));
-		values.put(FIELD_ENTERTIME, FormatterHelper.packTime(enterDateTime));
+		values.put(FIELD_ENTERDATE, FormatterHelper.packDate(enterDate));
+		values.put(FIELD_ENTERTIME, FormatterHelper.packTime(enterTime));
 		values.put(FIELD_DURATION, duration);
 		values.put(FIELD_TEMP_AIR, tempAir);
 		values.put(FIELD_TEMP_WATER, tempWater);
 		values.put(FIELD_WATER_TYPE, waterType);
 		values.put(FIELD_RATING, rating);
-		return update(rowId, values);
+		return values;
 	}
 }
