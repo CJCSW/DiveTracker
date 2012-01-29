@@ -1,0 +1,9 @@
+# Compiled Source
+*.class
+bin/**/*
+
+# Packages
+*.apk
+
+# R.java
+gen/org/cjc/mydives/divetracker/R.java
