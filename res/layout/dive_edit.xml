@@ -18,7 +18,7 @@
         android:id="@+id/dive_edit_field_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/dive_edit_hint_name"
+        android:hint="@string/dive_name"
         android:imeOptions="actionNext"
         />
 
@@ -33,7 +33,7 @@
         android:id="@+id/dive_edit_field_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/dive_edit_hint_date"
+        android:hint="@string/dive_enterDate"
         android:imeOptions="actionNext"
         />
 
@@ -42,7 +42,7 @@
         android:id="@+id/dive_edit_time_label"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/dive_edit_label_time" 
+        android:text="@string/dive_enterTime" 
     />
     <EditText
         android:id="@+id/dive_edit_field_time"
@@ -51,18 +51,29 @@
         android:hint="@string/dive_edit_hint_time"
         android:imeOptions="actionNext"
         />
-    <LinearLayout
-        android:orientation="horizontal"
+
+  	<!-- Max Deep -->
+    <TextView
+        android:id="@+id/dive_edit_maxDeep_label"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        >
-	    <Button
-	        android:id="@+id/btn_save"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_margin="2dp"
-	        android:text="@string/btn_save"
-	        android:onClick="onClickSave"
-	        />
-    </LinearLayout>
+        android:text="@string/dive_maxDeep" 
+    />
+    <EditText
+        android:id="@+id/dive_edit_field_deep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:imeOptions="actionNext"
+        />
+    
+    <!-- SAVE Button -->
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:text="@string/btn_save"
+        android:onClick="onClickSave"
+        />
 </LinearLayout>

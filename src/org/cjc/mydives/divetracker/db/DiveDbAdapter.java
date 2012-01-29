@@ -24,6 +24,7 @@ public class DiveDbAdapter extends DbAdapter {
 	 * @param name the name of the dive (name of the place)
 	 * @param enterDate the enter date of the dive
 	 * @param enterTime the enter time of the dive
+	 * @param maxDeep the maximum deep of the dive
 	 * @param duration the duration (in seconds) of the dive
 	 * @param tempAir the temperature of the air
 	 * @param tempWater the temperature of the water
@@ -31,10 +32,10 @@ public class DiveDbAdapter extends DbAdapter {
 	 * @param rating 0...5
 	 * @return dive _id if success, -1 otherwise
 	 */
-	public long insert(String name, Date enterDate, Date enterTime,
+	public long insert(String name, Date enterDate, Date enterTime, Integer maxDeep,
 			Integer duration, Double tempAir, Double tempWater, String waterType,
 			Integer rating) {
-		ContentValues values = createContentValues(name, enterDate, enterTime,
+		ContentValues values = createContentValues(name, enterDate, enterTime, maxDeep, 
 				duration, tempAir, tempWater, waterType, rating);
 		return insert(values);
 	}
@@ -45,6 +46,7 @@ public class DiveDbAdapter extends DbAdapter {
 	 * @param name the name of the dive (name of the place)
 	 * @param enterDate the enter date of the dive
 	 * @param enterTime the enter time of the dive
+	 * @param maxDeep the maximum deep of the dive
 	 * @param duration the duration (in seconds) of the dive
 	 * @param tempAir the temperature of the air
 	 * @param tempWater the temperature of the water
@@ -52,15 +54,15 @@ public class DiveDbAdapter extends DbAdapter {
 	 * @param rating 0...5
 	 * @return dive _id if success, -1 otherwise
 	 */
-	public boolean update(long rowId, String name, Date enterDate, Date enterTime,
+	public boolean update(long rowId, String name, Date enterDate, Date enterTime, Integer maxDeep, 
 			Integer duration, Double tempAir, Double tempWater, String waterType,
 			Integer rating) {
-		ContentValues values = createContentValues(name, enterDate, enterTime,
+		ContentValues values = createContentValues(name, enterDate, enterTime, maxDeep, 
 				duration, tempAir, tempWater, waterType, rating);
 		return update(rowId, values);
 	}
 	
-	private ContentValues createContentValues(String name, Date enterDate, Date enterTime,
+	private ContentValues createContentValues(String name, Date enterDate, Date enterTime, Integer maxDeep,
 			Integer duration, Double tempAir, Double tempWater, String waterType,
 			Integer rating) {
 		ContentValues values = new ContentValues();

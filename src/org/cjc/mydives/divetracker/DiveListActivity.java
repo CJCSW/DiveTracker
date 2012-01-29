@@ -4,8 +4,6 @@ import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_ENTERDATE;
 import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_ENTERTIME;
 import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_NAME;
 
-import java.util.Date;
-
 import org.cjc.mydives.divetracker.db.DiveDbAdapter;
 import org.cjc.mydives.divetracker.db.FormatterHelper;
 
@@ -57,15 +55,8 @@ public class DiveListActivity extends Activity {
 		// NewDive OnClick
 		ivNewDive.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
-				// Create a new Dive
-				diveDbAdapter.open();	// Open the DB
-				Date currentDateTime = new Date(System.currentTimeMillis());
-				long newId = diveDbAdapter.insert("", currentDateTime, currentDateTime, null, null, null, null, null);
-				diveDbAdapter.close();	// Close the DB
-
 				// Edit the new dive
 				Intent i = new Intent(getBaseContext(), DiveEditActivity.class);
-				i.putExtra("_ID", newId);
 				startActivity(i);
 			}
 		});

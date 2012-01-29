@@ -51,6 +51,10 @@
     <string name="user_edit_button_cancel">Cancel</string>
     
     <!-- DIVE -->
+    <string name="dive_name">Name</string>
+    <string name="dive_enterDate">Enter Date</string>
+    <string name="dive_enterTime">Enter Time</string>
+    <string name="dive_maxDeep">Maximum Deep</string>
     <!-- Dive list -->
     <string name="dive_list_activity">My dives</string>
     <string name="dive_list_title">My dives</string>
@@ -59,6 +63,8 @@
     <!-- Dive details -->
     <string name="dive_details_activity">Dive</string>
     <string name="dive_details_title">Dive</string>
+    <string name="dive_edit_btn">Edit</string>
+
     <!-- Dive edit -->
     <string name="dive_edit_activity">Dive edition</string>
     <string name="dive_edit_title">Dive edition</string>

@@ -75,6 +75,24 @@ public abstract class FormatterHelper {
 	}
 
 	/**
+	 * Converts the value of a date for the screen.
+	 * @param date the date to be formatted for the screen
+	 * @return a string with the date in the format {@link DATE_FORMAT_SCR}
+	 */
+	public static String packDate4Scr(Date date) {
+			return df2scr.format(date);
+	}
+	
+	/**
+	 * Converts the value of a time for the screen.
+	 * @param time the time to be formatted for the screen
+	 * @return a string with the time in the format {@link TIME_FORMAT_SCR}
+	 */
+	public static String packTime4Scr(Date time) {
+			return tf2scr.format(time);
+	}
+
+	/**
 	 * Packs the value of a date into a String.
 	 * @param date the date to be packed
 	 * @return a string with the date in the format {@link DATE_FORMAT}
