@@ -1,6 +1,7 @@
 package org.cjc.mydives.divetracker;
 
 import static org.cjc.mydives.divetracker.db.UserConstants.FIELD_NAME;
+import static org.cjc.mydives.divetracker.db.UserConstants.FIELD_PROFILEPIC;
 import static org.cjc.mydives.divetracker.db.UserConstants.FIELD_ROWID;
 import static org.cjc.mydives.divetracker.db.UserConstants.FIELD_SURNAME;
 
@@ -9,6 +10,8 @@ import org.cjc.mydives.divetracker.db.UserDbAdapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,6 +32,7 @@ public class UserDetailsActivity extends Activity {
 	private TextView name;
 	private TextView surname;
 	private ImageView profilepic;
+	private String profilepic_path;
 	
 	private static int ACTION_EDIT = 10;
 	
@@ -96,8 +100,13 @@ public class UserDetailsActivity extends Activity {
     		rowId = userCursor.getLong(userCursor.getColumnIndexOrThrow(FIELD_ROWID));
     		name.setText(userCursor.getString(userCursor.getColumnIndexOrThrow(FIELD_NAME)));
     		surname.setText(userCursor.getString(userCursor.getColumnIndexOrThrow(FIELD_SURNAME)));
-    		// TODO : How do we set the image of an ImageView?
-    		//profilepic = userCursor.getBlob(userCursor.getColumnIndexOrThrow(FIELD_PROFILEPIC));
+    		profilepic_path = userCursor.getString(userCursor.getColumnIndexOrThrow(FIELD_PROFILEPIC));
+    		if (profilepic_path != null && profilepic_path != ""){
+    			Bitmap bitmap = BitmapFactory.decodeFile(profilepic_path);
+    			if (bitmap != null) {
+    				profilepic.setImageBitmap(bitmap);
+    			}
+    		}
     	}
     	userCursor.close();
     	userDbAdapter.close();

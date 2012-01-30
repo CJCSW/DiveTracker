@@ -3,14 +3,26 @@ package org.cjc.mydives.divetracker;
 import static org.cjc.mydives.divetracker.db.UserConstants.FIELD_NAME;
 import static org.cjc.mydives.divetracker.db.UserConstants.FIELD_ROWID;
 import static org.cjc.mydives.divetracker.db.UserConstants.FIELD_SURNAME;
+import static org.cjc.mydives.divetracker.db.UserConstants.FIELD_PROFILEPIC;
+
+import java.io.File;
 
 import org.cjc.mydives.divetracker.db.UserDbAdapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -20,11 +32,16 @@ import android.widget.ImageView;
  */
 public class UserEditActivity extends Activity {
 	private UserDbAdapter userDbAdapter;
+
+	private Uri imageCaptureUri;
+	private static final int PICK_FROM_CAMERA = 1;
+	private static final int PICK_FROM_FILE = 2;
 	
 	private Long rowId;
 	private EditText name;
 	private EditText surname;
 	private ImageView profilepic;
+	private String profilepic_path;
 	
 	private boolean isCanceled;
 
@@ -49,7 +66,94 @@ public class UserEditActivity extends Activity {
 		if (extras != null) {
 			rowId = extras.getLong(FIELD_ROWID); 
 		}
+		
+		final String[] imageSelectionItems = new String[]{"From camera", "From SD Card"};
+		ArrayAdapter<String> optionsAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, imageSelectionItems);
+		AlertDialog.Builder optionsDialogBuilder = new AlertDialog.Builder(this);
+		optionsDialogBuilder.setTitle("Select Image");
+		optionsDialogBuilder.setAdapter(optionsAdapter, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int item) {
+				if (item == 0) {
+					// First item selected --> From camera
+					Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+					File file = new File(Environment.getExternalStorageDirectory(), "DiveTrackerUserAvatar.jpg");
+					imageCaptureUri = Uri.fromFile(file);
+					try {
+						intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, imageCaptureUri);
+						intent.putExtra("return-data", true);
+						startActivityForResult(intent, PICK_FROM_CAMERA);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					dialog.cancel();
+				} else {
+					// Second item selected --> From SD card
+					Intent intent = new Intent();
+					intent.setType("image/*");
+					intent.setAction(Intent.ACTION_GET_CONTENT);
+					startActivityForResult(Intent.createChooser(intent, "Complete action using"), PICK_FROM_FILE);
+				}
+				
+			}
+		});
+		
+		final AlertDialog profilePictureSelectDialog = optionsDialogBuilder.create();
+		
+		((Button)findViewById(R.id.user_edit_button_profilepic_select)).setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				profilePictureSelectDialog.show();
+				
+			}
+		});
+		
     }
+	
+    @Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    if (resultCode != RESULT_OK) return;
+	   
+		Bitmap bitmap = null;
+		String path	= "";
+		
+		if (requestCode == PICK_FROM_FILE) {
+			imageCaptureUri = data.getData(); 
+			path = getRealPathFromURI(imageCaptureUri); //from Gallery 
+		
+			if (path == null)
+				path = imageCaptureUri.getPath(); //from File Manager
+			
+			if (path != null) {
+				bitmap = BitmapFactory.decodeFile(path);
+				profilepic_path = path;
+			}
+		} else {
+			if (imageCaptureUri != null) {
+				path = imageCaptureUri.getPath();
+				profilepic_path = path;
+				bitmap = BitmapFactory.decodeFile(path);
+			}
+		}
+		
+		if (bitmap != null)
+			profilepic.setImageBitmap(bitmap);		
+    }
+	
+	private String getRealPathFromURI(Uri contentUri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = managedQuery( contentUri, proj, null, null,null);
+        
+        if (cursor == null) return null;
+        
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        
+        cursor.moveToFirst();
+
+        return cursor.getString(column_index);
+	}
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
@@ -67,7 +171,7 @@ public class UserEditActivity extends Activity {
 	@Override
 	public void onPause() {
 		super.onPause();
-		saveState();
+		//saveState();
 	}
 	
 	@Override
@@ -84,8 +188,13 @@ public class UserEditActivity extends Activity {
     	if (userCursor.moveToFirst()) {
     		name.setText(userCursor.getString(userCursor.getColumnIndexOrThrow(FIELD_NAME)));
     		surname.setText(userCursor.getString(userCursor.getColumnIndexOrThrow(FIELD_SURNAME)));
-    		// TODO : How do we set the image of an ImageView?
-    		//profilepic = userCursor.getBlob(userCursor.getColumnIndexOrThrow(FIELD_PROFILEPIC));
+    		profilepic_path = userCursor.getString(userCursor.getColumnIndexOrThrow(FIELD_PROFILEPIC));
+    		if (profilepic_path != null && profilepic_path != "") {
+    			Bitmap bitmap = BitmapFactory.decodeFile(profilepic_path);
+    			if (bitmap != null) {
+    				profilepic.setImageBitmap(bitmap);
+    			}
+    		}
     	}
     	userDbAdapter.close();
     }
@@ -95,9 +204,7 @@ public class UserEditActivity extends Activity {
     	if (!isCanceled) {
     		String name = this.name.getText().toString();
     		String surname = this.surname.getText().toString();
-    		// TODO: How do we get the image in the ImageView?
-    		//byte[] profilepic = this.profilepic.getDrawable();
-    		byte[] profilepic = null;
+    		String profilepic = this.profilepic_path;
     		if (rowId == null) {
     			long id = userDbAdapter.create(name, surname, profilepic);
     			if (id > 0) {
@@ -110,19 +217,24 @@ public class UserEditActivity extends Activity {
     	userDbAdapter.close();
     }
     
+    public void onClick_button_profilepic_select(View view) {
+    	
+    }
+    
     public void onClick_button_confirm(View view) {
+    	isCanceled = false;
+    	saveState();
     	Intent resultData = new Intent();
     	resultData.putExtra(FIELD_ROWID, rowId);
     	setResult(RESULT_OK, resultData);
-    	isCanceled = false;
     	finish();
     }
     
     public void onClick_button_cancel(View view) {
+    	isCanceled = true;
     	Intent resultData = new Intent();
     	resultData.putExtra(FIELD_ROWID, rowId);
     	setResult(RESULT_CANCELED, resultData);
-    	isCanceled = true;
     	finish();
     }
 }
