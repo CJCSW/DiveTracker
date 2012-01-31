@@ -61,13 +61,11 @@
 	  		android:id="@+id/user_edit_button_confirm"
 	  		android:layout_width="wrap_content"
 	  		android:layout_height="wrap_content"
-	  		android:text="@string/user_edit_button_confirm"
-	  		android:onClick="onClick_button_confirm"/>
+	  		android:text="@string/user_edit_button_confirm"/>
 		<Button
 	  		android:id="@+id/user_edit_button_cancel"
 	  		android:layout_width="wrap_content"
 	  		android:layout_height="wrap_content"
-	  		android:text="@string/user_edit_button_cancel"
-	  		android:onClick="onClick_button_cancel"/>
+	  		android:text="@string/user_edit_button_cancel"/>
 	</LinearLayout>
 </LinearLayout>

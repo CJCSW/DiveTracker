@@ -14,6 +14,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,18 +57,40 @@ public class UserDetailsActivity extends Activity {
 		if (extras != null) {
 			rowId = extras.getLong(FIELD_ROWID); 
 		}
-	}
-	
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putSerializable(FIELD_ROWID, rowId);
-	}
-	
-	@Override
-	public void onRestoreInstanceState(Bundle savedInstanceState) {
-		super.onRestoreInstanceState(savedInstanceState);
-		rowId = (Long) savedInstanceState.getSerializable(FIELD_ROWID);
+		
+		// Edit button
+		((Button)findViewById(R.id.user_details_button_edit)).setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent userEditIntent = new Intent(v.getContext(), UserEditActivity.class);
+				if (rowId != null) {
+					userEditIntent.putExtra(FIELD_ROWID, rowId);
+				}
+				startActivityForResult(userEditIntent, ACTION_EDIT);
+			}
+		});
+		
+		// Equipment button
+		((Button)findViewById(R.id.user_details_button_equipment)).setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Implement this once EquipmentListActivity is implemented 
+			}
+		});
+		
+		// Certifications button
+		((Button)findViewById(R.id.user_details_button_certifications)).setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent certificationListIntent = new Intent(v.getContext(), CertificationListActivity.class);
+				startActivity(certificationListIntent);
+			}
+		});
+		
+		// Populate fields
 		populateFields();
 	}
 	
@@ -79,7 +102,6 @@ public class UserDetailsActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		populateFields();
 	}
     
 	@Override
@@ -92,7 +114,7 @@ public class UserDetailsActivity extends Activity {
     	}
     }
 	
-    public void populateFields() {
+    private void populateFields() {
     	userDbAdapter.open();
     	Cursor userCursor = (rowId == null) ? userDbAdapter.fetchAll() : userDbAdapter.fetchById(rowId);
     	
@@ -111,21 +133,4 @@ public class UserDetailsActivity extends Activity {
     	userCursor.close();
     	userDbAdapter.close();
     }
-	
-	public void onClick_button_edit(View view){
-		Intent userEditIntent = new Intent(this, UserEditActivity.class);
-		if (rowId != null) {
-			userEditIntent.putExtra(FIELD_ROWID, rowId);
-		}
-		startActivityForResult(userEditIntent, ACTION_EDIT);
-	}
-	
-	public void onClick_button_equipment(View view){
-		// TODO: Implement when EquipmentListActivity is part of the project
-	}
-	
-	public void onClick_button_certifications(View view){
-		Intent certificationListIntent = new Intent(this, CertificationListActivity.class);
-		startActivity(certificationListIntent);
-	}
 }

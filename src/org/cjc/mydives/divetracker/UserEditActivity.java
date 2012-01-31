@@ -67,6 +67,7 @@ public class UserEditActivity extends Activity {
 			rowId = extras.getLong(FIELD_ROWID); 
 		}
 		
+		// Dialog associated to the profile picture selection button
 		final String[] imageSelectionItems = new String[]{"From camera", "From SD Card"};
 		ArrayAdapter<String> optionsAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, imageSelectionItems);
 		AlertDialog.Builder optionsDialogBuilder = new AlertDialog.Builder(this);
@@ -101,6 +102,7 @@ public class UserEditActivity extends Activity {
 		
 		final AlertDialog profilePictureSelectDialog = optionsDialogBuilder.create();
 		
+		// Profile picture selection button
 		((Button)findViewById(R.id.user_edit_button_profilepic_select)).setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -110,6 +112,35 @@ public class UserEditActivity extends Activity {
 			}
 		});
 		
+		// Confirm button
+		((Button)findViewById(R.id.user_edit_button_confirm)).setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				isCanceled = false;
+		    	saveState();
+		    	Intent resultData = new Intent();
+		    	resultData.putExtra(FIELD_ROWID, rowId);
+		    	setResult(RESULT_OK, resultData);
+		    	finish();
+			}
+		});
+		// Cancel button
+		((Button)findViewById(R.id.user_edit_button_cancel)).setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+		    	isCanceled = true;
+		    	Intent resultData = new Intent();
+		    	resultData.putExtra(FIELD_ROWID, rowId);
+		    	setResult(RESULT_CANCELED, resultData);
+		    	finish();
+			}
+		});
+		
+		// Populate fields
+		isCanceled = false;
+		populateFields();
     }
 	
     @Override
@@ -142,6 +173,11 @@ public class UserEditActivity extends Activity {
 			profilepic.setImageBitmap(bitmap);		
     }
 	
+    /**
+     * Transforms a URI into a path
+     * @param contentUri URI to transform
+     * @return Path corresponding to the URI
+     */
 	private String getRealPathFromURI(Uri contentUri) {
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = managedQuery( contentUri, proj, null, null,null);
@@ -156,32 +192,16 @@ public class UserEditActivity extends Activity {
 	}
 	
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		saveState();
-		outState.putSerializable(FIELD_ROWID, rowId);
-	}
-	
-	@Override
-	public void onRestoreInstanceState(Bundle savedInstanceState) {
-		super.onRestoreInstanceState(savedInstanceState);
-		rowId = (Long) savedInstanceState.getSerializable(FIELD_ROWID);
-	}
-	
-	@Override
 	public void onPause() {
 		super.onPause();
-		//saveState();
 	}
 	
 	@Override
 	public void onResume() {
 		super.onResume();
-		isCanceled = false;
-		populateFields();
 	}
     
-    public void populateFields() {
+    private void populateFields() {
     	userDbAdapter.open();
     	Cursor userCursor = (rowId == null) ? userDbAdapter.fetchAll() : userDbAdapter.fetchById(rowId);
     	
@@ -199,7 +219,7 @@ public class UserEditActivity extends Activity {
     	userDbAdapter.close();
     }
     
-    public void saveState() {
+    private void saveState() {
     	userDbAdapter.open();
     	if (!isCanceled) {
     		String name = this.name.getText().toString();
@@ -217,24 +237,4 @@ public class UserEditActivity extends Activity {
     	userDbAdapter.close();
     }
     
-    public void onClick_button_profilepic_select(View view) {
-    	
-    }
-    
-    public void onClick_button_confirm(View view) {
-    	isCanceled = false;
-    	saveState();
-    	Intent resultData = new Intent();
-    	resultData.putExtra(FIELD_ROWID, rowId);
-    	setResult(RESULT_OK, resultData);
-    	finish();
-    }
-    
-    public void onClick_button_cancel(View view) {
-    	isCanceled = true;
-    	Intent resultData = new Intent();
-    	resultData.putExtra(FIELD_ROWID, rowId);
-    	setResult(RESULT_CANCELED, resultData);
-    	finish();
-    }
 }
