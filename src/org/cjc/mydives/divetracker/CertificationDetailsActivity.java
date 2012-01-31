@@ -1,9 +1,11 @@
 package org.cjc.mydives.divetracker;
 
-import static org.cjc.mydives.divetracker.db.CertificationConstants.*;
-
-
-import java.text.ParseException;
+import static org.cjc.mydives.divetracker.db.CertificationConstants.FIELD_DATE;
+import static org.cjc.mydives.divetracker.db.CertificationConstants.FIELD_INSTRUCTOR;
+import static org.cjc.mydives.divetracker.db.CertificationConstants.FIELD_NUMBER;
+import static org.cjc.mydives.divetracker.db.CertificationConstants.FIELD_ORGANIZATION;
+import static org.cjc.mydives.divetracker.db.CertificationConstants.FIELD_ROWID;
+import static org.cjc.mydives.divetracker.db.CertificationConstants.FIELD_TYPE;
 
 import org.cjc.mydives.divetracker.db.CertificationDbAdapter;
 import org.cjc.mydives.divetracker.db.FormatterHelper;

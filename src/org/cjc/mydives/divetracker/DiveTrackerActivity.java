@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 /**
  * Launch activity
@@ -20,19 +21,30 @@ public class DiveTrackerActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        // User button
+        ((Button)findViewById(R.id.main_menu_button_user)).setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+		    	startActivity(new Intent(v.getContext(), UserDetailsActivity.class));
+			}
+		});
+        
+        // Dives button
+        ((Button)findViewById(R.id.main_menu_button_dives)).setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+		    	startActivity(new Intent(v.getContext(), DiveListActivity.class));
+			}
+		});
+        
+        // Convenience method to populate the db with some dives
         populateDB();
     }
     
-    public void onClick_button_user(View view) {
-    	Intent userDetailsIntent = new Intent(this, UserDetailsActivity.class);
-    	startActivity(userDetailsIntent);
-    }
-
-    public void onClick_button_dives(View view) {
-    	startActivity(new Intent(this, DiveListActivity.class));
-    }
-    
-    public void populateDB() {
+    private void populateDB() {
     	// Dives
     	DiveDbAdapter diveAdapter = new DiveDbAdapter(this);
     	if (diveAdapter.open() != null) {

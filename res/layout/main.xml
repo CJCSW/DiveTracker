@@ -8,18 +8,15 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/hello" />
-
     <Button 
         android:id="@+id/main_menu_button_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/main_menu_button_user"
-        android:onClick="onClick_button_user"/>
+        android:text="@string/main_menu_button_user"/>
     <Button
         android:id="@+id/main_menu_button_dives"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/main_menu_button_dives"
-        android:onClick="onClick_button_dives"/>        
+        android:text="@string/main_menu_button_dives"/>
         />
 </LinearLayout>
