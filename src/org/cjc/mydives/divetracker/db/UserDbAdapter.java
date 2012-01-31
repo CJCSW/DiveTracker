@@ -29,8 +29,8 @@ public class UserDbAdapter extends DbAdapter {
 	 * @param profilePic User profile picture
 	 * @return User id if successfully created, -1 otherwise
 	 */
-	public long create(String name, String surname, byte[] profilePic) {
-		ContentValues userContentValues = createContentValues(name, surname, profilePic);
+	public long create(String name, String surname, String profilepic) {
+		ContentValues userContentValues = createContentValues(name, surname, profilepic);
 		return insert(userContentValues);
 	}
 	
@@ -42,8 +42,8 @@ public class UserDbAdapter extends DbAdapter {
 	 * @param profilePic User profile picture
 	 * @return True if successfully updated, false otherwise
 	 */
-	public boolean update(long rowId, String name, String surname, byte[] profilePic) {
-		ContentValues userContentValues = createContentValues(name, surname, profilePic);
+	public boolean update(long rowId, String name, String surname, String profilepic) {
+		ContentValues userContentValues = createContentValues(name, surname, profilepic);
 		return update(rowId, userContentValues);
 	}
 	
@@ -80,11 +80,11 @@ public class UserDbAdapter extends DbAdapter {
 	 * @param profilePic User's profile picture
 	 * @return ContentValues instance with all attributes of the User
 	 */
-	private ContentValues createContentValues(String name, String surname, byte[] profilePic) {
+	private ContentValues createContentValues(String name, String surname, String profilepic) {
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(UserConstants.FIELD_NAME, name);
 		contentValues.put(UserConstants.FIELD_SURNAME, surname);
-		contentValues.put(UserConstants.FIELD_PROFILEPIC, profilePic);
+		contentValues.put(UserConstants.FIELD_PROFILEPIC, profilepic);
 		return contentValues;
 	}
 }
