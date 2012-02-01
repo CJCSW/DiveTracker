@@ -6,13 +6,20 @@
   android:layout_height="fill_parent"
   >
   	<include layout="@layout/header" />
-
+	<!-- GPS Map --> 
+	<com.google.android.maps.MapView
+		android:id="@+id/dive_map"
+		android:layout_width="fill_parent"
+		android:layout_height="120dp"
+		android:enabled="true"
+		android:apiKey="@string/maps_key"
+	/> 
   	<!-- NAME -->
     <TextView
         android:id="@+id/dive_edit_name_label"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/dive_edit_label_name" 
+        android:text="@string/dive_name" 
     />
     <EditText
         android:id="@+id/dive_edit_field_name"
@@ -27,13 +34,13 @@
         android:id="@+id/dive_edit_date_label"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/dive_edit_label_date" 
+        android:text="@string/dive_enterDate" 
     />
     <EditText
         android:id="@+id/dive_edit_field_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/dive_enterDate"
+        android:hint="@string/dive_edit_hint_date"
         android:imeOptions="actionNext"
         />
 
@@ -66,7 +73,7 @@
         android:text="0"
         android:imeOptions="actionNext"
         />
-    
+
     <!-- SAVE Button -->
     <Button
         android:id="@+id/btn_save"
@@ -74,6 +81,5 @@
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
         android:text="@string/btn_save"
-        android:onClick="onClickSave"
         />
 </LinearLayout>

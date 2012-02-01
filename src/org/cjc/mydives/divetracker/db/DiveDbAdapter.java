@@ -30,13 +30,15 @@ public class DiveDbAdapter extends DbAdapter {
 	 * @param tempWater the temperature of the water
 	 * @param waterType sweet or salty
 	 * @param rating 0...5
+	 * @param latitude GPS
+	 * @param longitude GPS
 	 * @return dive _id if success, -1 otherwise
 	 */
 	public long insert(String name, Date enterDate, Date enterTime, Integer maxDeep,
 			Integer duration, Double tempAir, Double tempWater, String waterType,
-			Integer rating) {
+			Integer rating, Double latitude, Double longitude) {
 		ContentValues values = createContentValues(name, enterDate, enterTime, maxDeep, 
-				duration, tempAir, tempWater, waterType, rating);
+				duration, tempAir, tempWater, waterType, rating, latitude, longitude);
 		return insert(values);
 	}
 	
@@ -52,19 +54,21 @@ public class DiveDbAdapter extends DbAdapter {
 	 * @param tempWater the temperature of the water
 	 * @param waterType sweet or salty
 	 * @param rating 0...5
+	 * @param latitude GPS
+	 * @param longitude GPS
 	 * @return dive _id if success, -1 otherwise
 	 */
 	public boolean update(long rowId, String name, Date enterDate, Date enterTime, Integer maxDeep, 
 			Integer duration, Double tempAir, Double tempWater, String waterType,
-			Integer rating) {
+			Integer rating, Double latitude, Double longitude) {
 		ContentValues values = createContentValues(name, enterDate, enterTime, maxDeep, 
-				duration, tempAir, tempWater, waterType, rating);
+				duration, tempAir, tempWater, waterType, rating, latitude, longitude);
 		return update(rowId, values);
 	}
 	
 	private ContentValues createContentValues(String name, Date enterDate, Date enterTime, Integer maxDeep,
 			Integer duration, Double tempAir, Double tempWater, String waterType,
-			Integer rating) {
+			Integer rating, Double latitude, Double longitude) {
 		ContentValues values = new ContentValues();
 		values.put(FIELD_NAME, name);
 		values.put(FIELD_ENTERDATE, FormatterHelper.packDate(enterDate));
@@ -74,6 +78,8 @@ public class DiveDbAdapter extends DbAdapter {
 		values.put(FIELD_TEMP_WATER, tempWater);
 		values.put(FIELD_WATER_TYPE, waterType);
 		values.put(FIELD_RATING, rating);
+		values.put(FIELD_LATITUDE, latitude);
+		values.put(FIELD_LONGITUDE, longitude);
 		return values;
 	}
 }

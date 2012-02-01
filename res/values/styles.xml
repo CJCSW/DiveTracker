@@ -3,6 +3,7 @@
     <color name="main_bg_color">#66c0ec</color>
     <color name="main_tx_color">#ffffff</color>
     <style name="header">
+    	<item name="android:gravity">center_vertical</item> <!-- CENTER_VERTICAL -->    
         <item name="android:background">@color/main_bg_color</item>
     </style>
     <style name="headerText">

@@ -42,7 +42,10 @@ public class DiveListActivity extends Activity {
 		
 		// Title
 		((TextView) findViewById(R.id.header_title)).setText(R.string.dive_list_title);
-
+		addListeners();
+	}
+	
+	public void addListeners() {
 		// DiveList OnClick 
 		lvDives.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
@@ -59,7 +62,7 @@ public class DiveListActivity extends Activity {
 				Intent i = new Intent(getBaseContext(), DiveEditActivity.class);
 				startActivity(i);
 			}
-		});
+		});		
 	}
 	
 	/**
