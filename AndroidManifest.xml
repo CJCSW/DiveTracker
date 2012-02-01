@@ -29,6 +29,9 @@
         </activity>
         <activity android:name="CertificationDetailsActivity">
         </activity>
+        <!-- Equipment activities -->
+        <activity android:name="EquipmentListActivity">
+        </activity>
 
         <!-- Dive activities -->
         <activity
