@@ -24,25 +24,21 @@ public class DiveDbAdapter extends DbAdapter {
 	 * @param name the name of the dive (name of the place)
 	 * @param enterDate the enter date of the dive
 	 * @param enterTime the enter time of the dive
+	 * @param maxDeep the maximum deep of the dive
 	 * @param duration the duration (in seconds) of the dive
 	 * @param tempAir the temperature of the air
 	 * @param tempWater the temperature of the water
 	 * @param waterType sweet or salty
 	 * @param rating 0...5
+	 * @param latitude GPS
+	 * @param longitude GPS
 	 * @return dive _id if success, -1 otherwise
 	 */
-	public long insert(String name, Date enterDate, Date enterTime,
+	public long insert(String name, Date enterDate, Date enterTime, Integer maxDeep,
 			Integer duration, Double tempAir, Double tempWater, String waterType,
-			Integer rating) {
-		ContentValues values = new ContentValues();
-		values.put(FIELD_NAME, name);
-		values.put(FIELD_ENTERDATE, FormatterHelper.packDate(enterDate));
-		values.put(FIELD_ENTERTIME, FormatterHelper.packTime(enterTime));
-		values.put(FIELD_DURATION, duration);
-		values.put(FIELD_TEMP_AIR, tempAir);
-		values.put(FIELD_TEMP_WATER, tempWater);
-		values.put(FIELD_WATER_TYPE, waterType);
-		values.put(FIELD_RATING, rating);
+			Integer rating, Double latitude, Double longitude) {
+		ContentValues values = createContentValues(name, enterDate, enterTime, maxDeep, 
+				duration, tempAir, tempWater, waterType, rating, latitude, longitude);
 		return insert(values);
 	}
 	
@@ -52,25 +48,38 @@ public class DiveDbAdapter extends DbAdapter {
 	 * @param name the name of the dive (name of the place)
 	 * @param enterDate the enter date of the dive
 	 * @param enterTime the enter time of the dive
+	 * @param maxDeep the maximum deep of the dive
 	 * @param duration the duration (in seconds) of the dive
 	 * @param tempAir the temperature of the air
 	 * @param tempWater the temperature of the water
 	 * @param waterType sweet or salty
 	 * @param rating 0...5
+	 * @param latitude GPS
+	 * @param longitude GPS
 	 * @return dive _id if success, -1 otherwise
 	 */
-	public boolean update(long rowId, String name, Date enterDateTime,
+	public boolean update(long rowId, String name, Date enterDate, Date enterTime, Integer maxDeep, 
 			Integer duration, Double tempAir, Double tempWater, String waterType,
-			Integer rating) {
+			Integer rating, Double latitude, Double longitude) {
+		ContentValues values = createContentValues(name, enterDate, enterTime, maxDeep, 
+				duration, tempAir, tempWater, waterType, rating, latitude, longitude);
+		return update(rowId, values);
+	}
+	
+	private ContentValues createContentValues(String name, Date enterDate, Date enterTime, Integer maxDeep,
+			Integer duration, Double tempAir, Double tempWater, String waterType,
+			Integer rating, Double latitude, Double longitude) {
 		ContentValues values = new ContentValues();
 		values.put(FIELD_NAME, name);
-		values.put(FIELD_ENTERDATE, FormatterHelper.packDate(enterDateTime));
-		values.put(FIELD_ENTERTIME, FormatterHelper.packTime(enterDateTime));
+		values.put(FIELD_ENTERDATE, FormatterHelper.packDate(enterDate));
+		values.put(FIELD_ENTERTIME, FormatterHelper.packTime(enterTime));
 		values.put(FIELD_DURATION, duration);
 		values.put(FIELD_TEMP_AIR, tempAir);
 		values.put(FIELD_TEMP_WATER, tempWater);
 		values.put(FIELD_WATER_TYPE, waterType);
 		values.put(FIELD_RATING, rating);
-		return update(rowId, values);
+		values.put(FIELD_LATITUDE, latitude);
+		values.put(FIELD_LONGITUDE, longitude);
+		return values;
 	}
 }

@@ -6,17 +6,7 @@
   android:layout_height="fill_parent"
   >
   
-  <LinearLayout
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      >
-	<Button 
-      android:id="@+id/dive_list_button_add"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/dive_list_button_add" />
-  </LinearLayout>
+  <include layout="@layout/header" /> 
   
   <ListView 
   	android:id="@+id/dive_list"
