@@ -47,6 +47,7 @@
     <string name="user_edit_hint_surname">Enter your surname</string>
     <string name="user_edit_label_profilepic">Profile picture</string>
     <string name="user_edit_contentdesc_profilepic">Profile picture</string>
+    <string name="user_edit_button_profilepic_select">Select</string>
     <string name="user_edit_button_confirm">Confirm</string>
     <string name="user_edit_button_cancel">Cancel</string>
     

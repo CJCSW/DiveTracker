@@ -41,20 +41,17 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/user_details_button_edit"
-        android:textSize="25dp"
-        android:onClick="onClick_button_edit"/>
+        android:textSize="25dp"/>
     <Button
         android:id="@+id/user_details_button_equipment"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/user_details_button_equipment"
-        android:textSize="25dp"
-        android:onClick="onClick_button_equipment"/>
+        android:textSize="25dp"/>
     <Button
         android:id="@+id/user_details_button_certifications"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/user_details_button_certifications"
-        android:textSize="25dp"
-        android:onClick="onClick_button_certifications"/>
+        android:textSize="25dp"/>
 </LinearLayout>
