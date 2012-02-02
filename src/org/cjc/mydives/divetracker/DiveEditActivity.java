@@ -74,13 +74,12 @@ public class DiveEditActivity extends MapActivity {
 		mvMap.setBuiltInZoomControls(true);
 		mvMap.setClickable(true);
 		
-		addListeners();
-		
 		// GPS if we are creating...
 		if (diveId == -1) {
 			enableGPS();
 		}
 
+		addListeners();
 		populateFields();
 	}
 
