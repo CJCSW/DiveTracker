@@ -51,6 +51,11 @@ public class DiveDetailsActivity extends Activity {
 		ivAdd.setVisibility(View.GONE);
 		ivEdit.setVisibility(View.VISIBLE);
 
+		addListeners();
+		populateFields();
+	}
+	
+	public void addListeners() {
 		// Edit Dive OnClick
 		ivEdit.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
@@ -60,8 +65,6 @@ public class DiveDetailsActivity extends Activity {
 				startActivity(i);
 			}
 		});
-
-		populateFields();
 	}
 	
 	private void populateFields() {
