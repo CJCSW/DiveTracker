@@ -7,12 +7,14 @@
   >
   	<include layout="@layout/header" />
     
-    <TextView
-        android:id="@+id/dive_details_name"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="No name" 
-        />
+	<!-- GPS Map --> 
+	<com.google.android.maps.MapView
+		android:id="@+id/dive_map"
+		android:layout_width="fill_parent"
+		android:layout_height="120dp"
+		android:enabled="true"
+		android:apiKey="@string/maps_key"
+	/> 
 
     <LinearLayout
         android:orientation="horizontal"
