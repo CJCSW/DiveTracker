@@ -16,20 +16,65 @@
 		android:apiKey="@string/maps_key"
 	/> 
 
+	<!-- Date and Time -->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         >
         <TextView 
+            style="@style/details_text"
             android:id="@+id/dive_details_date"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="0.5"
             />
         <TextView 
+            style="@style/details_text"
             android:id="@+id/dive_details_time"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="0.5"
             />
      </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            style="@style/details_label"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/dive_maxDeep"
+         />
+        <TextView
+            style="@style/details_label"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/dive_duration"
+         />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            style="@style/details_label"
+            android:id="@+id/dive_details_maxDeep"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+         />
+        <TextView
+            style="@style/details_label"
+            android:id="@+id/dive_details_duration"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+         />
+    </LinearLayout>
 </LinearLayout>

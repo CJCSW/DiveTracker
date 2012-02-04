@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="main_bg_color">#66c0ec</color>
-    <color name="main_tx_color">#ffffff</color>
+    <color name="main_bg_color">#66C0EC</color>
+    <color name="main_tx_color">#FFFFFF</color>
+    <!-- HEADER -->
     <style name="header">
     	<item name="android:gravity">center_vertical</item> <!-- CENTER_VERTICAL -->    
         <item name="android:background">@color/main_bg_color</item>
@@ -12,6 +13,27 @@
         <item name="android:paddingLeft">3dp</item>
         <item name="android:textSize">20sp</item>
     </style>
+    <!-- DETAILS -->
+    <style name="details_label">
+        <item name="android:textColor">#888888</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+    <style name="details_text">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">25sp</item>
+    </style>
+    <!-- LIST -->
+    <style name="row">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <style name="row.primary">
+        <item name="android:textSize">30sp</item>
+    </style>
+    <style name="row.secondary">
+        <item name="android:textColor">#DDDDDD</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    
     <style name="EmptyLabel">
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textSize">20sp</item>

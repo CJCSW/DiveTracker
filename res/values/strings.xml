@@ -55,6 +55,7 @@
     <string name="dive_name">Name</string>
     <string name="dive_enterDate">Enter Date</string>
     <string name="dive_enterTime">Enter Time</string>
+    <string name="dive_duration">Duration</string>
     <string name="dive_maxDeep">Maximum Deep</string>
     <string name="dive_latitude">Latitude</string>
     <string name="dive_longitude">Longitude</string>

@@ -2,10 +2,10 @@ package org.cjc.mydives.divetracker;
 
 import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_ENTERDATE;
 import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_ENTERTIME;
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_MAX_DEEP;
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_NAME;
 import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_LATITUDE;
 import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_LONGITUDE;
+import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_MAX_DEEP;
+import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_NAME;
 
 import java.util.Date;
 
@@ -25,9 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 
 public class DiveEditActivity extends MapActivity {
@@ -42,8 +40,8 @@ public class DiveEditActivity extends MapActivity {
 	private EditText etMaxDeep;
 	private Button btnSave;
 	private MapView mvMap;
-	private MapController mapController;
-
+	private MapHelper mapHelper;
+	
 	Double longitude;
 	Double latitude;
 
@@ -69,7 +67,7 @@ public class DiveEditActivity extends MapActivity {
 		etMaxDeep   = (EditText) findViewById(R.id.dive_edit_field_deep);
 		btnSave = (Button) findViewById(R.id.btn_save);
 		mvMap = (MapView) findViewById(R.id.dive_map);
-		mapController = mvMap.getController();
+		mapHelper = new MapHelper(mvMap, getResources());
 		
 		mvMap.setBuiltInZoomControls(true);
 		mvMap.setClickable(true);
@@ -115,7 +113,7 @@ public class DiveEditActivity extends MapActivity {
 				// Called when a new location is found by the network location provider.
 				longitude = location.getLongitude();
 				latitude = location.getLatitude();
-				setMapPosition(latitude, longitude);
+				mapHelper.setMapPosition(latitude, longitude);
 			}
 			
 			public void onStatusChanged(String provider, int status, Bundle extras) {}
@@ -158,8 +156,8 @@ public class DiveEditActivity extends MapActivity {
 			// GPS
 			latitude = cursor.getDouble(cursor.getColumnIndex(FIELD_LATITUDE));
 			longitude = cursor.getDouble(cursor.getColumnIndex(FIELD_LONGITUDE));
-			if (latitude != null && longitude != null) {
-				setMapPosition(latitude, longitude);
+			if (latitude != 0.0f && longitude != 0.0f) {
+				mapHelper.setMapPosition(latitude, longitude);
 			}
 		}
 		
@@ -167,25 +165,6 @@ public class DiveEditActivity extends MapActivity {
 		cursor.close();
 		diveDbAdapter.close();
 	}
-	
-    /**
-     * Set the map position to the one indicated
-     * @param posLat Latitude coordinate
-     * @param posLong longitude coordinate
-     */
-    private void setMapPosition(Double posLat, Double posLong) {
-    	if (posLat == null || posLong == null) {
-    		return;
-    	}
-
-		GeoPoint p = new GeoPoint (
-				(int) (posLat * 1E6),
-				(int) (posLong * 1E6));
-
-			mapController.animateTo(p);
-			mapController.setZoom(13); // TODO: Encontrar el valor adecuado
-			mvMap.invalidate();    	
-    }
     
 	/**
 	 * This will store the data to the database.
