@@ -2,20 +2,21 @@ package org.cjc.mydives.divetracker;
 
 import org.cjc.mydives.divetracker.db.CertificationConstants;
 import org.cjc.mydives.divetracker.db.CertificationDbAdapter;
-
+import org.cjc.mydives.divetracker.db.FormatterHelper;
 
 import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.TextView;
 
 /**
  * @author JuanCarlos
@@ -109,6 +110,20 @@ public class CertificationListActivity extends ListActivity {
 			
 	    	// Create an array adapter and set it to display each row using the certification_row.xml layout
 	    	SimpleCursorAdapter certificationCursorAdapter = new SimpleCursorAdapter(this, R.layout.certification_row, cursor, from, to);
+	    	// Use a ViewBinder to format certification date before it gets displayed by the ListView
+	    	certificationCursorAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
+				
+				@Override
+				public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
+					if (columnIndex == 2) {
+						TextView certificationDateTextView = (TextView) view;
+						String formattedDate = FormatterHelper.db2ScrDateFormat(cursor.getString(columnIndex));
+						certificationDateTextView.setText(formattedDate);
+						return true;
+					}
+					return false;
+				}
+			});
 	    	setListAdapter(certificationCursorAdapter);
 		}
 }

@@ -76,7 +76,7 @@ public class UserDetailsActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Implement this once EquipmentListActivity is implemented 
+				startActivity(new Intent(v.getContext(), EquipmentListActivity.class));
 			}
 		});
 		
@@ -85,8 +85,7 @@ public class UserDetailsActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Intent certificationListIntent = new Intent(v.getContext(), CertificationListActivity.class);
-				startActivity(certificationListIntent);
+				startActivity(new Intent(v.getContext(), CertificationListActivity.class));
 			}
 		});
 		
