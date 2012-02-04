@@ -11,7 +11,7 @@
 	    android:layout_marginTop = "6dp"
 	    android:layout_marginLeft="8dp"
 	    android:lines="1"
-	    android:text="TYPE"/>
+	    android:text=""/>
 	<TextView 
 	    android:id="@+id/certification_row_organization"
 	    android:layout_width="fill_parent"
@@ -19,7 +19,7 @@
 	    android:layout_marginTop = "6dp"
 	    android:layout_marginLeft="8dp"
 	    android:lines="1"
-	    android:text="ORGANIZATION"/>
+	    android:text=""/>
 	<TextView 
 	    android:id="@+id/certification_row_date"
 	    android:layout_width="fill_parent"
@@ -27,6 +27,6 @@
 	    android:layout_marginTop = "6dp"
 	    android:layout_marginLeft="8dp"
 	    android:lines="1"
-	    android:text="DATE"/>
+	    android:text=""/>
 	
 </LinearLayout>
