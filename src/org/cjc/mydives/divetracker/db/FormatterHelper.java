@@ -49,11 +49,58 @@ public abstract class FormatterHelper {
 	}
 
 	/**
+	 * Parse the value of a date from the screen.
+	 * @param dateStr the date to be parsed from the date string object
+	 * @return a Date with the date in the format {@link DATE_FORMAT_SCR}
+	 */
+	public static Date parseScrDate(String dateStr) {
+		try {
+			return df2scr.parse(dateStr);
+		} catch (ParseException e) {
+			return null;
+		}
+	}
+	
+	/**
+	 * Parse the value of a time from the screen.
+	 * @param timeStr the date to be parsed from the time string object
+	 * @return a Date with the time in the format {@link TIME_FORMAT_SCR}
+	 */
+	public static Date parseScrTime(String timeStr) {
+		try {
+			return tf2scr.parse(timeStr);
+		} catch (ParseException e) {
+			return null;
+		}
+	}
+
+	/**
+	 * Converts the value of a date for the screen.
+	 * @param date the date to be formatted for the screen
+	 * @return a string with the date in the format {@link DATE_FORMAT_SCR}
+	 */
+	public static String packDate4Scr(Date date) {
+			return df2scr.format(date);
+	}
+	
+	/**
+	 * Converts the value of a time for the screen.
+	 * @param time the time to be formatted for the screen
+	 * @return a string with the time in the format {@link TIME_FORMAT_SCR}
+	 */
+	public static String packTime4Scr(Date time) {
+			return tf2scr.format(time);
+	}
+
+	/**
 	 * Packs the value of a date into a String.
 	 * @param date the date to be packed
 	 * @return a string with the date in the format {@link DATE_FORMAT}
 	 */
 	public static String packDate(Date date) {
+		if (date == null) {
+			return null;
+		}
 		return df2db.format(date);
 	}
 	
@@ -76,6 +123,9 @@ public abstract class FormatterHelper {
 	 * @return a string with the time in the format {@link TIME_FORMAT}
 	 */
 	public static String packTime(Date time) {
+		if (time == null) {
+			return null;
+		}
 		return tf2db.format(time);
 	}
 	

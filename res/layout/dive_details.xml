@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  >
+  	<include layout="@layout/header" />
+    
+	<!-- GPS Map --> 
+	<com.google.android.maps.MapView
+		android:id="@+id/dive_map"
+		android:layout_width="fill_parent"
+		android:layout_height="120dp"
+		android:enabled="true"
+		android:apiKey="@string/maps_key"
+	/> 
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView 
+            android:id="@+id/dive_details_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <TextView 
+            android:id="@+id/dive_details_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+     </LinearLayout>
+</LinearLayout>
