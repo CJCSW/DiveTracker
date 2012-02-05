@@ -19,6 +19,7 @@ public class DbHelper extends SQLiteOpenHelper {
 		UserTable.onCreate(database);
 		CertificationTable.onCreate(database);
 		DiveTable.onCreate(database);
+		EquipmentTable.onCreate(database);
 	}
 
 	@Override
@@ -26,5 +27,6 @@ public class DbHelper extends SQLiteOpenHelper {
 		UserTable.onUpdate(database, oldVersion, newVersion);
 		CertificationTable.onUpdate(database, oldVersion, newVersion);
 		DiveTable.onUpdate(database, oldVersion, newVersion);
+		EquipmentTable.onUpdate(database, oldVersion, newVersion);
 	}
 }

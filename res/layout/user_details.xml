@@ -3,6 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+    
+    <include layout="@layout/header"/>
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,12 +39,7 @@
 	    </LinearLayout>       
     </LinearLayout>
     
-    <Button
-        android:id="@+id/user_details_button_edit"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/user_details_button_edit"
-        android:textSize="25dp"/>
+
     <Button
         android:id="@+id/user_details_button_equipment"
         android:layout_width="fill_parent"
