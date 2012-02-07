@@ -13,6 +13,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -35,7 +36,7 @@ public class CertificationListActivity extends ListActivity {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			
+			requestWindowFeature(Window.FEATURE_NO_TITLE);
 			setContentView(R.layout.certification_list);
 			this.getListView().setDividerHeight(2);
 			

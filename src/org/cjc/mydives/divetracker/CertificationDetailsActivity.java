@@ -15,8 +15,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * Certification details edition
@@ -39,6 +43,7 @@ public class CertificationDetailsActivity extends Activity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.certification_details);
 		
 		type = (EditText) findViewById(R.id.certification_details_field_type);
@@ -57,6 +62,46 @@ public class CertificationDetailsActivity extends Activity {
 		if (extras != null) {
 			rowId = extras.getLong(FIELD_ROWID); 
 		}
+		
+		// Set header text
+		((TextView) findViewById(R.id.header_title)).setText(R.string.certification_details_title);
+		// Hide header buttons
+        ((ImageView) findViewById(R.id.header_button_edit)).setVisibility(View.GONE);
+		((ImageView) findViewById(R.id.header_button_add)).setVisibility(View.GONE);
+		
+		// Add listeners
+		addListeners();
+		
+		// Populate fields
+		populateFields();
+	}
+	
+	private void addListeners() {
+		// Confirm button
+		((Button)findViewById(R.id.certification_details_button_confirm)).setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent resultData = new Intent();
+				resultData.putExtra(FIELD_ROWID, rowId);
+		    	setResult(RESULT_OK, resultData);
+		    	isCanceled = false;
+		    	finish();
+			}
+		});
+		
+		// Cancel button
+		((Button)findViewById(R.id.certification_details_button_cancel)).setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent resultData = new Intent();
+				resultData.putExtra(FIELD_ROWID, rowId);
+		    	setResult(RESULT_CANCELED, resultData);
+		    	isCanceled = true;
+		    	finish();
+			}
+		});
 	}
 	
 	@Override
@@ -70,6 +115,7 @@ public class CertificationDetailsActivity extends Activity {
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 		rowId = (Long) savedInstanceState.getSerializable(FIELD_ROWID);
+		isCanceled = true;
 		populateFields();
 	}
 	
@@ -82,7 +128,7 @@ public class CertificationDetailsActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		isCanceled = false;
+		isCanceled = true;
 		populateFields();
 	}
 	
@@ -127,20 +173,5 @@ public class CertificationDetailsActivity extends Activity {
     	}
     	certificationDbAdapter.close();
     }
-    
-    public void onClick_button_confirm(View view) {
-    	Intent resultData = new Intent();
-		resultData.putExtra(FIELD_ROWID, rowId);
-    	setResult(RESULT_OK, resultData);
-    	isCanceled = false;
-    	finish();
-    }
-    
-    public void onClick_button_cancel(View view) {
-    	Intent resultData = new Intent();
-		resultData.putExtra(FIELD_ROWID, rowId);
-    	setResult(RESULT_CANCELED, resultData);
-    	isCanceled = true;
-    	finish();
-    }
+
 }

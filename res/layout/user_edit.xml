@@ -3,56 +3,59 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-	<TextView android:id="@+id/user_edit_label_profilepic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/user_edit_label_profilepic"/>    
     
-    <LinearLayout 
-        android:layout_width="match_parent"
+    <include layout="@layout/header"/>
+    
+
+<TextView android:id="@+id/user_edit_label_profilepic"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="@string/user_edit_label_profilepic"/>    
+   
+   <LinearLayout 
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal">
+       <LinearLayout 
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <LinearLayout 
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:orientation="vertical"
-	        android:layout_weight="1">
-		    <ImageView android:id="@+id/user_edit_field_profilepic"
-		        android:layout_width="100dp"
-		        android:layout_height="100dp"
-		        android:src="@drawable/ic_launcher"
-		        android:contentDescription="@string/user_details_contentdesc_profilepic"/>
-	    </LinearLayout>
-	    <Button android:id="@+id/user_edit_button_profilepic_select"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
-	        android:text="@string/user_edit_button_profilepic_select"/>
+        android:orientation="vertical"
+        android:layout_weight="1">
+	    <ImageView android:id="@+id/user_edit_field_profilepic"
+	        android:layout_width="100dp"
+	        android:layout_height="100dp"
+	        android:src="@drawable/ic_launcher"
+	        android:contentDescription="@string/user_details_contentdesc_profilepic"/>
     </LinearLayout>
+    <Button android:id="@+id/user_edit_button_profilepic_select"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/user_edit_button_profilepic_select"/>
+   </LinearLayout>
 
-    
-    <TextView android:id="@+id/user_edit_label_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/user_edit_label_name"/>
-    <EditText android:id="@+id/user_edit_field_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/user_edit_hint_name"
-        android:imeOptions="actionNext"/>
+   
+   <TextView android:id="@+id/user_edit_label_name"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="@string/user_edit_label_name"/>
+   <EditText android:id="@+id/user_edit_field_name"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:hint="@string/user_edit_hint_name"
+       android:imeOptions="actionNext"/>
 
-    <TextView android:id="@+id/user_edit_label_surname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/user_edit_label_surname"/>
-    <EditText android:id="@+id/user_edit_field_surname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/user_edit_hint_surname"
-        android:imeOptions="actionNext"/>
+   <TextView android:id="@+id/user_edit_label_surname"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="@string/user_edit_label_surname"/>
+   <EditText android:id="@+id/user_edit_field_surname"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:hint="@string/user_edit_hint_surname"
+       android:imeOptions="actionNext"/>
 
-    <LinearLayout 
+   <LinearLayout 
 	  	android:id="@+id/user_edit_buttons"
 	  	android:layout_width="fill_parent"
 	  	android:layout_height="wrap_content"
@@ -68,4 +71,5 @@
 	  		android:layout_height="wrap_content"
 	  		android:text="@string/user_edit_button_cancel"/>
 	</LinearLayout>
+    
 </LinearLayout>

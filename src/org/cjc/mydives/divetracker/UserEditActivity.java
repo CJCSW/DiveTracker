@@ -1,9 +1,9 @@
 package org.cjc.mydives.divetracker;
 
 import static org.cjc.mydives.divetracker.db.UserConstants.FIELD_NAME;
+import static org.cjc.mydives.divetracker.db.UserConstants.FIELD_PROFILEPIC;
 import static org.cjc.mydives.divetracker.db.UserConstants.FIELD_ROWID;
 import static org.cjc.mydives.divetracker.db.UserConstants.FIELD_SURNAME;
-import static org.cjc.mydives.divetracker.db.UserConstants.FIELD_PROFILEPIC;
 
 import java.io.File;
 
@@ -21,10 +21,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * @author JuanCarlos
@@ -50,11 +52,14 @@ public class UserEditActivity extends Activity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.user_edit);
         
         name = (EditText)findViewById(R.id.user_edit_field_name);
         surname = (EditText)findViewById(R.id.user_edit_field_surname);
         profilepic = (ImageView)findViewById(R.id.user_edit_field_profilepic);
+        
+        
         
         userDbAdapter = new UserDbAdapter(this);
 
@@ -67,6 +72,22 @@ public class UserEditActivity extends Activity {
 			rowId = extras.getLong(FIELD_ROWID); 
 		}
 		
+		// Set header text
+		((TextView) findViewById(R.id.header_title)).setText(R.string.user_edit_title);
+
+		// Add listeners
+		addListeners();
+		
+		((ImageView) findViewById(R.id.header_button_edit)).setVisibility(View.GONE);
+		((ImageView) findViewById(R.id.header_button_add)).setVisibility(View.GONE);
+		
+		// Populate fields
+		isCanceled = false;
+		populateFields();
+	
+    }
+	
+	private void addListeners() {
 		// Dialog associated to the profile picture selection button
 		final String[] imageSelectionItems = new String[]{"From camera", "From SD Card"};
 		ArrayAdapter<String> optionsAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, imageSelectionItems);
@@ -88,7 +109,7 @@ public class UserEditActivity extends Activity {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					dialog.cancel();
+					//dialog.cancel();
 				} else {
 					// Second item selected --> From SD card
 					Intent intent = new Intent();
@@ -136,12 +157,8 @@ public class UserEditActivity extends Activity {
 		    	setResult(RESULT_CANCELED, resultData);
 		    	finish();
 			}
-		});
-		
-		// Populate fields
-		isCanceled = false;
-		populateFields();
-    }
+		});	
+	}
 	
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -162,6 +179,8 @@ public class UserEditActivity extends Activity {
 				profilepic_path = path;
 			}
 		} else {
+			File file = new File(Environment.getExternalStorageDirectory(), "DiveTrackerUserAvatar.jpg");
+			imageCaptureUri = Uri.fromFile(file);
 			if (imageCaptureUri != null) {
 				path = imageCaptureUri.getPath();
 				profilepic_path = path;

@@ -3,6 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+    
+    <include layout="@layout/header"/>
+    
+    <ScrollView 
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical">
 	<!-- Certification Type -->
     <TextView 
         android:layout_width="fill_parent"
@@ -63,7 +76,10 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:hint="@string/certification_details_hint_instructor"
-        android:textSize="20dp"/>
+        android:textSize="20dp"/>    
+    </LinearLayout>
+    </ScrollView>
+    
     <!-- Confirm/Cancel buttons -->
     <LinearLayout 
         android:id="@+id/certification_details_buttons"
@@ -76,15 +92,13 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/certification_details_button_confirm"
-        	android:textSize="20dp"
-        	android:onClick="onClick_button_confirm"/>
+        	android:textSize="20dp"/>
         <Button 
             android:id="@+id/certification_details_button_cancel"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/certification_details_button_cancel"
-        	android:textSize="20dp"
-        	android:onClick="onClick_button_cancel"/>
+        	android:textSize="20dp"/>
     </LinearLayout>
 </LinearLayout>
