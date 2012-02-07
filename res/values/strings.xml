@@ -76,8 +76,8 @@
     <string name="dive_edit_hint_date">Enter date</string>
     <string name="dive_edit_hint_time">Enter time</string>
     
-    <string name="maps_key">0pVsBO32kcBr2Ci4YoEIhaOZwMuadvWqrwbr_Vw</string>
-    
+    <!-- <string name="maps_key">0pVsBO32kcBr2Ci4YoEIhaOZwMuadvWqrwbr_Vw</string> -->
+    <string name="maps_key">0pVsBO32kcBogGW1PgBBxQ2rOICRWAm_AVy-wBQ</string>
     <!-- General -->
     <string name="btn_save">Save</string>
 

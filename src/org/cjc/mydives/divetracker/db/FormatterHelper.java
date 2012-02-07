@@ -13,7 +13,7 @@ public abstract class FormatterHelper {
 	
 	// Database formats
 	public static final String DATE_FORMAT_DB = "yyyyMMdd";
-	public static final String TIME_FORMAT_DB = "HHmm";
+	public static final String TIME_FORMAT_DB = "HH:mm";
 	public static final String DATETIME_FORMATDB = "yyyyMMddHHmm";
 
 	// Screen formats
@@ -32,20 +32,32 @@ public abstract class FormatterHelper {
 
 	/**
 	 * Format a date string from the database into a string to be presented in the screen.
-	 * @param date the string with the date in the DB format.
+	 * @param dateStr the string with the date in the DB format.
 	 * @return a String with the date in the format to be presented in the screen.
 	 */
-	public static String db2ScrDateFormat(String date) {
-		return df2scr.format(unPackDate(date));
+	public static String db2ScrDateFormat(String dateStr) {
+		Date date = unPackDate(dateStr);
+		if (date == null) {
+			return "";
+		}
+
+		return df2scr.format(date);
 	}
 
 	/**
 	 * Format a time string from the database into a string to be presented in the screen.
-	 * @param time the string with the time in the DB format.
+	 * @param timeStr the string with the time in the DB format.
 	 * @return a String with the date in the format to be presented in the screen.
 	 */
-	public static String db2ScrTimeFormat(String time) {
-		return tf2scr.format(unPackTime(time));
+	public static String db2ScrTimeFormat(String timeStr) {
+/*		Date time = unPackTime(timeStr);
+		if (time == null) {
+			return "";
+		}
+
+		return tf2scr.format(time);
+		*/
+		return timeStr;
 	}
 
 	/**
@@ -80,7 +92,10 @@ public abstract class FormatterHelper {
 	 * @return a string with the date in the format {@link DATE_FORMAT_SCR}
 	 */
 	public static String packDate4Scr(Date date) {
-			return df2scr.format(date);
+		if (date == null) {
+			return "";
+		}
+		return df2scr.format(date);
 	}
 	
 	/**
@@ -89,7 +104,10 @@ public abstract class FormatterHelper {
 	 * @return a string with the time in the format {@link TIME_FORMAT_SCR}
 	 */
 	public static String packTime4Scr(Date time) {
-			return tf2scr.format(time);
+		if (time == null) {
+			return "";
+		}
+		return tf2scr.format(time);
 	}
 
 	/**
@@ -148,6 +166,9 @@ public abstract class FormatterHelper {
 	 * @return a string with the date in the format {@link DATETIME_FORMAT}
 	 */
 	public static String packDateTime(Date dateTime) {
+		if (dateTime == null) {
+			return null;
+		}
 		return dtf2db.format(dateTime);
 	}
 	

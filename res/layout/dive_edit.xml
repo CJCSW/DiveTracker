@@ -6,80 +6,89 @@
   android:layout_height="fill_parent"
   >
   	<include layout="@layout/header" />
-	<!-- GPS Map --> 
-	<com.google.android.maps.MapView
-		android:id="@+id/dive_map"
-		android:layout_width="fill_parent"
-		android:layout_height="120dp"
-		android:enabled="true"
-		android:apiKey="@string/maps_key"
-	/> 
-  	<!-- NAME -->
-    <TextView
-        android:id="@+id/dive_edit_name_label"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/dive_name" 
-    />
-    <EditText
-        android:id="@+id/dive_edit_field_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/dive_name"
-        android:imeOptions="actionNext"
-        />
-
-  	<!-- DATE -->
-    <TextView
-        android:id="@+id/dive_edit_date_label"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/dive_enterDate" 
-    />
-    <EditText
-        android:id="@+id/dive_edit_field_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/dive_edit_hint_date"
-        android:imeOptions="actionNext"
-        />
-
-  	<!-- TIME -->
-    <TextView
-        android:id="@+id/dive_edit_time_label"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/dive_enterTime" 
-    />
-    <EditText
-        android:id="@+id/dive_edit_field_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/dive_edit_hint_time"
-        android:imeOptions="actionNext"
-        />
-
-  	<!-- Max Deep -->
-    <TextView
-        android:id="@+id/dive_edit_maxDeep_label"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/dive_maxDeep" 
-    />
-    <EditText
-        android:id="@+id/dive_edit_field_deep"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="0"
-        android:imeOptions="actionNext"
-        />
-
-    <!-- SAVE Button -->
-    <Button
-        android:id="@+id/btn_save"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="2dp"
-        android:text="@string/btn_save"
-        />
+  	<ScrollView 
+  	    android:layout_width="fill_parent"
+  	    android:layout_height="fill_parent">
+  	    <LinearLayout 
+  	        android:orientation="vertical"
+  	        android:layout_width="fill_parent"
+  	        android:layout_height="fill_parent">
+			<!-- GPS Map --> 
+			<com.google.android.maps.MapView
+				android:id="@+id/dive_map"
+				android:layout_width="fill_parent"
+				android:layout_height="120dp"
+				android:enabled="true"
+				android:apiKey="@string/maps_key"
+			/> 
+		  	<!-- NAME -->
+		    <TextView
+		        android:id="@+id/dive_edit_name_label"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:text="@string/dive_name" 
+		    />
+		    <EditText
+		        android:id="@+id/dive_edit_field_name"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:hint="@string/dive_name"
+		        android:imeOptions="actionNext"
+		        />
+		
+		  	<!-- DATE -->
+		    <TextView
+		        android:id="@+id/dive_edit_date_label"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:text="@string/dive_enterDate" 
+		    />
+		    <EditText
+		        android:id="@+id/dive_edit_field_date"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:hint="@string/dive_edit_hint_date"
+		        android:imeOptions="actionNext"
+		        />
+		
+		  	<!-- TIME -->
+		    <TextView
+		        android:id="@+id/dive_edit_time_label"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:text="@string/dive_enterTime" 
+		    />
+		    <EditText
+		        android:id="@+id/dive_edit_field_time"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:hint="@string/dive_edit_hint_time"
+		        android:imeOptions="actionNext"
+		        />
+		
+		  	<!-- Max Deep -->
+		    <TextView
+		        android:id="@+id/dive_edit_maxDeep_label"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:text="@string/dive_maxDeep" 
+		    />
+		    <EditText
+		        android:id="@+id/dive_edit_field_deep"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:text="0"
+		        android:imeOptions="actionNext"
+		        />
+		
+		    <!-- SAVE Button -->
+		    <Button
+		        android:id="@+id/btn_save"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_margin="2dp"
+		        android:text="@string/btn_save"
+		        />
+		</LinearLayout>
+	</ScrollView>
 </LinearLayout>

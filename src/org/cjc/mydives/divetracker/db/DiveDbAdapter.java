@@ -73,6 +73,7 @@ public class DiveDbAdapter extends DbAdapter {
 		values.put(FIELD_NAME, name);
 		values.put(FIELD_ENTERDATE, FormatterHelper.packDate(enterDate));
 		values.put(FIELD_ENTERTIME, FormatterHelper.packTime(enterTime));
+		values.put(FIELD_MAX_DEEP, maxDeep);
 		values.put(FIELD_DURATION, duration);
 		values.put(FIELD_TEMP_AIR, tempAir);
 		values.put(FIELD_TEMP_WATER, tempWater);
