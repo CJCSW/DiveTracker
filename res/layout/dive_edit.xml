@@ -35,37 +35,25 @@
 		        android:hint="@string/dive_name"
 		        android:imeOptions="actionNext"
 		        />
-		
-		  	<!-- DATE -->
-		    <TextView
-		        android:id="@+id/dive_edit_date_label"
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content"
-		        android:text="@string/dive_enterDate" 
-		    />
-		    <EditText
-		        android:id="@+id/dive_edit_field_date"
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-		        android:hint="@string/dive_edit_hint_date"
-		        android:imeOptions="actionNext"
-		        />
-		
-		  	<!-- TIME -->
-		    <TextView
-		        android:id="@+id/dive_edit_time_label"
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content"
-		        android:text="@string/dive_enterTime" 
-		    />
-		    <EditText
-		        android:id="@+id/dive_edit_field_time"
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-		        android:hint="@string/dive_edit_hint_time"
-		        android:imeOptions="actionNext"
-		        />
-		
+			<LinearLayout
+			    android:orientation="horizontal"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    >
+			    <Button
+			        android:id="@+id/dive_edit_date"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="0.4"
+			        />
+			
+			    <Button
+			        android:id="@+id/dive_edit_time"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="0.6"
+			        />
+			</LinearLayout>
 		  	<!-- Max Deep -->
 		    <TextView
 		        android:id="@+id/dive_edit_maxDeep_label"

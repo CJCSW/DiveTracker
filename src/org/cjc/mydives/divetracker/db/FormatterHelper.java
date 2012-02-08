@@ -1,8 +1,10 @@
 package org.cjc.mydives.divetracker.db;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 
 /**
  * This class is used to package values to and un-package values from the database.
@@ -15,17 +17,13 @@ public abstract class FormatterHelper {
 	public static final String DATE_FORMAT_DB = "yyyyMMdd";
 	public static final String TIME_FORMAT_DB = "HH:mm";
 	public static final String DATETIME_FORMATDB = "yyyyMMddHHmm";
-
-	// Screen formats
-	public static final String DATE_FORMAT_SCR = "dd/MM/yyyy";
-	public static final String TIME_FORMAT_SCR = "HH:mm";
 	
 	private static SimpleDateFormat df2db = new SimpleDateFormat(DATE_FORMAT_DB);
 	private static SimpleDateFormat tf2db = new SimpleDateFormat(TIME_FORMAT_DB);
 	private static SimpleDateFormat dtf2db = new SimpleDateFormat(DATETIME_FORMATDB);
 
-	private static SimpleDateFormat df2scr = new SimpleDateFormat(DATE_FORMAT_SCR);	
-	private static SimpleDateFormat tf2scr = new SimpleDateFormat(TIME_FORMAT_SCR);
+	private static DateFormat df2scr = SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM);	// Haciendo caso al locale	
+	private static DateFormat tf2scr = SimpleDateFormat.getTimeInstance(SimpleDateFormat.SHORT);	// Haciendo caso al locale
 	
 	/* Hide the default constructor. */
 	private FormatterHelper() {}
