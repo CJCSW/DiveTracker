@@ -8,7 +8,7 @@
         style="@style/headerText"
         android:id="@+id/header_title"
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:text="@string/header_title"
         android:gravity="left"
         />
