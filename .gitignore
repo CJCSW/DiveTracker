@@ -1,6 +1,7 @@
 # Compiled Source
 *.class
 bin/**/*
+bin
 
 # Packages
 *.apk
