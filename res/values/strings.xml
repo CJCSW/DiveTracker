@@ -29,7 +29,7 @@
     <string name="certification_details_label_instructor">Instructor</string>
     <string name="certification_details_hint_instructor">Name of certification instructor</string>
     <string name="certification_details_button_confirm">Confirm</string>
-    <string name="certification_details_button_cancel">Cancel</string>
+
     
     <!-- USER -->
     <!-- User Details -->
@@ -52,7 +52,6 @@
     <string name="user_edit_contentdesc_profilepic">Profile picture</string>
     <string name="user_edit_button_profilepic_select">Select</string>
     <string name="user_edit_button_confirm">Confirm</string>
-    <string name="user_edit_button_cancel">Cancel</string>
     
     <!-- EQUIPMENT -->
     <string name="user_equipment_list_title">Your equipment list</string>

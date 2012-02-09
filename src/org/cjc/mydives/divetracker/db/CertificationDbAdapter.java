@@ -2,9 +2,6 @@ package org.cjc.mydives.divetracker.db;
 
 import static org.cjc.mydives.divetracker.db.CertificationConstants.DB_TABLE;
 import static org.cjc.mydives.divetracker.db.CertificationConstants.fields;
-
-import java.util.Date;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -33,7 +30,7 @@ public class CertificationDbAdapter extends DbAdapter {
 	 * @param instructor Instructor name
 	 * @return
 	 */
-	public long create(String type, Date date, String number, String organization, String instructor) {
+	public long create(String type, long date, String number, String organization, String instructor) {
 		ContentValues contentValues = createContentValues(type, date, number, organization, instructor);
 		return insert(contentValues);
 	}
@@ -48,7 +45,7 @@ public class CertificationDbAdapter extends DbAdapter {
 	 * @param instructor Instructor name
 	 * @return True if successfully updated, false otherwise
 	 */
-	public boolean update(long rowId, String type, Date date, String number, String organization, String instructor) {
+	public boolean update(long rowId, String type, long date, String number, String organization, String instructor) {
 		ContentValues contentValues = createContentValues(type, date, number, organization, instructor);
 		return update(rowId, contentValues);
 	}
@@ -80,10 +77,10 @@ public class CertificationDbAdapter extends DbAdapter {
 	}
 
 	
-	private ContentValues createContentValues(String type, Date date, String number, String organization, String instructor) {
+	private ContentValues createContentValues(String type, long date, String number, String organization, String instructor) {
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(CertificationConstants.FIELD_TYPE, type);
-		contentValues.put(CertificationConstants.FIELD_DATE, FormatterHelper.packDate(date));
+		contentValues.put(CertificationConstants.FIELD_DATE, date);
 		contentValues.put(CertificationConstants.FIELD_NUMBER, number);
 		contentValues.put(CertificationConstants.FIELD_ORGANIZATION, organization);
 		contentValues.put(CertificationConstants.FIELD_INSTRUCTOR, instructor);

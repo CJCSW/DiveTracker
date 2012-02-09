@@ -44,8 +44,6 @@ public class UserEditActivity extends Activity {
 	private EditText surname;
 	private ImageView profilepic;
 	private String profilepic_path;
-	
-	private boolean isCanceled;
 
 	
 	/** Called when the activity is first created */
@@ -82,7 +80,6 @@ public class UserEditActivity extends Activity {
 		((ImageView) findViewById(R.id.header_button_add)).setVisibility(View.GONE);
 		
 		// Populate fields
-		isCanceled = false;
 		populateFields();
 	
     }
@@ -138,7 +135,6 @@ public class UserEditActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				isCanceled = false;
 		    	saveState();
 		    	Intent resultData = new Intent();
 		    	resultData.putExtra(FIELD_ROWID, rowId);
@@ -146,18 +142,6 @@ public class UserEditActivity extends Activity {
 		    	finish();
 			}
 		});
-		// Cancel button
-		((Button)findViewById(R.id.user_edit_button_cancel)).setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-		    	isCanceled = true;
-		    	Intent resultData = new Intent();
-		    	resultData.putExtra(FIELD_ROWID, rowId);
-		    	setResult(RESULT_CANCELED, resultData);
-		    	finish();
-			}
-		});	
 	}
 	
     @Override
@@ -240,19 +224,19 @@ public class UserEditActivity extends Activity {
     
     private void saveState() {
     	userDbAdapter.open();
-    	if (!isCanceled) {
-    		String name = this.name.getText().toString();
-    		String surname = this.surname.getText().toString();
-    		String profilepic = this.profilepic_path;
-    		if (rowId == null) {
-    			long id = userDbAdapter.create(name, surname, profilepic);
-    			if (id > 0) {
-    				rowId = id;
-    			}
-    		} else {
-    			userDbAdapter.update(rowId, name, surname, profilepic);
-    		}
-    	}
+    	
+		String name = this.name.getText().toString();
+		String surname = this.surname.getText().toString();
+		String profilepic = this.profilepic_path;
+		if (rowId == null) {
+			long id = userDbAdapter.create(name, surname, profilepic);
+			if (id > 0) {
+				rowId = id;
+			}
+		} else {
+			userDbAdapter.update(rowId, name, surname, profilepic);
+		}
+    	
     	userDbAdapter.close();
     }
     

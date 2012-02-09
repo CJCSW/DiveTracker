@@ -22,7 +22,7 @@ public class CertificationConstants {
 	public static final String DATABASE_CREATE = "create table " + DB_TABLE + " "
 			+ "(" + FIELD_ROWID + " integer primary key autoincrement, "
 			+ FIELD_TYPE + " text not null, "
-			+ FIELD_DATE + " numeric not null, "
+			+ FIELD_DATE + " integer not null, "
 			+ FIELD_NUMBER + " text not null, "
 			+ FIELD_ORGANIZATION + " text not null, "
 			+ FIELD_INSTRUCTOR + " text null)";
