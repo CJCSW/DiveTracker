@@ -1,17 +1,14 @@
 package org.cjc.mydives.divetracker;
 
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_ENTERDATE;
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_ENTERTIME;
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_MAX_DEEP;
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_NAME;
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_LATITUDE;
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_LONGITUDE;
-
-import java.util.Date;
+import java.util.Calendar;
 
 import org.cjc.mydives.divetracker.db.DiveDbAdapter;
 import org.cjc.mydives.divetracker.db.FormatterHelper;
+import org.cjc.mydives.divetracker.entity.Dive;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
@@ -22,30 +19,35 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
-import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 
 public class DiveEditActivity extends MapActivity {
+	private static final int DATE_DIALOG_ID  = 0;
+	private static final int TIME_IN_DIALOG_ID  = 1;
+	private static final int TIME_OUT_DIALOG_ID = 2;
+	
+	TimePicker timePicker;
+	DatePicker datePicker;
+	
 	private DiveDbAdapter diveDbAdapter = new DiveDbAdapter(this);
-
-	long diveId = -1;
 
 	// CONTROLS
 	private EditText etName;
-	private EditText etDate;
-	private EditText etTime;
-	private EditText etMaxDeep;
+	private Button btnDate;
+	private Button btnTimeIn;
+	private Button btnTimeOut;
+	private EditText etDepth;
 	private Button btnSave;
 	private MapView mvMap;
-	private MapController mapController;
+	private MapHelper mapHelper;
 
-	Double longitude;
-	Double latitude;
+	private Dive dive = new Dive(); // The dive being edited;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -54,9 +56,9 @@ public class DiveEditActivity extends MapActivity {
 		setContentView(R.layout.dive_edit);
 		
 		if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("_ID")) {
-			diveId = getIntent().getExtras().getLong("_ID");
+			dive.set_id(getIntent().getExtras().getInt("_ID"));
 		} else {
-			diveId = -1;
+			dive.set_id(-1);
 		}
 
 		// Title
@@ -64,18 +66,19 @@ public class DiveEditActivity extends MapActivity {
 		
 		// Get the controls
 		etName = (EditText) findViewById(R.id.dive_edit_field_name);
-		etDate = (EditText) findViewById(R.id.dive_edit_field_date);
-		etTime = (EditText) findViewById(R.id.dive_edit_field_time);
-		etMaxDeep   = (EditText) findViewById(R.id.dive_edit_field_deep);
+		btnDate = (Button) findViewById(R.id.dive_edit_date);
+		btnTimeIn = (Button) findViewById(R.id.dive_edit_timeIn);
+		btnTimeOut = (Button) findViewById(R.id.dive_edit_timeOut);
+		etDepth   = (EditText) findViewById(R.id.dive_edit_field_deep);
 		btnSave = (Button) findViewById(R.id.btn_save);
 		mvMap = (MapView) findViewById(R.id.dive_map);
-		mapController = mvMap.getController();
+		mapHelper = new MapHelper(mvMap, getResources());
 		
 		mvMap.setBuiltInZoomControls(true);
 		mvMap.setClickable(true);
 		
 		// GPS if we are creating...
-		if (diveId == -1) {
+		if (dive.get_id() == -1) {
 			enableGPS();
 		}
 
@@ -87,11 +90,91 @@ public class DiveEditActivity extends MapActivity {
 	protected boolean isRouteDisplayed() {
 		return false;
 	}
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		Calendar date = Calendar.getInstance();
+		switch (id) {
+		case TIME_IN_DIALOG_ID:
+			date.setTimeInMillis(dive.getTimeIn());
+			return new TimePickerDialog(this, timeInSetListener, date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE), true);
+		case TIME_OUT_DIALOG_ID:
+			date.setTimeInMillis(dive.getTimeOut());
+			return new TimePickerDialog(this, timeOutSetListener, date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE), true);
+		case DATE_DIALOG_ID:
+			date.setTimeInMillis(dive.getTimeIn());
+			return new DatePickerDialog(
+					this, dateSetListener, date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH));
+		}
+		return null;
+	}
 
+	private TimePickerDialog.OnTimeSetListener timeInSetListener = new TimePickerDialog.OnTimeSetListener() {
+		@Override
+		public void onTimeSet(TimePicker view, int hourOfDay, int minuteOfHour) {
+			Calendar dateIn = Calendar.getInstance();
+			dateIn.setTimeInMillis(dive.getTimeIn());
+			dateIn.set(Calendar.HOUR_OF_DAY, hourOfDay);
+			dateIn.set(Calendar.MINUTE, minuteOfHour);
+			dive.setTimeIn(dateIn.getTimeInMillis());
+			btnTimeIn.setText(FormatterHelper.formatTime(dive.getTimeIn()));
+		}
+	};
+	
+	private TimePickerDialog.OnTimeSetListener timeOutSetListener = new TimePickerDialog.OnTimeSetListener() {
+		@Override
+		public void onTimeSet(TimePicker view, int hourOfDay, int minuteOfHour) {
+			Calendar dateOut = Calendar.getInstance();
+			dateOut.setTimeInMillis(dive.getTimeOut());
+			dateOut.set(Calendar.HOUR_OF_DAY, hourOfDay);
+			dateOut.set(Calendar.MINUTE, minuteOfHour);
+			dive.setTimeOut(dateOut.getTimeInMillis());
+			btnTimeOut.setText(FormatterHelper.formatTime(dive.getTimeOut()));
+		}
+	};
+
+	private DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+		@Override
+		public void onDateSet(DatePicker view, int year, int monthOfYear,
+				int dayOfMonth) {
+			Calendar dateIn = Calendar.getInstance();
+			dateIn.setTimeInMillis(dive.getTimeIn());
+			dateIn.set(year, monthOfYear, dayOfMonth);
+			dive.setTimeIn(dateIn.getTimeInMillis());
+			btnDate.setText(FormatterHelper.formatDate(dive.getTimeIn()));
+		}
+	};
+	
 	/**
 	 * Method used to subscribe to the listeners of the scenario.
 	 */
 	public void addListeners() {
+		// DATE Button
+		btnDate.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showDialog(DATE_DIALOG_ID);
+			}
+		});
+		
+		// TIME IN Button
+		btnTimeIn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showDialog(TIME_IN_DIALOG_ID);
+			}
+		});
+
+		// TIME OUT Button
+		btnTimeOut.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (dive.getTimeOut() == 0)
+					dive.setTimeOut(System.currentTimeMillis());
+				showDialog(TIME_OUT_DIALOG_ID);
+			}
+		});
+
 		// SAVE Button
 		btnSave.setOnClickListener(new OnClickListener() {
 			@Override
@@ -113,9 +196,9 @@ public class DiveEditActivity extends MapActivity {
     	LocationListener locationListener = new LocationListener() {
 			public void onLocationChanged(Location location) {
 				// Called when a new location is found by the network location provider.
-				longitude = location.getLongitude();
-				latitude = location.getLatitude();
-				setMapPosition(latitude, longitude);
+				dive.setLongitude(location.getLongitude());
+				dive.setLatitude(location.getLatitude());
+				mapHelper.setMapPosition(dive.getLatitude(), dive.getLongitude());
 			}
 			
 			public void onStatusChanged(String provider, int status, Bundle extras) {}
@@ -134,32 +217,33 @@ public class DiveEditActivity extends MapActivity {
 	 * Method used to populate the scenario fields with data.
 	 */
     private void populateFields() {
-    	if (diveId == -1) {
+    	if (dive.get_id() == -1) {
     		// Instance creation
-    		etDate.setText(FormatterHelper.packDate4Scr(new Date(System.currentTimeMillis())));
-    		etTime.setText(FormatterHelper.packTime4Scr(new Date(System.currentTimeMillis())));
+    		dive.setTimeIn(System.currentTimeMillis());
+    		btnDate.setText(FormatterHelper.formatDate(dive.getTimeIn()));
+    		btnTimeIn.setText(FormatterHelper.formatTime(dive.getTimeIn()));
     	}
 
 		// Get the data
 		diveDbAdapter.open();	// Open the DB
-		Cursor cursor = diveDbAdapter.fetchById(diveId);
+		Cursor cursor = diveDbAdapter.fetchById(dive.get_id());
 		if (cursor.moveToFirst()) {
-			String name = cursor.getString(cursor.getColumnIndex(FIELD_NAME));
-			if (name != null) {
-				etName.setText(name);
+			diveDbAdapter.loadInstance(cursor, dive);
+			if (dive.getName() != null) {
+				etName.setText(dive.getName());
 			}
-			etDate.setText(FormatterHelper.db2ScrDateFormat(cursor.getString(cursor.getColumnIndex(FIELD_ENTERDATE))));
-			etTime.setText(FormatterHelper.db2ScrTimeFormat(cursor.getString(cursor.getColumnIndex(FIELD_ENTERTIME))));
+			btnDate.setText(FormatterHelper.formatDate(dive.getTimeIn()));
+			btnTimeIn.setText(FormatterHelper.formatTime(dive.getTimeIn()));
 
-			int maxDeep = cursor.getInt(cursor.getColumnIndex(FIELD_MAX_DEEP));
+			if (dive.getTimeOut() > 0) {
+				btnTimeOut.setText(FormatterHelper.formatTime(dive.getTimeOut()));
+			}
 
-			etMaxDeep.setText(String.valueOf(maxDeep));
-			
+			etDepth.setText(String.valueOf(dive.getDepth()));
+
 			// GPS
-			latitude = cursor.getDouble(cursor.getColumnIndex(FIELD_LATITUDE));
-			longitude = cursor.getDouble(cursor.getColumnIndex(FIELD_LONGITUDE));
-			if (latitude != null && longitude != null) {
-				setMapPosition(latitude, longitude);
+			if (dive.getLatitude() != 0.0f && dive.getLongitude() != 0.0f) {
+				mapHelper.setMapPosition(dive.getLatitude(), dive.getLongitude());
 			}
 		}
 		
@@ -167,45 +251,23 @@ public class DiveEditActivity extends MapActivity {
 		cursor.close();
 		diveDbAdapter.close();
 	}
-	
-    /**
-     * Set the map position to the one indicated
-     * @param posLat Latitude coordinate
-     * @param posLong longitude coordinate
-     */
-    private void setMapPosition(Double posLat, Double posLong) {
-    	if (posLat == null || posLong == null) {
-    		return;
-    	}
-
-		GeoPoint p = new GeoPoint (
-				(int) (posLat * 1E6),
-				(int) (posLong * 1E6));
-
-			mapController.animateTo(p);
-			mapController.setZoom(13); // TODO: Encontrar el valor adecuado
-			mvMap.invalidate();    	
-    }
     
 	/**
 	 * This will store the data to the database.
 	 */
 	private void saveData() {
-		String name = etName.getText().toString();
-		Date date = FormatterHelper.parseScrDate(etDate.getText().toString());
-		Date time = FormatterHelper.parseScrTime(etTime.getText().toString());
-		int maxDeep = 0;
+		dive.setName(etName.getText().toString());
 
 		try {
-			maxDeep = Integer.valueOf(etMaxDeep.getText().toString());
+			dive.setDepth(Integer.valueOf(etDepth.getText().toString()).intValue());
 		} catch (NumberFormatException e) {
 		}
 				
 		diveDbAdapter.open();
-		if (diveId != -1) {
-			diveDbAdapter.update(diveId, name, date, time, maxDeep, null, null, null, null, null, latitude, longitude);
+		if (dive.get_id() != -1) {
+			diveDbAdapter.update(dive.get_id(), dive.getName(), dive.getTimeIn(), dive.getTimeOut(), dive.getDepth(), null, null, null, null, dive.getLatitude(), dive.getLongitude());
 		} else {
-			diveDbAdapter.insert(name, date, time, maxDeep, null, null, null, null, null, latitude, longitude);
+			diveDbAdapter.insert(dive.getName(), dive.getTimeIn(), dive.getTimeOut(), dive.getDepth(), null, null, null, null, dive.getLatitude(), dive.getLongitude());
 		}
 		diveDbAdapter.close();
 	}
