@@ -1,8 +1,7 @@
 package org.cjc.mydives.divetracker;
 
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_ENTERDATE;
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_ENTERTIME;
 import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_NAME;
+import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_TIME_IN;
 
 import org.cjc.mydives.divetracker.db.DiveDbAdapter;
 import org.cjc.mydives.divetracker.db.FormatterHelper;
@@ -43,6 +42,8 @@ public class DiveListActivity extends Activity {
 		// Title
 		((TextView) findViewById(R.id.header_title)).setText(R.string.dive_list_title);
 		addListeners();
+		
+		populateFields();
 	}
 	
 	public void addListeners() {
@@ -50,7 +51,7 @@ public class DiveListActivity extends Activity {
 		lvDives.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
 				Intent i = new Intent(getBaseContext(), DiveDetailsActivity.class);
-				i.putExtra("_ID", id);
+				i.putExtra("_ID", new Long(id).intValue());
 		    	startActivity(i);
 			}
 		});
@@ -78,20 +79,21 @@ public class DiveListActivity extends Activity {
 
 			// Populate the list
 			SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(this, R.layout.dive_row, cursor, 
-					new String[] {FIELD_ENTERDATE,FIELD_ENTERTIME, FIELD_NAME}, 
+					new String[] {FIELD_TIME_IN, FIELD_TIME_IN, FIELD_NAME}, 
 					new int[] {R.id.dive_row_date, R.id.dive_row_time, R.id.dive_row_name});
 			
 			// Columns Conversion
 			listAdapter.setViewBinder(new ViewBinder() {
 				public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-					String strValue = cursor.getString(columnIndex);
 					TextView tView = (TextView) view;
 
-					if (columnIndex == 2) {			// DATE
-						tView.setText(FormatterHelper.db2ScrDateFormat(strValue));
+					if (columnIndex == 2 && tView.getId() == R.id.dive_row_date) {	// DATE
+						long value = cursor.getLong(columnIndex);
+						tView.setText(FormatterHelper.formatDate(value));
 						return true;
-					} else if (columnIndex == 3) {	// TIME
-						tView.setText(FormatterHelper.db2ScrTimeFormat(strValue));
+					} else if (columnIndex == 2) {	// TIME
+						long value = cursor.getLong(columnIndex);
+						tView.setText(FormatterHelper.formatTime(value));
 						return true;
 					}
 					return false;
@@ -110,6 +112,5 @@ public class DiveListActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		populateFields();
 	}
 }

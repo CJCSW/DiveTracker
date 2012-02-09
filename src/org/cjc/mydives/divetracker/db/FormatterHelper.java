@@ -19,8 +19,6 @@ public abstract class FormatterHelper {
 	public static final String DATETIME_FORMATDB = "yyyyMMddHHmm";
 	
 	private static SimpleDateFormat df2db = new SimpleDateFormat(DATE_FORMAT_DB);
-	private static SimpleDateFormat tf2db = new SimpleDateFormat(TIME_FORMAT_DB);
-	private static SimpleDateFormat dtf2db = new SimpleDateFormat(DATETIME_FORMATDB);
 
 	private static DateFormat df2scr = SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM);	// Haciendo caso al locale	
 	private static DateFormat tf2scr = SimpleDateFormat.getTimeInstance(SimpleDateFormat.SHORT);	// Haciendo caso al locale
@@ -28,34 +26,36 @@ public abstract class FormatterHelper {
 	/* Hide the default constructor. */
 	private FormatterHelper() {}
 
+	@Deprecated
+	public static String packDate(Date date) {
+		return df2db.format(date);
+	}
+	
+	@Deprecated
+	public static Date unPackDate(String dateStr) {
+		try {
+			return df2db.parse(dateStr);
+		} catch (ParseException e) {
+			return null;
+		}
+	}
+
 	/**
 	 * Format a date string from the database into a string to be presented in the screen.
-	 * @param dateStr the string with the date in the DB format.
+	 * @param dateMillis the string with the date in the DB format.
 	 * @return a String with the date in the format to be presented in the screen.
 	 */
-	public static String db2ScrDateFormat(String dateStr) {
-		Date date = unPackDate(dateStr);
-		if (date == null) {
-			return "";
-		}
-
-		return df2scr.format(date);
+	public static String formatDate(long dateMillis) {
+		return df2scr.format(new Date(dateMillis));
 	}
 
 	/**
 	 * Format a time string from the database into a string to be presented in the screen.
-	 * @param timeStr the string with the time in the DB format.
+	 * @param time the string with the time in the DB format.
 	 * @return a String with the date in the format to be presented in the screen.
 	 */
-	public static String db2ScrTimeFormat(String timeStr) {
-/*		Date time = unPackTime(timeStr);
-		if (time == null) {
-			return "";
-		}
-
-		return tf2scr.format(time);
-		*/
-		return timeStr;
+	public static String formatTime(long timeMillis) {
+		return tf2scr.format(new Date(timeMillis));
 	}
 
 	/**
@@ -63,11 +63,11 @@ public abstract class FormatterHelper {
 	 * @param dateStr the date to be parsed from the date string object
 	 * @return a Date with the date in the format {@link DATE_FORMAT_SCR}
 	 */
-	public static Date parseScrDate(String dateStr) {
+	public static long parseDate(String dateStr) {
 		try {
-			return df2scr.parse(dateStr);
+			return df2scr.parse(dateStr).getTime();
 		} catch (ParseException e) {
-			return null;
+			return 0;
 		}
 	}
 	
@@ -76,110 +76,11 @@ public abstract class FormatterHelper {
 	 * @param timeStr the date to be parsed from the time string object
 	 * @return a Date with the time in the format {@link TIME_FORMAT_SCR}
 	 */
-	public static Date parseScrTime(String timeStr) {
+	public static long parseTime(String timeStr) {
 		try {
-			return tf2scr.parse(timeStr);
+			return tf2scr.parse(timeStr).getTime();
 		} catch (ParseException e) {
-			return null;
+			return 0;
 		}
-	}
-
-	/**
-	 * Converts the value of a date for the screen.
-	 * @param date the date to be formatted for the screen
-	 * @return a string with the date in the format {@link DATE_FORMAT_SCR}
-	 */
-	public static String packDate4Scr(Date date) {
-		if (date == null) {
-			return "";
-		}
-		return df2scr.format(date);
-	}
-	
-	/**
-	 * Converts the value of a time for the screen.
-	 * @param time the time to be formatted for the screen
-	 * @return a string with the time in the format {@link TIME_FORMAT_SCR}
-	 */
-	public static String packTime4Scr(Date time) {
-		if (time == null) {
-			return "";
-		}
-		return tf2scr.format(time);
-	}
-
-	/**
-	 * Packs the value of a date into a String.
-	 * @param date the date to be packed
-	 * @return a string with the date in the format {@link DATE_FORMAT}
-	 */
-	public static String packDate(Date date) {
-		if (date == null) {
-			return null;
-		}
-		return df2db.format(date);
-	}
-	
-	/**
-	 * Returns a Date object for the passes date string.
-	 * @param dateStr a string with a date in the format {@link DATE_FORMAT}
-	 * @return The date object if it can be parsed or null.
-	 */
-	public static Date unPackDate(String dateStr) {
-		try {
-			return df2db.parse(dateStr);
-		} catch (ParseException e) {
-			return null;
-		}
-	}
-	
-	/**
-	 * Packs the value of a time into a String.
-	 * @param time the time to be packed from the date object
-	 * @return a string with the time in the format {@link TIME_FORMAT}
-	 */
-	public static String packTime(Date time) {
-		if (time == null) {
-			return null;
-		}
-		return tf2db.format(time);
-	}
-	
-	/**
-	 * Returns a Date object for the passes time string.
-	 * @param timeStr a string with a time in the format {@link TIME_FORMAT}
-	 * @return The date object with the time if it can be parsed or null.
-	 */
-	public static Date unPackTime(String timeStr) {
-		try {
-			return tf2db.parse(timeStr);
-		} catch (ParseException e) {
-			return null;
-		}
-	}
-	
-	/**
-	 * Packs the value of a dateTme into a String.
-	 * @param dateTime the DateTime to be packed
-	 * @return a string with the date in the format {@link DATETIME_FORMAT}
-	 */
-	public static String packDateTime(Date dateTime) {
-		if (dateTime == null) {
-			return null;
-		}
-		return dtf2db.format(dateTime);
-	}
-	
-	/**
-	 * Returns a Date object with the datetime for the passes datetime string.
-	 * @param dateTimeStr a string with a dateTime in the format {@link DATETIME_FORMAT}
-	 * @return The date object if it can be parsed or null.
-	 */
-	public static Date unPackDateTime(String dateTimeStr) {
-		try {
-			return df2db.parse(dateTimeStr);
-		} catch (ParseException e) {
-			return null;
-		}
-	}
+	}	
 }

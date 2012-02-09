@@ -44,14 +44,20 @@
 			        android:id="@+id/dive_edit_date"
 			        android:layout_width="fill_parent"
 			        android:layout_height="wrap_content"
-			        android:layout_weight="0.4"
+			        android:layout_weight="0.3"
 			        />
 			
 			    <Button
-			        android:id="@+id/dive_edit_time"
+			        android:id="@+id/dive_edit_timeIn"
 			        android:layout_width="fill_parent"
 			        android:layout_height="wrap_content"
-			        android:layout_weight="0.6"
+			        android:layout_weight="0.35"
+			        />
+			    <Button
+			        android:id="@+id/dive_edit_timeOut"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="0.35"
 			        />
 			</LinearLayout>
 		  	<!-- Max Deep -->
