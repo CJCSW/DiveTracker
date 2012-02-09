@@ -12,10 +12,12 @@
         
     <!-- CERTIFICATION -->
     <!-- Certification List -->
+    <string name="certification_list_title">Your certifications</string>
     <string name="certification_list_button_add">Add</string>
     <string name="certification_list_menu_delete">Delete</string>
     <string name="no_certifications">Tap \'Add\' to add certifications</string>
     <!-- Certification Details -->
+    <string name="certification_details_title">Certification Details</string>
     <string name="certification_details_label_type">Type</string>
     <string name="certification_details_hint_type">OWD, Rescue Diver &#8230;</string>
     <string name="certification_details_label_number">Number</string>
@@ -28,10 +30,10 @@
     <string name="certification_details_hint_instructor">Name of certification instructor</string>
     <string name="certification_details_button_confirm">Confirm</string>
     <string name="certification_details_button_cancel">Cancel</string>
-    <!-- Certification Details -->
     
     <!-- USER -->
     <!-- User Details -->
+    <string name="user_details_title">Your Profile</string>
     <string name="user_details_label_name">Name</string>
     <string name="user_details_defval_name">John</string>
     <string name="user_details_label_surname">Surname</string>
@@ -41,6 +43,7 @@
 	<string name="user_details_button_equipment">Equipment</string>
 	<string name="user_details_button_certifications">Certifications</string>
     <!-- User Edit -->
+    <string name="user_edit_title">Edit Profile</string>
     <string name="user_edit_label_name">Name</string>
     <string name="user_edit_hint_name">Enter your name</string>
     <string name="user_edit_label_surname">Surname</string>
@@ -50,6 +53,10 @@
     <string name="user_edit_button_profilepic_select">Select</string>
     <string name="user_edit_button_confirm">Confirm</string>
     <string name="user_edit_button_cancel">Cancel</string>
+    
+    <!-- EQUIPMENT -->
+    <string name="user_equipment_list_title">Your equipment list</string>
+    <string name="equipment_list_empty">There is no equipment available</string>
     
     <!-- DIVE -->
     <string name="dive_name">Name</string>
@@ -76,8 +83,14 @@
     <string name="dive_edit_hint_date">Enter date</string>
     <string name="dive_edit_hint_time">Enter time</string>
     
-    <!-- <string name="maps_key">0pVsBO32kcBr2Ci4YoEIhaOZwMuadvWqrwbr_Vw</string> -->
+
+    <!-- falutx
+    <string name="maps_key">0pVsBO32kcBr2Ci4YoEIhaOZwMuadvWqrwbr_Vw</string>
     <string name="maps_key">0pVsBO32kcBogGW1PgBBxQ2rOICRWAm_AVy-wBQ</string>
+     -->
+    <!-- jc -->
+    <string name="maps_key">06iC7cbybRkBv8mw9OFixN44mjcI8ZaFS-snEYg</string>
+
     <!-- General -->
     <string name="btn_save">Save</string>
 

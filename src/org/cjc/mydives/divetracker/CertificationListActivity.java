@@ -13,7 +13,9 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -34,15 +36,34 @@ public class CertificationListActivity extends ListActivity {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			
+			requestWindowFeature(Window.FEATURE_NO_TITLE);
 			setContentView(R.layout.certification_list);
 			this.getListView().setDividerHeight(2);
 			
+			// Set header text
+			((TextView) findViewById(R.id.header_title)).setText(R.string.certification_list_title);
+			
+			// Fill data
 			dbAdapter = new CertificationDbAdapter(this);
 			dbAdapter.open();
 			
 			fillData();
+			
+			// Register context menu
 			registerForContextMenu(getListView());
+			
+			// Add listeners
+			addListeners();
+		}
+		
+		private void addListeners() {
+			((ImageView)findViewById(R.id.header_button_add)).setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+			    	startActivityForResult(new Intent(v.getContext(), CertificationDetailsActivity.class), ACTIVITY_CREATE);
+				}
+			});
 		}
 		
 	    // Life cycle method callback implementation. Called when the activity is about to be destroyed
@@ -61,14 +82,7 @@ public class CertificationListActivity extends ListActivity {
 	    	menu.add(0, DELETE_ID, 0, R.string.certification_list_menu_delete);
 	    }
 	    
-	    // Creation of items via clicking the Add button
-	    public void onClick_button_add(View view){
-	    	Intent createCertificationIntent = new Intent(this, CertificationDetailsActivity.class);
-	    	startActivityForResult(createCertificationIntent, ACTIVITY_CREATE);
-	    }
-	    
-	    // Edition of items via clicking on them (on the ListView)
-	    
+	    // Edition of items via clicking on them (on the ListView)	    
 	    @Override
 	    public void onListItemClick(ListView l, View v, int position, long id) {
 	    	super.onListItemClick(l, v, position, id);
@@ -115,9 +129,11 @@ public class CertificationListActivity extends ListActivity {
 				
 				@Override
 				public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-					if (columnIndex == 2) {
+					if (columnIndex == cursor.getColumnIndex(CertificationConstants.FIELD_DATE)) {
 						TextView certificationDateTextView = (TextView) view;
-						String formattedDate = FormatterHelper.db2ScrDateFormat(cursor.getString(columnIndex));
+						// TODO MODIFICAR PARA USAR MILISEGUNDOS	
+						//String formattedDate = FormatterHelper.db2ScrDateFormat(cursor.getString(cursor.getColumnIndex(CertificationConstants.FIELD_DATE)));
+						String formattedDate = "TODO!!";
 						certificationDateTextView.setText(formattedDate);
 						return true;
 					}

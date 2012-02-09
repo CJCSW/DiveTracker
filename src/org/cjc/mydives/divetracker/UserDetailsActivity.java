@@ -5,6 +5,7 @@ import static org.cjc.mydives.divetracker.db.UserConstants.FIELD_PROFILEPIC;
 import static org.cjc.mydives.divetracker.db.UserConstants.FIELD_ROWID;
 import static org.cjc.mydives.divetracker.db.UserConstants.FIELD_SURNAME;
 
+import org.cjc.mydives.divetracker.db.EquipmentConstants;
 import org.cjc.mydives.divetracker.db.UserDbAdapter;
 
 import android.app.Activity;
@@ -14,6 +15,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,31 +37,67 @@ public class UserDetailsActivity extends Activity {
 	private ImageView profilepic;
 	private String profilepic_path;
 	
+	private ImageView ivEdit;
+	private ImageView ivAdd;
+	private Button btEquipment;
+	private Button btCertifications;
+	
 	private static int ACTION_EDIT = 10;
 	
 	/** Called when the activity is first created */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.user_details);
 		
         name = (TextView)findViewById(R.id.user_details_field_name);
         surname = (TextView)findViewById(R.id.user_details_field_surname);
         profilepic = (ImageView)findViewById(R.id.user_details_field_profilepic);
         
+        ivEdit = (ImageView) this.findViewById(R.id.header_button_edit);
+		ivAdd  = (ImageView) this.findViewById(R.id.header_button_add);
+		btEquipment = (Button)findViewById(R.id.user_details_button_equipment);
+		btCertifications = (Button)findViewById(R.id.user_details_button_certifications);
+        
         userDbAdapter = new UserDbAdapter(this);
 
+        // Set the rowId (in case the intent is for the edition of an existing User profile)
         rowId = null;
         Bundle extras = getIntent().getExtras();
 		
-		// Set the rowId (in case the intent is for the edition of an existing todo item)
 		rowId = (savedInstanceState == null) ? null : (Long) savedInstanceState.getSerializable(FIELD_ROWID);
 		if (extras != null) {
 			rowId = extras.getLong(FIELD_ROWID); 
 		}
 		
+		// Set header text
+		((TextView) findViewById(R.id.header_title)).setText(R.string.user_details_title);
+		
+		// Add listeners
+		addListeners();
+		
+		// Populate fields
+		populateFields();
+	}
+	
+	private void addListeners(){
+		// Add button
+		ivAdd.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent userEditIntent = new Intent(v.getContext(), UserEditActivity.class);
+				if (rowId != null) {
+					userEditIntent.putExtra(FIELD_ROWID, rowId);
+				}
+				startActivityForResult(userEditIntent, ACTION_EDIT);
+			}
+		});
+		
+		
 		// Edit button
-		((Button)findViewById(R.id.user_details_button_edit)).setOnClickListener(new View.OnClickListener() {
+		ivEdit.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -72,25 +110,24 @@ public class UserDetailsActivity extends Activity {
 		});
 		
 		// Equipment button
-		((Button)findViewById(R.id.user_details_button_equipment)).setOnClickListener(new View.OnClickListener() {
+		btEquipment.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(v.getContext(), EquipmentListActivity.class));
+				Intent intent = new Intent(v.getContext(), EquipmentListActivity.class);
+				intent.putExtra(EquipmentConstants.FIELD_USERID, rowId);
+				startActivity(intent);
 			}
 		});
 		
 		// Certifications button
-		((Button)findViewById(R.id.user_details_button_certifications)).setOnClickListener(new View.OnClickListener() {
+		btCertifications.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				startActivity(new Intent(v.getContext(), CertificationListActivity.class));
 			}
 		});
-		
-		// Populate fields
-		populateFields();
 	}
 	
 	@Override
@@ -128,6 +165,15 @@ public class UserDetailsActivity extends Activity {
     				profilepic.setImageBitmap(bitmap);
     			}
     		}
+     		ivAdd.setVisibility(View.GONE);
+     		ivEdit.setVisibility(View.VISIBLE);
+     		btEquipment.setEnabled(true);
+     		btCertifications.setEnabled(true);
+    	} else {
+     		ivAdd.setVisibility(View.VISIBLE);
+     		ivEdit.setVisibility(View.GONE);
+     		btEquipment.setEnabled(false);
+     		btCertifications.setEnabled(false);
     	}
     	userCursor.close();
     	userDbAdapter.close();

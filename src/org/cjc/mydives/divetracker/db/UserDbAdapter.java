@@ -13,12 +13,15 @@ import android.database.Cursor;
  */
 public class UserDbAdapter extends DbAdapter {
 
+	private Context context;
+	
 	/**
 	 * Constructor
 	 * @param context Context
 	 */
 	public UserDbAdapter (Context context) {
 		super(context);
+		this.context = context;
 		init(DB_TABLE, fields());
 	}
 	
@@ -31,7 +34,25 @@ public class UserDbAdapter extends DbAdapter {
 	 */
 	public long create(String name, String surname, String profilepic) {
 		ContentValues userContentValues = createContentValues(name, surname, profilepic);
-		return insert(userContentValues);
+		long user_id = insert(userContentValues);
+		
+		// Associate default equipment list to user profile
+		EquipmentDbAdapter equipmentDbAdapter = new EquipmentDbAdapter(context);
+		equipmentDbAdapter.open();
+		equipmentDbAdapter.create(user_id, null, "Mask", 1);
+		equipmentDbAdapter.create(user_id, null, "BCD", 1);
+		equipmentDbAdapter.create(user_id, null, "Regulator", 1);
+		equipmentDbAdapter.create(user_id, null, "Fins", 1);
+		equipmentDbAdapter.create(user_id, null, "Wet suit", 1);
+		equipmentDbAdapter.create(user_id, null, "Dry suit", 0);
+		equipmentDbAdapter.create(user_id, null, "Compass", 0);
+		equipmentDbAdapter.create(user_id, null, "Dive computer", 0);
+		equipmentDbAdapter.create(user_id, null, "Torch", 0);
+		equipmentDbAdapter.create(user_id, null, "Camera", 0);
+		equipmentDbAdapter.create(user_id, null, "Buoy", 1);
+		equipmentDbAdapter.close();
+		
+		return user_id;
 	}
 	
 	/**
