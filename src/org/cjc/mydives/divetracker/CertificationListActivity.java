@@ -130,11 +130,8 @@ public class CertificationListActivity extends ListActivity {
 				@Override
 				public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
 					if (columnIndex == cursor.getColumnIndex(CertificationConstants.FIELD_DATE)) {
-						TextView certificationDateTextView = (TextView) view;
-						// TODO MODIFICAR PARA USAR MILISEGUNDOS	
-						//String formattedDate = FormatterHelper.db2ScrDateFormat(cursor.getString(cursor.getColumnIndex(CertificationConstants.FIELD_DATE)));
-						String formattedDate = "TODO!!";
-						certificationDateTextView.setText(formattedDate);
+						String formattedDate = FormatterHelper.formatDate(cursor.getLong(cursor.getColumnIndex(CertificationConstants.FIELD_DATE)));
+						((TextView) view).setText(formattedDate);
 						return true;
 					}
 					return false;

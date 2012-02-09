@@ -85,20 +85,14 @@
         android:id="@+id/certification_details_buttons"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+       	android:paddingLeft="10dp"
+	    android:paddingRight="10dp"
         android:orientation="horizontal">
         <Button 
             android:id="@+id/certification_details_button_confirm"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:text="@string/certification_details_button_confirm"
-        	android:textSize="20dp"/>
-        <Button 
-            android:id="@+id/certification_details_button_cancel"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/certification_details_button_cancel"
         	android:textSize="20dp"/>
     </LinearLayout>
 </LinearLayout>
