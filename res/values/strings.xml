@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, DiveTrackerActivity!</string>
+    <string name="hello">Welcome to DiveTracker!</string>
     <string name="app_name">DiveTracker</string>
 
 	<string name="header_title">Dive Tracker</string>
 
-    <!-- MAIN MENU -->
-    <string name="main_menu_button_user">User</string>
-    <string name="main_menu_button_dives">Dives</string>
+    <!-- MAIN MENU/TABHOST -->
+    <string name="main_menu_tab_tag_home">home</string>
+    <string name="main_menu_tab_tag_dives">dives</string>
+    <string name="main_menu_tab_tag_user">user</string>
+    <string name="main_menu_tab_home">Home</string>
+    <string name="main_menu_tab_dives">Dives</string>
+    <string name="main_menu_tab_user">User</string>
         
     <!-- CERTIFICATION -->
     <!-- Certification List -->
