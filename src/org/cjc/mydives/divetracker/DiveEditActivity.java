@@ -21,6 +21,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -31,6 +33,9 @@ public class DiveEditActivity extends MapActivity {
 	private static final int DATE_DIALOG_ID  = 0;
 	private static final int TIME_IN_DIALOG_ID  = 1;
 	private static final int TIME_OUT_DIALOG_ID = 2;
+
+	private static final double MAX_DEPTH = 64.0f;
+	private static final double MAX_VISIBILITY = 100.0f;
 	
 	TimePicker timePicker;
 	DatePicker datePicker;
@@ -39,13 +44,18 @@ public class DiveEditActivity extends MapActivity {
 
 	// CONTROLS
 	private EditText etName;
+	private EditText etAirTemp;
+	private EditText etWaterTemp;
 	private Button btnDate;
 	private Button btnTimeIn;
 	private Button btnTimeOut;
-	private EditText etDepth;
 	private Button btnSave;
 	private MapView mvMap;
 	private MapHelper mapHelper;
+	private SeekBar sbDepth;		// Depth bar
+	private TextView tvDepth;		// Depth text
+	private SeekBar sbVisibility;	// Visibility bar
+	private TextView tvVisibility;	// Visibility text
 
 	private Dive dive = new Dive(); // The dive being edited;
 
@@ -66,13 +76,18 @@ public class DiveEditActivity extends MapActivity {
 		
 		// Get the controls
 		etName = (EditText) findViewById(R.id.dive_edit_field_name);
+		etAirTemp = (EditText) findViewById(R.id.dive_edit_airTemp);
+		etWaterTemp = (EditText) findViewById(R.id.dive_edit_waterTemp);
 		btnDate = (Button) findViewById(R.id.dive_edit_date);
 		btnTimeIn = (Button) findViewById(R.id.dive_edit_timeIn);
 		btnTimeOut = (Button) findViewById(R.id.dive_edit_timeOut);
-		etDepth   = (EditText) findViewById(R.id.dive_edit_field_deep);
 		btnSave = (Button) findViewById(R.id.btn_save);
 		mvMap = (MapView) findViewById(R.id.dive_map);
 		mapHelper = new MapHelper(mvMap, getResources());
+		sbDepth = (SeekBar) findViewById(R.id.dive_seekBar_depth);
+		tvDepth = (TextView) findViewById(R.id.dive_edit_field_depth);
+		sbVisibility = (SeekBar) findViewById(R.id.dive_seekBar_visibility);
+		tvVisibility = (TextView) findViewById(R.id.dive_edit_field_visibility);
 		
 		mvMap.setBuiltInZoomControls(true);
 		mvMap.setClickable(true);
@@ -174,6 +189,48 @@ public class DiveEditActivity extends MapActivity {
 				showDialog(TIME_OUT_DIALOG_ID);
 			}
 		});
+		
+		// DEPTH SeekBar
+		sbDepth.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+			}
+			
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+			}
+			
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				if (fromUser) {
+					setDepth(progress);
+				}
+				
+			}
+		});
+
+		// VISIBILITY SeekBar
+		sbVisibility.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+			}
+			
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+			}
+			
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				if (fromUser) {
+					setVisibility(progress);
+				}
+				
+			}
+		});
 
 		// SAVE Button
 		btnSave.setOnClickListener(new OnClickListener() {
@@ -239,12 +296,21 @@ public class DiveEditActivity extends MapActivity {
 				btnTimeOut.setText(FormatterHelper.formatTime(dive.getTimeOut()));
 			}
 
-			etDepth.setText(String.valueOf(dive.getDepth()));
+			tvDepth.setText(String.valueOf(dive.getDepth()) + "m");
+			int progress = new Double(dive.getDepth() * 100 / MAX_DEPTH).intValue();
+			sbDepth.setProgress(progress);
+			
+			tvVisibility.setText(String.valueOf(dive.getVisibility())+ "m");
+			sbVisibility.setProgress(new Double(dive.getVisibility()).intValue());
 
 			// GPS
 			if (dive.getLatitude() != 0.0f && dive.getLongitude() != 0.0f) {
 				mapHelper.setMapPosition(dive.getLatitude(), dive.getLongitude());
 			}
+			
+			// Temperature
+			etWaterTemp.setText(String.valueOf(dive.getTempWater()));
+			etAirTemp.setText(String.valueOf(dive.getTempAir()));
 		}
 		
 		// Close the DB
@@ -252,22 +318,31 @@ public class DiveEditActivity extends MapActivity {
 		diveDbAdapter.close();
 	}
     
-	/**
+    private void setDepth(int relDepth) {
+    	double depth = relDepth * MAX_DEPTH / 100;
+    	tvDepth.setText(String.valueOf(depth) + "m");
+    	dive.setDepth(depth);
+    }
+    
+    private void setVisibility(int relVisibility) {
+    	double visibility = relVisibility * MAX_VISIBILITY / 100;
+    	tvVisibility.setText(String.valueOf(visibility) + "m");
+    	dive.setVisibility(visibility);
+    }
+
+    /**
 	 * This will store the data to the database.
 	 */
 	private void saveData() {
 		dive.setName(etName.getText().toString());
+		dive.setTempAir(Integer.valueOf(etAirTemp.getText().toString()));
+		dive.setTempWater(Integer.valueOf(etWaterTemp.getText().toString()));
 
-		try {
-			dive.setDepth(Integer.valueOf(etDepth.getText().toString()).intValue());
-		} catch (NumberFormatException e) {
-		}
-				
 		diveDbAdapter.open();
 		if (dive.get_id() != -1) {
-			diveDbAdapter.update(dive.get_id(), dive.getName(), dive.getTimeIn(), dive.getTimeOut(), dive.getDepth(), null, null, null, null, dive.getLatitude(), dive.getLongitude());
+			diveDbAdapter.update(dive);
 		} else {
-			diveDbAdapter.insert(dive.getName(), dive.getTimeIn(), dive.getTimeOut(), dive.getDepth(), null, null, null, null, dive.getLatitude(), dive.getLongitude());
+			diveDbAdapter.insert(dive);
 		}
 		diveDbAdapter.close();
 	}

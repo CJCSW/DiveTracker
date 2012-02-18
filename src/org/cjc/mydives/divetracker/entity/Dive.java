@@ -13,6 +13,7 @@ public class Dive {
 	private int rating;
 	private double longitude;
 	private double latitude;
+	private double visibility;
 	
 	/**
 	 * Default constructor.
@@ -108,6 +109,14 @@ public class Dive {
 		this.latitude = latitude;
 	}
 	
+	public double getVisibility() {
+		return visibility;
+	}
+
+	public void setVisibility(double visibility) {
+		this.visibility = visibility;
+	}
+
 	// COMPUTED FIELDS
 	public long getDuration() {
 		if (timeOut == 0 || timeIn > timeOut) {

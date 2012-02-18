@@ -5,9 +5,10 @@ public class DiveConstants {
 	/* Fields */
 	public static final String FIELD_ROWID = "_id";
 	public static final String FIELD_NAME  = "name";
-	public static final String FIELD_TIME_IN   = "timeIn";
-	public static final String FIELD_TIME_OUT  = "timeOut";
-	public static final String FIELD_DEPTH  = "depth";			// In meters
+	public static final String FIELD_TIME_IN    = "timeIn";
+	public static final String FIELD_TIME_OUT   = "timeOut";
+	public static final String FIELD_DEPTH      = "depth";		// In meters
+	public static final String FIELD_VISIBILITY = "visibility"; // In meters
 	public static final String FIELD_TEMP_AIR   = "temp_air";	// In C
 	public static final String FIELD_TEMP_WATER = "temp_water";	// In C
 	public static final String FIELD_WATER_TYPE = "water_type";	// [freshwater, saltwater]
@@ -19,7 +20,8 @@ public class DiveConstants {
 	public static final String[] FIELDS = new String[] {
 		FIELD_ROWID, FIELD_NAME, FIELD_TIME_IN, FIELD_TIME_OUT,
 		FIELD_DEPTH, FIELD_TEMP_AIR, FIELD_TEMP_WATER,
-		FIELD_WATER_TYPE, FIELD_RATING, FIELD_LATITUDE, FIELD_LONGITUDE
+		FIELD_WATER_TYPE, FIELD_RATING, FIELD_LATITUDE, FIELD_LONGITUDE,
+		FIELD_VISIBILITY
 	};
 	
 	/* Queries */
@@ -35,6 +37,7 @@ public class DiveConstants {
 			+ FIELD_WATER_TYPE + " text null,"
 			+ FIELD_RATING + " integer null,"
 			+ FIELD_LATITUDE + " real null,"
-			+ FIELD_LONGITUDE + " real null"
+			+ FIELD_LONGITUDE + " real null,"
+			+ FIELD_VISIBILITY + " integer null"
 			+ ");";
 }

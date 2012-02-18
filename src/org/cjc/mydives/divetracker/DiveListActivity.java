@@ -42,8 +42,6 @@ public class DiveListActivity extends Activity {
 		// Title
 		((TextView) findViewById(R.id.header_title)).setText(R.string.dive_list_title);
 		addListeners();
-		
-		populateFields();
 	}
 	
 	public void addListeners() {
@@ -112,5 +110,6 @@ public class DiveListActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		populateFields();
 	}
 }
