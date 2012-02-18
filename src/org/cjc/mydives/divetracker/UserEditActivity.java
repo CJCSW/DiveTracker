@@ -8,6 +8,7 @@ import static org.cjc.mydives.divetracker.db.UserConstants.FIELD_SURNAME;
 import java.io.File;
 
 import org.cjc.mydives.divetracker.db.UserDbAdapter;
+import org.cjc.mydives.divetracker.entity.User;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -40,6 +41,8 @@ public class UserEditActivity extends Activity {
 	private static final int PICK_FROM_FILE = 2;
 	
 	private Long rowId;
+	private User user = new User();
+	
 	private EditText name;
 	private EditText surname;
 	private ImageView profilepic;
@@ -209,6 +212,7 @@ public class UserEditActivity extends Activity {
     	Cursor userCursor = (rowId == null) ? userDbAdapter.fetchAll() : userDbAdapter.fetchById(rowId);
     	
     	if (userCursor.moveToFirst()) {
+    		user.set_id(new Long(rowId).intValue());
     		name.setText(userCursor.getString(userCursor.getColumnIndexOrThrow(FIELD_NAME)));
     		surname.setText(userCursor.getString(userCursor.getColumnIndexOrThrow(FIELD_SURNAME)));
     		profilepic_path = userCursor.getString(userCursor.getColumnIndexOrThrow(FIELD_PROFILEPIC));
@@ -223,20 +227,16 @@ public class UserEditActivity extends Activity {
     }
     
     private void saveState() {
-    	userDbAdapter.open();
-    	
-		String name = this.name.getText().toString();
-		String surname = this.surname.getText().toString();
-		String profilepic = this.profilepic_path;
-		if (rowId == null) {
-			long id = userDbAdapter.create(name, surname, profilepic);
-			if (id > 0) {
-				rowId = id;
-			}
+    	user.setName(name.getText().toString());
+		user.setSurname(surname.getText().toString());
+		user.setProfilepic(profilepic_path);
+		
+		userDbAdapter.open();
+		if (user.get_id() > 0) {
+			userDbAdapter.update(user);
 		} else {
-			userDbAdapter.update(rowId, name, surname, profilepic);
+			rowId = userDbAdapter.create(user);
 		}
-    	
     	userDbAdapter.close();
     }
     
