@@ -10,6 +10,7 @@ import static org.cjc.mydives.divetracker.db.CertificationConstants.FIELD_TYPE;
 import java.util.Calendar;
 
 import org.cjc.mydives.divetracker.db.CertificationDbAdapter;
+import org.cjc.mydives.divetracker.entity.Certification;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -32,6 +33,8 @@ public class CertificationDetailsActivity extends Activity {
 	private CertificationDbAdapter certificationDbAdapter;
 	
 	private Long rowId;
+	private Certification certification = new Certification();
+	
 	private EditText type;
 	private EditText number;
 	private EditText organization;
@@ -61,6 +64,7 @@ public class CertificationDetailsActivity extends Activity {
 		if (extras != null) {
 			rowId = extras.getLong(FIELD_ROWID); 
 		}
+
 		
 		// Set header text
 		((TextView) findViewById(R.id.header_title)).setText(R.string.certification_details_title);
@@ -99,7 +103,6 @@ public class CertificationDetailsActivity extends Activity {
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 		rowId = (Long) savedInstanceState.getSerializable(FIELD_ROWID);
-		populateFields();
 	}
 	
 	@Override
@@ -114,8 +117,10 @@ public class CertificationDetailsActivity extends Activity {
 	}
 	
 	private void populateFields() {
-		certificationDbAdapter.open();
 		if (rowId != null) {
+			certification.set_id(rowId);
+			certificationDbAdapter.open();
+		
 			Cursor certificationCursor = certificationDbAdapter.fetchById(rowId);
 			startManagingCursor(certificationCursor);
 			
@@ -127,30 +132,26 @@ public class CertificationDetailsActivity extends Activity {
 			certificationDate.setTimeInMillis(certificationDateMillis);
 			date.updateDate(certificationDate.get(Calendar.YEAR), certificationDate.get(Calendar.MONTH), certificationDate.get(Calendar.DAY_OF_MONTH));
 			instructor.setText(certificationCursor.getString(certificationCursor.getColumnIndexOrThrow(FIELD_INSTRUCTOR)));
+		
+			certificationDbAdapter.close();
 		}
-		certificationDbAdapter.close();
 	}
 	
     public void saveState() {
-    	certificationDbAdapter.open();
-    	
-		String type = this.type.getText().toString();
-		String number = this.number.getText().toString();
-		String organization = this.organization.getText().toString();
+    	certification.setType(type.getText().toString());
+    	certification.setNumber(number.getText().toString());
+    	certification.setOrganization(organization.getText().toString());
 		Calendar certificationDate = Calendar.getInstance();
 		certificationDate.set(this.date.getYear(), this.date.getMonth(), this.date.getDayOfMonth());
-		long date = certificationDate.getTimeInMillis();
-		
-		String instructor = this.instructor.getText().toString();
-		if (rowId == null) {
-			long id = certificationDbAdapter.create(type, date, number, organization, instructor);
-			if (id > 0) {
-				rowId = id;
-			}
-		} else {
-			certificationDbAdapter.update(rowId, type, date, number, organization, instructor);
-		}
+    	certification.setDate(certificationDate.getTimeInMillis());
+    	certification.setInstructor(instructor.getText().toString());
     	
+    	certificationDbAdapter.open();
+    	if (certification.get_id() > 0) {
+    		certificationDbAdapter.update(certification);
+    	} else {
+    		certificationDbAdapter.create(certification);
+    	}
     	certificationDbAdapter.close();
     }
 

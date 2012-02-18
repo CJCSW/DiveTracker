@@ -2,6 +2,10 @@ package org.cjc.mydives.divetracker.db;
 
 import static org.cjc.mydives.divetracker.db.UserConstants.DB_TABLE;
 import static org.cjc.mydives.divetracker.db.UserConstants.fields;
+
+import org.cjc.mydives.divetracker.entity.Equipment;
+import org.cjc.mydives.divetracker.entity.User;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -32,24 +36,23 @@ public class UserDbAdapter extends DbAdapter {
 	 * @param profilePic User profile picture
 	 * @return User id if successfully created, -1 otherwise
 	 */
-	public long create(String name, String surname, String profilepic) {
-		ContentValues userContentValues = createContentValues(name, surname, profilepic);
-		long user_id = insert(userContentValues);
+	public long create(User user) {
+		long user_id = insert(createContentValues(user));
 		
 		// Associate default equipment list to user profile
 		EquipmentDbAdapter equipmentDbAdapter = new EquipmentDbAdapter(context);
 		equipmentDbAdapter.open();
-		equipmentDbAdapter.create(user_id, null, "Mask", 1);
-		equipmentDbAdapter.create(user_id, null, "BCD", 1);
-		equipmentDbAdapter.create(user_id, null, "Regulator", 1);
-		equipmentDbAdapter.create(user_id, null, "Fins", 1);
-		equipmentDbAdapter.create(user_id, null, "Wet suit", 1);
-		equipmentDbAdapter.create(user_id, null, "Dry suit", 0);
-		equipmentDbAdapter.create(user_id, null, "Compass", 0);
-		equipmentDbAdapter.create(user_id, null, "Dive computer", 0);
-		equipmentDbAdapter.create(user_id, null, "Torch", 0);
-		equipmentDbAdapter.create(user_id, null, "Camera", 0);
-		equipmentDbAdapter.create(user_id, null, "Buoy", 1);
+		equipmentDbAdapter.create(new Equipment(user_id, null, "Mask", true));
+		equipmentDbAdapter.create(new Equipment(user_id, null, "BCD", true));
+		equipmentDbAdapter.create(new Equipment(user_id, null, "Regulator", true));
+		equipmentDbAdapter.create(new Equipment(user_id, null, "Fins", true));
+		equipmentDbAdapter.create(new Equipment(user_id, null, "Wet suit", false));
+		equipmentDbAdapter.create(new Equipment(user_id, null, "Dry suit", false));
+		equipmentDbAdapter.create(new Equipment(user_id, null, "Compass", false));
+		equipmentDbAdapter.create(new Equipment(user_id, null, "Dive computer", false));
+		equipmentDbAdapter.create(new Equipment(user_id, null, "Torch", false));
+		equipmentDbAdapter.create(new Equipment(user_id, null, "Camera", false));
+		equipmentDbAdapter.create(new Equipment(user_id, null, "Buoy", true));
 		equipmentDbAdapter.close();
 		
 		return user_id;
@@ -63,9 +66,8 @@ public class UserDbAdapter extends DbAdapter {
 	 * @param profilePic User profile picture
 	 * @return True if successfully updated, false otherwise
 	 */
-	public boolean update(long rowId, String name, String surname, String profilepic) {
-		ContentValues userContentValues = createContentValues(name, surname, profilepic);
-		return update(rowId, userContentValues);
+	public boolean update(User user) {
+		return update(user.get_id(), createContentValues(user));
 	}
 	
 	/**
@@ -73,8 +75,8 @@ public class UserDbAdapter extends DbAdapter {
 	 * @param rowId User Id
 	 * @return True if successfully deleted, false otherwise
 	 */
-	public boolean delete(long rowId) {
-		return super.delete(rowId);
+	public boolean delete(User user) {
+		return super.delete(user.get_id());
 	}
 	
 	/**
@@ -101,11 +103,11 @@ public class UserDbAdapter extends DbAdapter {
 	 * @param profilePic User's profile picture
 	 * @return ContentValues instance with all attributes of the User
 	 */
-	private ContentValues createContentValues(String name, String surname, String profilepic) {
+	private ContentValues createContentValues(User user) {
 		ContentValues contentValues = new ContentValues();
-		contentValues.put(UserConstants.FIELD_NAME, name);
-		contentValues.put(UserConstants.FIELD_SURNAME, surname);
-		contentValues.put(UserConstants.FIELD_PROFILEPIC, profilepic);
+		contentValues.put(UserConstants.FIELD_NAME, user.getName());
+		contentValues.put(UserConstants.FIELD_SURNAME, user.getSurname());
+		contentValues.put(UserConstants.FIELD_PROFILEPIC, user.getProfilepic());
 		return contentValues;
 	}
 }

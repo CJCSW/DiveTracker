@@ -5,6 +5,9 @@ package org.cjc.mydives.divetracker.db;
 
 import static org.cjc.mydives.divetracker.db.EquipmentConstants.DB_TABLE;
 import static org.cjc.mydives.divetracker.db.EquipmentConstants.fields;
+
+import org.cjc.mydives.divetracker.entity.Equipment;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -33,8 +36,8 @@ public class EquipmentDbAdapter extends DbAdapter {
 	 * @param active Whether this equipment item is active/used or not
 	 * @return
 	 */
-	public long create(Long user_id, Long dive_id, String name, long active){
-		return insert(createContentValues(user_id, dive_id, name, active));
+	public long create(Equipment equipment){
+		return insert(createContentValues(equipment));
 	}
 	
 	/**
@@ -46,8 +49,8 @@ public class EquipmentDbAdapter extends DbAdapter {
 	 * @param active Whether this equipment item is active/used or not
 	 * @return
 	 */
-	public boolean update(long rowId, Long user_id, Long dive_id, String name, long active) {
-		return update(rowId, createContentValues(user_id, dive_id, name, active));
+	public boolean update(Equipment equipment) {
+		return update(equipment.get_id(), createContentValues(equipment));
 	}
 	
 	/**
@@ -55,8 +58,8 @@ public class EquipmentDbAdapter extends DbAdapter {
 	 * @param rowId Equipment item Id
 	 * @return True if successfully deleted, false otherwise
 	 */
-	public boolean delete(long rowId) {
-		return super.delete(rowId);
+	public boolean delete(Equipment equipment) {
+		return super.delete(equipment.get_id());
 	}
 	
 	/**
@@ -100,12 +103,12 @@ public class EquipmentDbAdapter extends DbAdapter {
 	 * @param active Whether this equipment item is active/used or not
 	 * @return
 	 */
-	private ContentValues createContentValues(Long user_id, Long dive_id, String name, long active) {
+	private ContentValues createContentValues(Equipment equipment) {
 		ContentValues contentValues = new ContentValues();
-		contentValues.put(EquipmentConstants.FIELD_USERID, user_id);
-		contentValues.put(EquipmentConstants.FIELD_DIVEID, dive_id);
-		contentValues.put(EquipmentConstants.FIELD_NAME, name);
-		contentValues.put(EquipmentConstants.FIELD_ACTIVE, active);
+		contentValues.put(EquipmentConstants.FIELD_USERID, equipment.getUser_id());
+		contentValues.put(EquipmentConstants.FIELD_DIVEID, equipment.getDive_id());
+		contentValues.put(EquipmentConstants.FIELD_NAME, equipment.getName());
+		contentValues.put(EquipmentConstants.FIELD_ACTIVE, equipment.isActive());
 		return contentValues;
 	}
 }
