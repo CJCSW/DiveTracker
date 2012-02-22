@@ -26,7 +26,8 @@ public class DiveDetailsActivity extends MapActivity {
 	private TextView tvDate;
 	private TextView tvTime;
 	private TextView tvDepth;
-	private TextView tvDuration;
+	private TextView tvBottomTime;
+	private TextView tvVisibility;
 	
 	private ImageView ivEdit;
 	private ImageView ivAdd;
@@ -46,7 +47,8 @@ public class DiveDetailsActivity extends MapActivity {
 		tvDate = (TextView) this.findViewById(R.id.dive_details_date);
 		tvTime = (TextView) this.findViewById(R.id.dive_details_time);
 		tvDepth = (TextView) this.findViewById(R.id.dive_details_maxDeep);
-		tvDuration = (TextView) this.findViewById(R.id.dive_details_duration);
+		tvBottomTime = (TextView) this.findViewById(R.id.dive_details_bottomTime);
+		tvVisibility = (TextView) this.findViewById(R.id.dive_details_visibility);
 		ivEdit = (ImageView) this.findViewById(R.id.header_button_edit);
 		ivAdd  = (ImageView) this.findViewById(R.id.header_button_add);
 		mvMap = (MapView) findViewById(R.id.dive_map);
@@ -96,9 +98,15 @@ public class DiveDetailsActivity extends MapActivity {
 				tvDepth.setText(String.valueOf(depth));				
 			}
 			
-			// Duration
-			if (dive.getDuration() > 0) {
-				tvDuration.setText(FormatterHelper.formatTime(dive.getDuration()));
+			// Visibility
+			double visibility = dive.getVisibility();
+			if (visibility > 0.0f) {
+				tvVisibility.setText(String.valueOf(visibility));
+			}
+			
+			// BottomTime
+			if (dive.getBottomTime() > 0) {
+				tvBottomTime.setText(FormatterHelper.formatTime(dive.getBottomTime()));
 			}
 		}
 		

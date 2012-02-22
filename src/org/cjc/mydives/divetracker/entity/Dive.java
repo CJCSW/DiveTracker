@@ -118,7 +118,7 @@ public class Dive {
 	}
 
 	// COMPUTED FIELDS
-	public long getDuration() {
+	public long getBottomTime() {
 		if (timeOut == 0 || timeIn > timeOut) {
 			return 0;
 		}

@@ -77,21 +77,24 @@ public class DiveListActivity extends Activity {
 
 			// Populate the list
 			SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(this, R.layout.dive_row, cursor, 
-					new String[] {FIELD_TIME_IN, FIELD_TIME_IN, FIELD_NAME}, 
-					new int[] {R.id.dive_row_date, R.id.dive_row_time, R.id.dive_row_name});
+					new String[] {FIELD_NAME, FIELD_TIME_IN, FIELD_TIME_IN}, 
+					new int[] {R.id.dive_row_name, R.id.dive_row_date, R.id.dive_row_time});
 			
 			// Columns Conversion
 			listAdapter.setViewBinder(new ViewBinder() {
 				public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
 					TextView tView = (TextView) view;
 
-					if (columnIndex == 2 && tView.getId() == R.id.dive_row_date) {	// DATE
+					if (tView.getId() == R.id.dive_row_date) {	// DATE
 						long value = cursor.getLong(columnIndex);
 						tView.setText(FormatterHelper.formatDate(value));
 						return true;
-					} else if (columnIndex == 2) {	// TIME
+					} else if (tView.getId() == R.id.dive_row_time) {	// TIME
 						long value = cursor.getLong(columnIndex);
 						tView.setText(FormatterHelper.formatTime(value));
+						return true;
+					} else if (tView.getId() == R.id.dive_row_name) {	// NAME
+						tView.setText(cursor.getString(columnIndex));
 						return true;
 					}
 					return false;

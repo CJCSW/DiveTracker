@@ -63,7 +63,7 @@
     <string name="dive_enterDate">Enter Date</string>
     <string name="dive_enterTime">In</string>
     <string name="dive_outTime">Out</string>
-    <string name="dive_duration">Duration</string>
+    <string name="dive_bottomTime">Bottom time</string>
     <string name="dive_depth">Depth</string>
     <string name="dive_visibility">Visibility</string>
     <string name="dive_latitude">Latitude</string>
@@ -89,9 +89,9 @@
     <string name="dive_edit_hint_time">Enter time</string>
     
 
-    <!-- falutx
-    <string name="maps_key">0pVsBO32kcBr2Ci4YoEIhaOZwMuadvWqrwbr_Vw</string> -->
-    <string name="maps_key">0pVsBO32kcBogGW1PgBBxQ2rOICRWAm_AVy-wBQ</string>
+    <!-- falutx -->
+    <string name="maps_key">0pVsBO32kcBr2Ci4YoEIhaOZwMuadvWqrwbr_Vw</string> 
+    <!-- string name="maps_key">0pVsBO32kcBogGW1PgBBxQ2rOICRWAm_AVy-wBQ</string> -->
     
     <!-- jc 
     <string name="maps_key">06iC7cbybRkBv8mw9OFixN44mjcI8ZaFS-snEYg</string>

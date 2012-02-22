@@ -36,7 +36,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             />
-     </LinearLayout>
+        <TextView
+            style="@style/details_label"
+            android:id="@+id/dive_details_bottomTime"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+         />
+    </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
@@ -54,7 +61,7 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="@string/dive_duration"
+            android:text="@string/dive_visibility"
          />
     </LinearLayout>
     <LinearLayout
@@ -71,10 +78,16 @@
          />
         <TextView
             style="@style/details_label"
-            android:id="@+id/dive_details_duration"
+            android:id="@+id/dive_details_visibility"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
             android:layout_weight="0.5"
          />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
     </LinearLayout>
 </LinearLayout>
