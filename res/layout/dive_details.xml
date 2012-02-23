@@ -44,6 +44,48 @@
             android:layout_weight="0.5"
          />
     </LinearLayout>
+<!-- PGs -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            style="@style/details_label"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/dive_pgIn"
+         />
+        <TextView
+            style="@style/details_label"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/dive_pgOut"
+         />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView 
+            style="@style/details_text"
+            android:id="@+id/dive_details_pgIn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            />
+        <TextView 
+            style="@style/details_text"
+            android:id="@+id/dive_details_pgOut"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            />
+    </LinearLayout>
+<!-- DEPTH and VISIBILITY -->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"

@@ -15,13 +15,15 @@ public class DiveConstants {
 	public static final String FIELD_RATING     = "rating";		// 0 - 5
 	public static final String FIELD_LATITUDE   = "latitude";	// double
 	public static final String FIELD_LONGITUDE  = "longitude";	// double
+	public static final String FIELD_PGIN   = "pg_in";	// string [A - Z]
+	public static final String FIELD_PGOUT  = "pg_out";	// string [A - Z]
 	
 	/* Field list */
 	public static final String[] FIELDS = new String[] {
 		FIELD_ROWID, FIELD_NAME, FIELD_TIME_IN, FIELD_TIME_OUT,
 		FIELD_DEPTH, FIELD_TEMP_AIR, FIELD_TEMP_WATER,
 		FIELD_WATER_TYPE, FIELD_RATING, FIELD_LATITUDE, FIELD_LONGITUDE,
-		FIELD_VISIBILITY
+		FIELD_VISIBILITY, FIELD_PGIN, FIELD_PGOUT
 	};
 	
 	/* Queries */
@@ -38,6 +40,8 @@ public class DiveConstants {
 			+ FIELD_RATING + " integer null,"
 			+ FIELD_LATITUDE + " real null,"
 			+ FIELD_LONGITUDE + " real null,"
-			+ FIELD_VISIBILITY + " integer null"
+			+ FIELD_VISIBILITY + " integer null,"
+			+ FIELD_PGIN + " string null,"
+			+ FIELD_PGOUT + " string null"
 			+ ");";
 }

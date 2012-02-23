@@ -1,19 +1,6 @@
 package org.cjc.mydives.divetracker.db;
 
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELDS;
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_DEPTH;
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_LATITUDE;
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_LONGITUDE;
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_NAME;
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_RATING;
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_ROWID;
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_TEMP_AIR;
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_TEMP_WATER;
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_TIME_IN;
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_TIME_OUT;
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_VISIBILITY;
-import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_WATER_TYPE;
-import static org.cjc.mydives.divetracker.db.DiveConstants.TABLE_NAME;
+import static org.cjc.mydives.divetracker.db.DiveConstants.*;
 
 import org.cjc.mydives.divetracker.entity.Dive;
 
@@ -27,10 +14,21 @@ import android.database.Cursor;
  *
  */
 public class DiveDbAdapter extends DbAdapter {
+	
+	public static final String DEFAULT_ORDER = FIELD_TIME_IN;
 
 	public DiveDbAdapter(Context ctx) {
 		super(ctx);
 		init(TABLE_NAME, FIELDS);
+	}
+
+	/**
+	 * Fetch all the rows in the DB for Dive.
+	 * @return all the rows in the table ordered by {@link DEFAULT_ORDER}.
+	 */
+	@Override
+	public Cursor fetchAll() {
+		return super.fetchAll(null, DEFAULT_ORDER);
 	}
 
 	/**
@@ -41,7 +39,6 @@ public class DiveDbAdapter extends DbAdapter {
 	public long insert(Dive dive) {
 		ContentValues values = createContentValues(dive);
 		return insert(values);
-		
 	}
 	
 	/**
@@ -67,6 +64,8 @@ public class DiveDbAdapter extends DbAdapter {
 		values.put(FIELD_LATITUDE, dive.getLatitude());
 		values.put(FIELD_LONGITUDE, dive.getLongitude());
 		values.put(FIELD_VISIBILITY, dive.getVisibility());
+		values.put(FIELD_PGIN, dive.getGpIn());
+		values.put(FIELD_PGOUT, dive.getGpOut());
 		return values;
 	}
 
@@ -92,5 +91,7 @@ public class DiveDbAdapter extends DbAdapter {
 		d.setWaterType(c.getInt(c.getColumnIndex(FIELD_WATER_TYPE)));
 		d.setRating(c.getInt(c.getColumnIndex(FIELD_RATING)));
 		d.setVisibility(c.getInt(c.getColumnIndex(FIELD_VISIBILITY)));
+		d.setGpIn(c.getString(c.getColumnIndex(FIELD_PGIN)));
+		d.setGpOut(c.getString(c.getColumnIndex(FIELD_PGOUT)));
 	}
 }

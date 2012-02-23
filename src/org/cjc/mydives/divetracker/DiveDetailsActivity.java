@@ -28,6 +28,8 @@ public class DiveDetailsActivity extends MapActivity {
 	private TextView tvDepth;
 	private TextView tvBottomTime;
 	private TextView tvVisibility;
+	private TextView tvPgIn;
+	private TextView tvPgOut;
 	
 	private ImageView ivEdit;
 	private ImageView ivAdd;
@@ -49,6 +51,8 @@ public class DiveDetailsActivity extends MapActivity {
 		tvDepth = (TextView) this.findViewById(R.id.dive_details_maxDeep);
 		tvBottomTime = (TextView) this.findViewById(R.id.dive_details_bottomTime);
 		tvVisibility = (TextView) this.findViewById(R.id.dive_details_visibility);
+		tvPgIn  = (TextView) this.findViewById(R.id.dive_details_pgIn);
+		tvPgOut = (TextView) this.findViewById(R.id.dive_details_pgOut);
 		ivEdit = (ImageView) this.findViewById(R.id.header_button_edit);
 		ivAdd  = (ImageView) this.findViewById(R.id.header_button_add);
 		mvMap = (MapView) findViewById(R.id.dive_map);
@@ -92,7 +96,11 @@ public class DiveDetailsActivity extends MapActivity {
 			tvDate.setText(FormatterHelper.formatDate(dive.getTimeIn()));
 			tvTime.setText(FormatterHelper.formatTime(dive.getTimeIn()));
 
-			// Max Deep
+			// PGs
+			tvPgIn.setText(dive.getGpIn());
+			tvPgOut.setText(dive.getGpOut());
+			
+			// Max Depth
 			double depth = dive.getDepth();
 			if (depth > 0.0f) {
 				tvDepth.setText(String.valueOf(depth));				

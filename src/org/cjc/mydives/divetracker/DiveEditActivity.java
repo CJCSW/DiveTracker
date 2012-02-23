@@ -18,11 +18,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -52,6 +56,7 @@ public class DiveEditActivity extends MapActivity {
 	private Button btnSave;
 	private MapView mvMap;
 	private MapHelper mapHelper;
+	private Spinner spPgIn;			// PGs IN
 	private SeekBar sbDepth;		// Depth bar
 	private TextView tvDepth;		// Depth text
 	private SeekBar sbVisibility;	// Visibility bar
@@ -88,6 +93,11 @@ public class DiveEditActivity extends MapActivity {
 		tvDepth = (TextView) findViewById(R.id.dive_edit_field_depth);
 		sbVisibility = (SeekBar) findViewById(R.id.dive_seekBar_visibility);
 		tvVisibility = (TextView) findViewById(R.id.dive_edit_field_visibility);
+		spPgIn = (Spinner) findViewById(R.id.dive_edit_pgin);
+		
+		ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.pg, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spPgIn.setAdapter(adapter);
 		
 		mvMap.setBuiltInZoomControls(true);
 		mvMap.setClickable(true);
@@ -188,6 +198,22 @@ public class DiveEditActivity extends MapActivity {
 					dive.setTimeOut(System.currentTimeMillis());
 				showDialog(TIME_OUT_DIALOG_ID);
 			}
+		});
+		
+		// PG-In SPINNER
+		spPgIn.setOnItemSelectedListener(new OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
+            		int position, long id) {
+				String selectedPgIn = parentView.getItemAtPosition(position).toString();
+				if (dive.getGpIn() != null && dive.getGpIn().equalsIgnoreCase(selectedPgIn)) {
+					return;
+				}
+				dive.setGpIn(selectedPgIn);
+            }
+ 
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }			
 		});
 		
 		// DEPTH SeekBar
@@ -306,6 +332,13 @@ public class DiveEditActivity extends MapActivity {
 			// GPS
 			if (dive.getLatitude() != 0.0f && dive.getLongitude() != 0.0f) {
 				mapHelper.setMapPosition(dive.getLatitude(), dive.getLongitude());
+			}
+			
+			// PG - IN
+			if (dive.getGpIn() != null) {
+				spPgIn.setSelection(((ArrayAdapter)spPgIn.getAdapter()).getPosition(dive.getGpIn()));
+			} else {
+				spPgIn.setSelection(0);
 			}
 			
 			// Temperature
