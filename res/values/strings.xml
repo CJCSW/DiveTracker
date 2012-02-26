@@ -31,7 +31,7 @@
     <string name="certification_details_label_date">Date</string>
     <string name="certification_details_hint_date">Enter the date of certification</string>
     <string name="certification_details_label_instructor">Instructor</string>
-    <string name="certification_details_hint_instructor">Name of certification instructor</string>
+    <string name="certification_details_hint_instructor">Certification instructor</string>
     <string name="certification_details_button_confirm">Confirm</string>
 
     

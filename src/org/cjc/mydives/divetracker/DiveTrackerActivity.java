@@ -52,25 +52,5 @@ public class DiveTrackerActivity extends TabActivity {
         
         // Set Home as the current tab
         tabHost.setCurrentTab(0);
-        
-        /*
-        // User button
-        ((Button)findViewById(R.id.main_menu_button_user)).setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-		    	startActivity(new Intent(v.getContext(), UserDetailsActivity.class));
-			}
-		});
-        
-        // Dives button
-        ((Button)findViewById(R.id.main_menu_button_dives)).setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-		    	startActivity(new Intent(v.getContext(), DiveListActivity.class));
-			}
-		});
-        */
     }
 }
