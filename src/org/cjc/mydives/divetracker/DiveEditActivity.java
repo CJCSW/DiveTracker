@@ -95,7 +95,7 @@ public class DiveEditActivity extends MapActivity {
 		tvVisibility = (TextView) findViewById(R.id.dive_edit_field_visibility);
 		spPgIn = (Spinner) findViewById(R.id.dive_edit_pgin);
 		
-		ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.pg, android.R.layout.simple_spinner_item);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.pg, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spPgIn.setAdapter(adapter);
 		
@@ -150,9 +150,13 @@ public class DiveEditActivity extends MapActivity {
 		@Override
 		public void onTimeSet(TimePicker view, int hourOfDay, int minuteOfHour) {
 			Calendar dateOut = Calendar.getInstance();
-			dateOut.setTimeInMillis(dive.getTimeOut());
-			dateOut.set(Calendar.HOUR_OF_DAY, hourOfDay);
-			dateOut.set(Calendar.MINUTE, minuteOfHour);
+			if (dive.getTimeIn() != 0) {
+				dateOut.setTimeInMillis(dive.getTimeIn());
+			} else {
+				dateOut.setTimeInMillis(dive.getTimeOut());
+				dateOut.set(Calendar.HOUR_OF_DAY, hourOfDay);
+				dateOut.set(Calendar.MINUTE, minuteOfHour);
+			}
 			dive.setTimeOut(dateOut.getTimeInMillis());
 			btnTimeOut.setText(FormatterHelper.formatTime(dive.getTimeOut()));
 		}
@@ -299,7 +303,8 @@ public class DiveEditActivity extends MapActivity {
 	/**
 	 * Method used to populate the scenario fields with data.
 	 */
-    private void populateFields() {
+    @SuppressWarnings("unchecked")
+	private void populateFields() {
     	if (dive.get_id() == -1) {
     		// Instance creation
     		dive.setTimeIn(System.currentTimeMillis());
@@ -336,7 +341,7 @@ public class DiveEditActivity extends MapActivity {
 			
 			// PG - IN
 			if (dive.getGpIn() != null) {
-				spPgIn.setSelection(((ArrayAdapter)spPgIn.getAdapter()).getPosition(dive.getGpIn()));
+				spPgIn.setSelection(((ArrayAdapter<String>)spPgIn.getAdapter()).getPosition(dive.getGpIn()));
 			} else {
 				spPgIn.setSelection(0);
 			}
