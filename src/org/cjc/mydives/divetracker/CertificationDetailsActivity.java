@@ -10,13 +10,17 @@ import static org.cjc.mydives.divetracker.db.CertificationConstants.FIELD_TYPE;
 import java.util.Calendar;
 
 import org.cjc.mydives.divetracker.db.CertificationDbAdapter;
+import org.cjc.mydives.divetracker.db.FormatterHelper;
 import org.cjc.mydives.divetracker.entity.Certification;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -32,13 +36,15 @@ import android.widget.TextView;
 public class CertificationDetailsActivity extends Activity {
 	private CertificationDbAdapter certificationDbAdapter;
 	
+	private static final int DATE_DIALOG_ID  = 0;
+	
 	private Long rowId;
 	private Certification certification = new Certification();
 	
 	private EditText type;
 	private EditText number;
 	private EditText organization;
-	private DatePicker date;
+	private Button date;
 	private EditText instructor;
 	
 	/** Called when the activity is first created */
@@ -51,7 +57,7 @@ public class CertificationDetailsActivity extends Activity {
 		type = (EditText) findViewById(R.id.certification_details_field_type);
 		number = (EditText) findViewById(R.id.certification_details_field_number);
 		organization = (EditText) findViewById(R.id.certification_details_field_organization);
-		date = (DatePicker) findViewById(R.id.certification_details_field_date);
+		date = (Button) findViewById(R.id.certification_details_button_certification_date);
 		instructor = (EditText) findViewById(R.id.certification_details_field_instructor);
 		
 		certificationDbAdapter = new CertificationDbAdapter(this);
@@ -77,7 +83,42 @@ public class CertificationDetailsActivity extends Activity {
 
 	}
 	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		Calendar date = Calendar.getInstance();
+		switch (id) {
+		case DATE_DIALOG_ID:
+			date.setTimeInMillis(certification.getDate());
+			return new DatePickerDialog(
+					this, certificationDateSetListener, date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH));
+		}
+		return null;
+	}
+	
+	private DatePickerDialog.OnDateSetListener certificationDateSetListener = new DatePickerDialog.OnDateSetListener() {
+		
+		@Override
+		public void onDateSet(DatePicker view, int year, int monthOfYear,
+				int dayOfMonth) {
+			Calendar certificationDate = Calendar.getInstance();
+			certificationDate.setTimeInMillis(certification.getDate());
+			certificationDate.set(year, monthOfYear, dayOfMonth);
+			certification.setDate(certificationDate.getTimeInMillis());
+			date.setText(FormatterHelper.formatDate(certification.getDate()));
+			
+		}
+	};
+	
 	private void addListeners() {
+		// Date button
+		date.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showDialog(DATE_DIALOG_ID);
+			}
+		}
+		);
+		
 		// Confirm button
 		((Button)findViewById(R.id.certification_details_button_confirm)).setOnClickListener(new View.OnClickListener() {
 			
@@ -128,12 +169,15 @@ public class CertificationDetailsActivity extends Activity {
 			number.setText(certificationCursor.getString(certificationCursor.getColumnIndexOrThrow(FIELD_NUMBER)));
 			organization.setText(certificationCursor.getString(certificationCursor.getColumnIndexOrThrow(FIELD_ORGANIZATION)));
 			long certificationDateMillis = certificationCursor.getLong(certificationCursor.getColumnIndexOrThrow(FIELD_DATE));
-			Calendar certificationDate = Calendar.getInstance();
-			certificationDate.setTimeInMillis(certificationDateMillis);
-			date.updateDate(certificationDate.get(Calendar.YEAR), certificationDate.get(Calendar.MONTH), certificationDate.get(Calendar.DAY_OF_MONTH));
+			date.setText(FormatterHelper.formatDate(certificationDateMillis));
+			certification.setDate(certificationDateMillis);
 			instructor.setText(certificationCursor.getString(certificationCursor.getColumnIndexOrThrow(FIELD_INSTRUCTOR)));
 		
 			certificationDbAdapter.close();
+		} else {
+			Calendar calendar = Calendar.getInstance();
+			certification.setDate(calendar.getTimeInMillis());
+			date.setText(FormatterHelper.formatDate(certification.getDate()));
 		}
 	}
 	
@@ -141,9 +185,7 @@ public class CertificationDetailsActivity extends Activity {
     	certification.setType(type.getText().toString());
     	certification.setNumber(number.getText().toString());
     	certification.setOrganization(organization.getText().toString());
-		Calendar certificationDate = Calendar.getInstance();
-		certificationDate.set(this.date.getYear(), this.date.getMonth(), this.date.getDayOfMonth());
-    	certification.setDate(certificationDate.getTimeInMillis());
+
     	certification.setInstructor(instructor.getText().toString());
     	
     	certificationDbAdapter.open();

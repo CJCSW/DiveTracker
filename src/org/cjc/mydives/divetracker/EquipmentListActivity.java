@@ -9,19 +9,17 @@ import org.cjc.mydives.divetracker.db.EquipmentConstants;
 import org.cjc.mydives.divetracker.db.EquipmentDbAdapter;
 
 import android.app.ListActivity;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-/**
- * @author JuanCarlos
- *
- */
 public class EquipmentListActivity extends ListActivity {
 	private EquipmentDbAdapter dbAdapter;
 	private Long user_id;
@@ -64,29 +62,48 @@ public class EquipmentListActivity extends ListActivity {
 	@Override
     public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		CheckBox checkBox = (CheckBox) v.findViewById(R.id.equipment_row_selected);
-		checkBox.setChecked(!checkBox.isChecked());
+		
+		ImageView image = (ImageView) v.findViewById(R.id.equipment_row_selected);
+		Resources res = getResources();	// Resources object to get access to strings and graphic resources
+		Drawable itemChecked = res.getDrawable(R.drawable.tick);
+		Drawable itemNotChecked = res.getDrawable(R.drawable.cancel);
+		
+		String tagText = (String) image.getTag();
+		
+		if (tagText.equals("CHECKED")) {
+			image.setImageDrawable(itemNotChecked);
+			image.setTag("NOTCHECKED");
+		} else {
+			image.setImageDrawable(itemChecked);
+			image.setTag("CHECKED");
+		}
 	}
 	
 	private void fillData() {
 		cursor = dbAdapter.fecthAllByUser(user_id);
 		startManagingCursor(cursor);
-		
+
 		String[] from = new String[]{EquipmentConstants.FIELD_NAME, EquipmentConstants.FIELD_ACTIVE};
 		int[] to = new int[]{R.id.equipment_row_name, R.id.equipment_row_selected};
 		
 		SimpleCursorAdapter equipmentCursorAdapter = new SimpleCursorAdapter(this, R.layout.equipment_row, cursor, from, to);
 		equipmentCursorAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
-			
+
+			Resources res = getResources();	// Resources object to get access to strings and graphic resources
+			Drawable itemChecked = res.getDrawable(R.drawable.tick);
+			Drawable itemNotChecked = res.getDrawable(R.drawable.cancel);
+
 			@Override
 			public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
 				if (columnIndex == cursor.getColumnIndex(EquipmentConstants.FIELD_ACTIVE)) {
-					CheckBox checkBox = (CheckBox) view;
+					ImageView image = (ImageView) view;
 					int active = cursor.getInt(cursor.getColumnIndexOrThrow(EquipmentConstants.FIELD_ACTIVE));
 					if (active == 0){
-						checkBox.setChecked(false);
+						image.setImageDrawable(itemNotChecked);
+						image.setTag("NOTCHECKED");
 					} else {
-						checkBox.setChecked(true);
+						image.setImageDrawable(itemChecked);
+						image.setTag("CHECKED");
 					}
 					return true;
 				}
