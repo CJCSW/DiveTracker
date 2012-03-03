@@ -8,17 +8,16 @@ import static org.cjc.mydives.divetracker.db.UserConstants.FIELD_SURNAME;
 import org.cjc.mydives.divetracker.db.EquipmentConstants;
 import org.cjc.mydives.divetracker.db.UserDbAdapter;
 
-import android.app.TabActivity;
+import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TabHost;
 import android.widget.TextView;
 
 
@@ -29,7 +28,7 @@ import android.widget.TextView;
  * @author JuanCarlos
  *
  */
-public class UserDetailsActivity extends TabActivity {
+public class UserDetailsActivity extends Activity {
 	private UserDbAdapter userDbAdapter;
 	
 	private Long rowId;
@@ -40,12 +39,9 @@ public class UserDetailsActivity extends TabActivity {
 	
 	private ImageView ivEdit;
 	private ImageView ivAdd;
-	//JC-INI
-	/*
 	private Button btEquipment;
 	private Button btCertifications;
-	*/
-	//JC-FIN
+
 	
 	private static int ACTION_EDIT = 10;
 	
@@ -62,12 +58,9 @@ public class UserDetailsActivity extends TabActivity {
         
         ivEdit = (ImageView) this.findViewById(R.id.header_button_edit);
 		ivAdd  = (ImageView) this.findViewById(R.id.header_button_add);
-		//JC-INI
-		/*
+
 		btEquipment = (Button)findViewById(R.id.user_details_button_equipment);
 		btCertifications = (Button)findViewById(R.id.user_details_button_certifications);
-		*/
-		//JC-FIN
         
         userDbAdapter = new UserDbAdapter(this);
 
@@ -89,10 +82,13 @@ public class UserDetailsActivity extends TabActivity {
 		// Populate fields
 		populateFields();
 		
+		/*
 		// Set up tabbed view
 		setUpTabs();
+		*/
 	}
 	
+	/*
 	private void setUpTabs() {
 		// Tabbed view
         Resources res = getResources();	// Resources object to get access to strings and graphic resources
@@ -122,6 +118,7 @@ public class UserDetailsActivity extends TabActivity {
         // Set Home as the current tab
         tabHost.setCurrentTab(0);
 	}
+	*/
 	
 	private void addListeners(){
 		// Add button
@@ -151,8 +148,7 @@ public class UserDetailsActivity extends TabActivity {
 			}
 		});
 		
-		//JC-INI
-		/*
+
 		// Equipment button
 		btEquipment.setOnClickListener(new View.OnClickListener() {
 			
@@ -172,8 +168,7 @@ public class UserDetailsActivity extends TabActivity {
 				startActivity(new Intent(v.getContext(), CertificationListActivity.class));
 			}
 		});
-		*/
-		//JC-FIN
+
 	}
 	
 	@Override
@@ -213,21 +208,13 @@ public class UserDetailsActivity extends TabActivity {
     		}
      		ivAdd.setVisibility(View.GONE);
      		ivEdit.setVisibility(View.VISIBLE);
-     		//JC-INI
-     		/*
      		btEquipment.setEnabled(true);
      		btCertifications.setEnabled(true);
-     		*/
-     		//JC-FIN
     	} else {
      		ivAdd.setVisibility(View.VISIBLE);
      		ivEdit.setVisibility(View.GONE);
-     		//JC-INI
-     		/*
      		btEquipment.setEnabled(false);
      		btCertifications.setEnabled(false);
-     		*/
-     		//JC-FIN
     	}
     	userCursor.close();
     	userDbAdapter.close();

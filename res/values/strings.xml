@@ -44,10 +44,8 @@
     <string name="user_details_defval_surname">Bubble Maker</string>
     <string name="user_details_contentdesc_profilepic">Profile picture</string>
     <string name="user_details_button_edit">Edit</string>
-    <!-- JC
 	<string name="user_details_button_equipment">Equipment</string>
 	<string name="user_details_button_certifications">Certifications</string>
-	-->
     <string name="user_details_tab_tag_certifications">certifications</string>
     <string name="user_details_tab_tag_equipment">equipment</string>
     <string name="user_details_tab_certifications">Certifications</string>

@@ -38,7 +38,7 @@
 	        
 	    </LinearLayout>       
     </LinearLayout>
-    
+    <!--
     <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/tabhost"
     android:layout_width="fill_parent"
@@ -59,8 +59,7 @@
 	            android:padding="5dp" />
 	    </LinearLayout>
 	</TabHost>
-
-    <!--
+	-->   
     <Button
         android:id="@+id/user_details_button_equipment"
         android:layout_width="fill_parent"
@@ -73,5 +72,4 @@
         android:layout_height="wrap_content"
         android:text="@string/user_details_button_certifications"
         android:textSize="25dp"/>
-    -->
 </LinearLayout>
