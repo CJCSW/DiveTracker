@@ -185,6 +185,7 @@ public class CertificationDetailsActivity extends Activity {
     	certification.setType(type.getText().toString());
     	certification.setNumber(number.getText().toString());
     	certification.setOrganization(organization.getText().toString());
+
     	certification.setInstructor(instructor.getText().toString());
     	
     	certificationDbAdapter.open();
