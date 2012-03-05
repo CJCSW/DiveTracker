@@ -104,4 +104,8 @@
     <!-- COLORS -->
     <color name="listcolor">#2987BA</color>
     <color name="black">#000000</color>
+    
+    <!-- MENU -->
+    <string name="menu_refresh">Refresh</string>
+    <string name="menu_create">Create</string>
 </resources>
