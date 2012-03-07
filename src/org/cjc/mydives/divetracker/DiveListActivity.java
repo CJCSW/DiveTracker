@@ -14,37 +14,30 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DiveListActivity extends ActionBarActivity {
 	private DiveDbAdapter diveDbAdapter;
 	private TextView tvEmptyList;
 	private ListView lvDives;
-//	private ImageView ivNewDive;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.dive_list);
 
 		// Get the controls
 		diveDbAdapter = new DiveDbAdapter(this);
 		lvDives   = (ListView) this.findViewById(R.id.dive_list);
 		tvEmptyList = (TextView) this.findViewById(R.id.dive_list_tv_empty);
-//		ivNewDive = (ImageView) this.findViewById(R.id.header_button_add);
 		
 		// Title
-		//((TextView) findViewById(R.id.header_title)).setText(R.string.dive_list_title);
 		setTitle(R.string.dive_list_title);
 		addListeners();
 	}
@@ -88,18 +81,7 @@ public class DiveListActivity extends ActionBarActivity {
 				i.putExtra("_ID", new Long(id).intValue());
 		    	startActivity(i);
 			}
-		});
-		
-		/*
-		// NewDive OnClick
-		ivNewDive.setOnClickListener(new OnClickListener() {
-			public void onClick(View arg0) {
-				// Edit the new dive
-				Intent i = new Intent(getBaseContext(), DiveEditActivity.class);
-				startActivity(i);
-			}
-		});
-		*/
+		});	
 	}
 	
 	/**

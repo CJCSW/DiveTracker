@@ -2,6 +2,7 @@ package org.cjc.mydives.divetracker;
 
 import java.util.Calendar;
 
+import org.cjc.mydives.divetracker.actionbar.ActionBarMapActivity;
 import org.cjc.mydives.divetracker.db.DiveDbAdapter;
 import org.cjc.mydives.divetracker.db.FormatterHelper;
 import org.cjc.mydives.divetracker.entity.Dive;
@@ -15,9 +16,11 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -29,20 +32,17 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
-import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 
-public class DiveEditActivity extends MapActivity {
+public class DiveEditActivity extends ActionBarMapActivity {
 	private static final int DATE_DIALOG_ID  = 0;
 	private static final int TIME_IN_DIALOG_ID  = 1;
 	private static final int TIME_OUT_DIALOG_ID = 2;
 
 	private static final double MAX_DEPTH = 64.0f;
 	private static final double MAX_VISIBILITY = 100.0f;
-	
-	TimePicker timePicker;
-	DatePicker datePicker;
 	
 	private DiveDbAdapter diveDbAdapter = new DiveDbAdapter(this);
 
@@ -53,7 +53,6 @@ public class DiveEditActivity extends MapActivity {
 	private Button btnDate;
 	private Button btnTimeIn;
 	private Button btnTimeOut;
-	private Button btnSave;
 	private MapView mvMap;
 	private MapHelper mapHelper;
 	private Spinner spPgIn;			// PGs IN
@@ -67,7 +66,6 @@ public class DiveEditActivity extends MapActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.dive_edit);
 		
 		if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("_ID")) {
@@ -77,7 +75,7 @@ public class DiveEditActivity extends MapActivity {
 		}
 
 		// Title
-		((TextView) findViewById(R.id.header_title)).setText(R.string.dive_edit_title);
+		setTitle(R.string.dive_edit_title);
 		
 		// Get the controls
 		etName = (EditText) findViewById(R.id.dive_edit_field_name);
@@ -86,7 +84,6 @@ public class DiveEditActivity extends MapActivity {
 		btnDate = (Button) findViewById(R.id.dive_edit_date);
 		btnTimeIn = (Button) findViewById(R.id.dive_edit_timeIn);
 		btnTimeOut = (Button) findViewById(R.id.dive_edit_timeOut);
-		btnSave = (Button) findViewById(R.id.btn_save);
 		mvMap = (MapView) findViewById(R.id.dive_map);
 		mapHelper = new MapHelper(mvMap, getResources());
 		sbDepth = (SeekBar) findViewById(R.id.dive_seekBar_depth);
@@ -116,7 +113,34 @@ public class DiveEditActivity extends MapActivity {
 		return false;
 	}
 	
-	@Override
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.dive_edit, menu);
+
+        // Calling super after populating the menu is necessary here to ensure that the
+        // action bar helpers have a chance to handle this event.
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Toast.makeText(this, "Tapped home", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.menu_save:
+				// Save the data
+            	saveData();
+				finish();
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
 	protected Dialog onCreateDialog(int id) {
 		Calendar date = Calendar.getInstance();
 		switch (id) {
@@ -259,15 +283,6 @@ public class DiveEditActivity extends MapActivity {
 					setVisibility(progress);
 				}
 				
-			}
-		});
-
-		// SAVE Button
-		btnSave.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				saveData();
-				finish();
 			}
 		});
 	}

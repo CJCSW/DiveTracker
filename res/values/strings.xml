@@ -108,4 +108,6 @@
     <!-- MENU -->
     <string name="menu_refresh">Refresh</string>
     <string name="menu_create">Create</string>
+    <string name="menu_edit">Edit</string>
+    <string name="menu_save">Save</string>
 </resources>

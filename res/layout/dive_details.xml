@@ -3,133 +3,107 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
   android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
-  >
-  	<include layout="@layout/header" />
-    
+  android:layout_height="fill_parent">
 	<!-- GPS Map --> 
 	<com.google.android.maps.MapView
 		android:id="@+id/dive_map"
 		android:layout_width="fill_parent"
 		android:layout_height="120dp"
 		android:enabled="true"
-		android:apiKey="@string/maps_key"
-	/> 
+		android:apiKey="@string/maps_key"/> 
 
 	<!-- Date and Time -->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
         <TextView 
             style="@style/details_text"
             android:id="@+id/dive_details_date"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            />
+            android:layout_weight="0.5"/>
         <TextView 
             style="@style/details_text"
             android:id="@+id/dive_details_time"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            />
+            android:layout_weight="0.5"/>
         <TextView
             style="@style/details_label"
             android:id="@+id/dive_details_bottomTime"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-         />
+            android:layout_weight="0.5"/>
     </LinearLayout>
 <!-- PGs -->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
         <TextView
             style="@style/details_label"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="@string/dive_pgIn"
-         />
+            android:text="@string/dive_pgIn"/>
         <TextView
             style="@style/details_label"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="@string/dive_pgOut"
-         />
+            android:text="@string/dive_pgOut"/>
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
         <TextView 
             style="@style/details_text"
             android:id="@+id/dive_details_pgIn"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            />
+            android:layout_weight="0.5"/>
         <TextView 
             style="@style/details_text"
             android:id="@+id/dive_details_pgOut"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            />
+            android:layout_weight="0.5"/>
     </LinearLayout>
 <!-- DEPTH and VISIBILITY -->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
         <TextView
             style="@style/details_label"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="@string/dive_depth"
-         />
+            android:text="@string/dive_depth"/>
         <TextView
             style="@style/details_label"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="@string/dive_visibility"
-         />
+            android:text="@string/dive_visibility"/>
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
         <TextView
             style="@style/details_label"
             android:id="@+id/dive_details_maxDeep"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-         />
+            android:layout_weight="0.5"/>
         <TextView
             style="@style/details_label"
             android:id="@+id/dive_details_visibility"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-         />
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        >
+            android:layout_weight="0.5"/>
     </LinearLayout>
 </LinearLayout>

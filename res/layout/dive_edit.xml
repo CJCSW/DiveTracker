@@ -5,7 +5,6 @@
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
   >
-  	<include layout="@layout/header" />
   	<ScrollView 
   	    android:layout_width="fill_parent"
   	    android:layout_height="fill_parent">
@@ -181,7 +180,7 @@
 			        android:text = "0"
 		            />
 		    </LinearLayout>
-<!-- SAVE Button -->
+<!-- SAVE Button 
 		    <Button
 		        android:id="@+id/btn_save"
 		        android:layout_width="fill_parent"
@@ -189,6 +188,7 @@
 		        android:layout_margin="2dp"
 		        android:text="@string/btn_save"
 		        />
+		        -->
 		</LinearLayout>
     </ScrollView>
 </LinearLayout>
