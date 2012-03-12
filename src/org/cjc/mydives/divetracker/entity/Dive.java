@@ -13,7 +13,10 @@ public class Dive {
 	private int rating;
 	private double longitude;
 	private double latitude;
-	
+	private double visibility;
+	private String gpIn;	// A - Z
+	private String gpOut;	// A - Z
+
 	/**
 	 * Default constructor.
 	 */
@@ -108,8 +111,32 @@ public class Dive {
 		this.latitude = latitude;
 	}
 	
+	public double getVisibility() {
+		return visibility;
+	}
+
+	public void setVisibility(double visibility) {
+		this.visibility = visibility;
+	}
+
+	public String getGpIn() {
+		return gpIn;
+	}
+
+	public void setGpIn(String gpIn) {
+		this.gpIn = gpIn;
+	}
+
+	public String getGpOut() {
+		return gpOut;
+	}
+
+	public void setGpOut(String gpOut) {
+		this.gpOut = gpOut;
+	}
+
 	// COMPUTED FIELDS
-	public long getDuration() {
+	public long getBottomTime() {
 		if (timeOut == 0 || timeIn > timeOut) {
 			return 0;
 		}

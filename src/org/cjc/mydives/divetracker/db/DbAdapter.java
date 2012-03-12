@@ -95,7 +95,18 @@ public class DbAdapter {
 	}
 
 	/**
-	 * Fetch all the rows in the DB
+	 * Fetch all the rows in the DB allowing grouping and ordering.
+	 * @param groupBy defines the group by clause to be used. It can be null.
+	 * @param orerBy defines the columns used to order the query. It can be null.
+	 * @return all the instances of {@link tableName} grouped and ordered.
+	 */
+	public Cursor fetchAll(String groupBy, String orderBy) {
+		return db.query(tableName, fields, null, null, groupBy, null, orderBy);
+	}
+
+	/**
+	 * Fetch all the rows in the DB for {@link tableName}.
+	 * @return all the rows in the table as they were inserted.
 	 */
 	public Cursor fetchAll() {
 		return db.query(tableName, fields, null, null, null, null, null);
