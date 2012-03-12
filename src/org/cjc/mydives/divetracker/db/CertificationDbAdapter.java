@@ -3,7 +3,7 @@ package org.cjc.mydives.divetracker.db;
 import static org.cjc.mydives.divetracker.db.CertificationConstants.DB_TABLE;
 import static org.cjc.mydives.divetracker.db.CertificationConstants.fields;
 
-import java.util.Date;
+import org.cjc.mydives.divetracker.entity.Certification;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -33,9 +33,8 @@ public class CertificationDbAdapter extends DbAdapter {
 	 * @param instructor Instructor name
 	 * @return
 	 */
-	public long create(String type, Date date, String number, String organization, String instructor) {
-		ContentValues contentValues = createContentValues(type, date, number, organization, instructor);
-		return insert(contentValues);
+	public long create(Certification certification) {
+		return insert(createContentValues(certification));
 	}
 	
 	/**
@@ -48,9 +47,8 @@ public class CertificationDbAdapter extends DbAdapter {
 	 * @param instructor Instructor name
 	 * @return True if successfully updated, false otherwise
 	 */
-	public boolean update(long rowId, String type, Date date, String number, String organization, String instructor) {
-		ContentValues contentValues = createContentValues(type, date, number, organization, instructor);
-		return update(rowId, contentValues);
+	public boolean update(Certification certification) {
+		return update(certification.get_id(), createContentValues(certification));
 	}
 	
 	/**
@@ -58,8 +56,8 @@ public class CertificationDbAdapter extends DbAdapter {
 	 * @param rowId Certification Id
 	 * @return True if successfully deleted, false otherwise
 	 */
-	public boolean delete(long rowId) {
-		return super.delete(rowId);
+	public boolean delete(Certification certification) {
+		return super.delete(certification.get_id());
 	}
 	
 	/**
@@ -80,13 +78,13 @@ public class CertificationDbAdapter extends DbAdapter {
 	}
 
 	
-	private ContentValues createContentValues(String type, Date date, String number, String organization, String instructor) {
+	private ContentValues createContentValues(Certification certification) {
 		ContentValues contentValues = new ContentValues();
-		contentValues.put(CertificationConstants.FIELD_TYPE, type);
-		contentValues.put(CertificationConstants.FIELD_DATE, FormatterHelper.packDate(date));
-		contentValues.put(CertificationConstants.FIELD_NUMBER, number);
-		contentValues.put(CertificationConstants.FIELD_ORGANIZATION, organization);
-		contentValues.put(CertificationConstants.FIELD_INSTRUCTOR, instructor);
+		contentValues.put(CertificationConstants.FIELD_TYPE, certification.getType());
+		contentValues.put(CertificationConstants.FIELD_DATE, certification.getDate());
+		contentValues.put(CertificationConstants.FIELD_NUMBER, certification.getNumber());
+		contentValues.put(CertificationConstants.FIELD_ORGANIZATION, certification.getOrganization());
+		contentValues.put(CertificationConstants.FIELD_INSTRUCTOR, certification.getInstructor());
 		return contentValues;
 	}
 }

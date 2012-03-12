@@ -7,14 +7,20 @@ import static org.cjc.mydives.divetracker.db.CertificationConstants.FIELD_ORGANI
 import static org.cjc.mydives.divetracker.db.CertificationConstants.FIELD_ROWID;
 import static org.cjc.mydives.divetracker.db.CertificationConstants.FIELD_TYPE;
 
+import java.util.Calendar;
+
 import org.cjc.mydives.divetracker.db.CertificationDbAdapter;
 import org.cjc.mydives.divetracker.db.FormatterHelper;
+import org.cjc.mydives.divetracker.entity.Certification;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -30,14 +36,16 @@ import android.widget.TextView;
 public class CertificationDetailsActivity extends Activity {
 	private CertificationDbAdapter certificationDbAdapter;
 	
+	private static final int DATE_DIALOG_ID  = 0;
+	
 	private Long rowId;
+	private Certification certification = new Certification();
+	
 	private EditText type;
 	private EditText number;
 	private EditText organization;
-	private DatePicker date;
+	private Button date;
 	private EditText instructor;
-	
-	private boolean isCanceled;
 	
 	/** Called when the activity is first created */
 	@Override
@@ -49,7 +57,7 @@ public class CertificationDetailsActivity extends Activity {
 		type = (EditText) findViewById(R.id.certification_details_field_type);
 		number = (EditText) findViewById(R.id.certification_details_field_number);
 		organization = (EditText) findViewById(R.id.certification_details_field_organization);
-		date = (DatePicker) findViewById(R.id.certification_details_field_date);
+		date = (Button) findViewById(R.id.certification_details_button_certification_date);
 		instructor = (EditText) findViewById(R.id.certification_details_field_instructor);
 		
 		certificationDbAdapter = new CertificationDbAdapter(this);
@@ -62,6 +70,7 @@ public class CertificationDetailsActivity extends Activity {
 		if (extras != null) {
 			rowId = extras.getLong(FIELD_ROWID); 
 		}
+
 		
 		// Set header text
 		((TextView) findViewById(R.id.header_title)).setText(R.string.certification_details_title);
@@ -71,43 +80,63 @@ public class CertificationDetailsActivity extends Activity {
 		
 		// Add listeners
 		addListeners();
-		
-		// Populate fields
-		populateFields();
+
 	}
 	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		Calendar date = Calendar.getInstance();
+		switch (id) {
+		case DATE_DIALOG_ID:
+			date.setTimeInMillis(certification.getDate());
+			return new DatePickerDialog(
+					this, certificationDateSetListener, date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH));
+		}
+		return null;
+	}
+	
+	private DatePickerDialog.OnDateSetListener certificationDateSetListener = new DatePickerDialog.OnDateSetListener() {
+		
+		@Override
+		public void onDateSet(DatePicker view, int year, int monthOfYear,
+				int dayOfMonth) {
+			Calendar certificationDate = Calendar.getInstance();
+			certificationDate.setTimeInMillis(certification.getDate());
+			certificationDate.set(year, monthOfYear, dayOfMonth);
+			certification.setDate(certificationDate.getTimeInMillis());
+			date.setText(FormatterHelper.formatDate(certification.getDate()));
+			
+		}
+	};
+	
 	private void addListeners() {
+		// Date button
+		date.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showDialog(DATE_DIALOG_ID);
+			}
+		}
+		);
+		
 		// Confirm button
 		((Button)findViewById(R.id.certification_details_button_confirm)).setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				Intent resultData = new Intent();
+				saveState();
 				resultData.putExtra(FIELD_ROWID, rowId);
 		    	setResult(RESULT_OK, resultData);
-		    	isCanceled = false;
 		    	finish();
 			}
 		});
 		
-		// Cancel button
-		((Button)findViewById(R.id.certification_details_button_cancel)).setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent resultData = new Intent();
-				resultData.putExtra(FIELD_ROWID, rowId);
-		    	setResult(RESULT_CANCELED, resultData);
-		    	isCanceled = true;
-		    	finish();
-			}
-		});
 	}
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		saveState();
 		outState.putSerializable(FIELD_ROWID, rowId);
 	}
 	
@@ -115,61 +144,55 @@ public class CertificationDetailsActivity extends Activity {
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 		rowId = (Long) savedInstanceState.getSerializable(FIELD_ROWID);
-		isCanceled = true;
-		populateFields();
 	}
 	
 	@Override
 	public void onPause() {
 		super.onPause();
-		saveState();
 	}
 	
 	@Override
 	public void onResume() {
 		super.onResume();
-		isCanceled = true;
 		populateFields();
 	}
 	
 	private void populateFields() {
-		certificationDbAdapter.open();
 		if (rowId != null) {
+			certification.set_id(rowId);
+			certificationDbAdapter.open();
+		
 			Cursor certificationCursor = certificationDbAdapter.fetchById(rowId);
 			startManagingCursor(certificationCursor);
 			
 			type.setText(certificationCursor.getString(certificationCursor.getColumnIndexOrThrow(FIELD_TYPE)));
 			number.setText(certificationCursor.getString(certificationCursor.getColumnIndexOrThrow(FIELD_NUMBER)));
 			organization.setText(certificationCursor.getString(certificationCursor.getColumnIndexOrThrow(FIELD_ORGANIZATION)));
-			String dateString = certificationCursor.getString(certificationCursor.getColumnIndexOrThrow(FIELD_DATE));
-			date.updateDate(Integer.parseInt(dateString.substring(0, 4)),
-						Integer.parseInt(dateString.substring(4,6)) - 1, 
-						Integer.parseInt(dateString.substring(6,8)));
+			long certificationDateMillis = certificationCursor.getLong(certificationCursor.getColumnIndexOrThrow(FIELD_DATE));
+			date.setText(FormatterHelper.formatDate(certificationDateMillis));
+			certification.setDate(certificationDateMillis);
 			instructor.setText(certificationCursor.getString(certificationCursor.getColumnIndexOrThrow(FIELD_INSTRUCTOR)));
+		
+			certificationDbAdapter.close();
+		} else {
+			Calendar calendar = Calendar.getInstance();
+			certification.setDate(calendar.getTimeInMillis());
+			date.setText(FormatterHelper.formatDate(certification.getDate()));
 		}
-		certificationDbAdapter.close();
 	}
 	
     public void saveState() {
+    	certification.setType(type.getText().toString());
+    	certification.setNumber(number.getText().toString());
+    	certification.setOrganization(organization.getText().toString());
+
+    	certification.setInstructor(instructor.getText().toString());
+    	
     	certificationDbAdapter.open();
-    	if (!isCanceled) {
-    		String type = this.type.getText().toString();
-    		String number = this.number.getText().toString();
-    		String organization = this.organization.getText().toString();
-    		String dateString = this.date.getYear()
-    				+ String.format("%02d", this.date.getMonth() + 1)
-    				+ String.format("%02d", this.date.getDayOfMonth());
-    		java.util.Date date = FormatterHelper.unPackDate(dateString);
-			
-    		String instructor = this.instructor.getText().toString();
-    		if (rowId == null) {
-    			long id = certificationDbAdapter.create(type, date, number, organization, instructor);
-    			if (id > 0) {
-    				rowId = id;
-    			}
-    		} else {
-    			certificationDbAdapter.update(rowId, type, date, number, organization, instructor);
-    		}
+    	if (certification.get_id() > 0) {
+    		certificationDbAdapter.update(certification);
+    	} else {
+    		certificationDbAdapter.create(certification);
     	}
     	certificationDbAdapter.close();
     }

@@ -3,16 +3,13 @@ package org.cjc.mydives.divetracker;
 import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_NAME;
 import static org.cjc.mydives.divetracker.db.DiveConstants.FIELD_TIME_IN;
 
-import org.cjc.mydives.divetracker.actionbar.ActionBarActivity;
 import org.cjc.mydives.divetracker.db.DiveDbAdapter;
 import org.cjc.mydives.divetracker.db.FormatterHelper;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -20,9 +17,8 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class DiveListActivity extends ActionBarActivity {
+public class DiveListActivity extends Activity {
 	private DiveDbAdapter diveDbAdapter;
 	private TextView tvEmptyList;
 	private ListView lvDives;
@@ -38,40 +34,10 @@ public class DiveListActivity extends ActionBarActivity {
 		tvEmptyList = (TextView) this.findViewById(R.id.dive_list_tv_empty);
 		
 		// Title
-		setTitle(R.string.dive_list_title);
+		//setTitle(R.string.dive_list_title);
 		addListeners();
 	}
 	
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.dive_list, menu);
-
-        // Calling super after populating the menu is necessary here to ensure that the
-        // action bar helpers have a chance to handle this event.
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Toast.makeText(this, "Tapped home", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.menu_refresh:
-                Toast.makeText(this, "Fake refreshing...", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.menu_create:
-				// Edit the new dive
-				Intent i = new Intent(getBaseContext(), DiveEditActivity.class);
-				startActivity(i);
-                break;
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     public void addListeners() {
 		// DiveList OnClick 

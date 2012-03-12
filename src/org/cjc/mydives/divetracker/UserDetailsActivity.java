@@ -41,6 +41,7 @@ public class UserDetailsActivity extends Activity {
 	private ImageView ivAdd;
 	private Button btEquipment;
 	private Button btCertifications;
+
 	
 	private static int ACTION_EDIT = 10;
 	
@@ -57,6 +58,7 @@ public class UserDetailsActivity extends Activity {
         
         ivEdit = (ImageView) this.findViewById(R.id.header_button_edit);
 		ivAdd  = (ImageView) this.findViewById(R.id.header_button_add);
+
 		btEquipment = (Button)findViewById(R.id.user_details_button_equipment);
 		btCertifications = (Button)findViewById(R.id.user_details_button_certifications);
         
@@ -79,7 +81,44 @@ public class UserDetailsActivity extends Activity {
 		
 		// Populate fields
 		populateFields();
+		
+		/*
+		// Set up tabbed view
+		setUpTabs();
+		*/
 	}
+	
+	/*
+	private void setUpTabs() {
+		// Tabbed view
+        Resources res = getResources();	// Resources object to get access to strings and graphic resources
+        TabHost tabHost = getTabHost();	// The TabHost defined in the layout used as content view for this activity
+        TabHost.TabSpec tabSpec;		// Reusable TabSpec to define each of the tabs in this activity's TabHost
+        Intent tabIntent;				// Reusable Intent to launch the activity for each of the tabs
+        
+        // Certifications tab
+        // Create an intent to launch the CertificationListActivity
+        tabIntent = new Intent().setClass(this, CertificationListActivity.class);
+        // Create a TabSpec for the Dives tab and add it to the TabHos
+        tabSpec = tabHost.newTabSpec(res.getString(R.string.user_details_tab_tag_certifications))
+        		.setIndicator(res.getString(R.string.user_details_tab_certifications), res.getDrawable(R.drawable.ic_tab_certifications))
+        		.setContent(tabIntent);
+        tabHost.addTab(tabSpec);        
+
+        // Equipment tab
+        // Create an intent to launch the EquipmentListActivity
+        tabIntent = new Intent().setClass(this, EquipmentListActivity.class);
+        tabIntent.putExtra(EquipmentConstants.FIELD_USERID, rowId);
+        // Create a TabSpec for the User tab and add it to the TabHos
+        tabSpec = tabHost.newTabSpec(res.getString(R.string.user_details_tab_tag_equipment))
+        		.setIndicator(res.getString(R.string.user_details_tab_equipment), res.getDrawable(R.drawable.ic_tab_equipment))
+        		.setContent(tabIntent);
+        tabHost.addTab(tabSpec);     
+        
+        // Set Home as the current tab
+        tabHost.setCurrentTab(0);
+	}
+	*/
 	
 	private void addListeners(){
 		// Add button
@@ -109,6 +148,7 @@ public class UserDetailsActivity extends Activity {
 			}
 		});
 		
+
 		// Equipment button
 		btEquipment.setOnClickListener(new View.OnClickListener() {
 			
@@ -128,6 +168,7 @@ public class UserDetailsActivity extends Activity {
 				startActivity(new Intent(v.getContext(), CertificationListActivity.class));
 			}
 		});
+
 	}
 	
 	@Override

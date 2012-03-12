@@ -8,9 +8,18 @@
         android:layout_height="wrap_content"
         android:text=""
         android:textSize="30dp"/>
+    <!--
     <CheckBox android:id="@+id/equipment_row_selected"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="10dp"/>
+     -->
+     <ImageView android:id="@+id/equipment_row_selected"
+		android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:src="@drawable/tick"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="10dp"/>

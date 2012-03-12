@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, DiveTrackerActivity!</string>
+    <string name="hello">Welcome to DiveTracker!</string>
     <string name="app_name">DiveTracker</string>
 
 	<string name="header_title">Dive Tracker</string>
 
-    <!-- MAIN MENU -->
-    <string name="main_menu_button_user">User</string>
-    <string name="main_menu_button_dives">Dives</string>
+    <!-- MAIN MENU/TABHOST -->
+    <string name="main_menu_tab_tag_home">home</string>
+    <string name="main_menu_tab_tag_dives">dives</string>
+    <string name="main_menu_tab_tag_user">user</string>
+    <string name="main_menu_tab_home">Home</string>
+    <string name="main_menu_tab_dives">Dives</string>
+    <string name="main_menu_tab_user">User</string>
         
     <!-- CERTIFICATION -->
     <!-- Certification List -->
@@ -27,9 +31,9 @@
     <string name="certification_details_label_date">Date</string>
     <string name="certification_details_hint_date">Enter the date of certification</string>
     <string name="certification_details_label_instructor">Instructor</string>
-    <string name="certification_details_hint_instructor">Name of certification instructor</string>
+    <string name="certification_details_hint_instructor">Certification instructor</string>
     <string name="certification_details_button_confirm">Confirm</string>
-    <string name="certification_details_button_cancel">Cancel</string>
+
     
     <!-- USER -->
     <!-- User Details -->
@@ -42,6 +46,11 @@
     <string name="user_details_button_edit">Edit</string>
 	<string name="user_details_button_equipment">Equipment</string>
 	<string name="user_details_button_certifications">Certifications</string>
+    <string name="user_details_tab_tag_certifications">certifications</string>
+    <string name="user_details_tab_tag_equipment">equipment</string>
+    <string name="user_details_tab_certifications">Certifications</string>
+    <string name="user_details_tab_equipment">Equipment</string>
+	
     <!-- User Edit -->
     <string name="user_edit_title">Edit Profile</string>
     <string name="user_edit_label_name">Name</string>
@@ -52,7 +61,6 @@
     <string name="user_edit_contentdesc_profilepic">Profile picture</string>
     <string name="user_edit_button_profilepic_select">Select</string>
     <string name="user_edit_button_confirm">Confirm</string>
-    <string name="user_edit_button_cancel">Cancel</string>
     
     <!-- EQUIPMENT -->
     <string name="user_equipment_list_title">Your equipment list</string>

@@ -1,22 +1,17 @@
 package org.cjc.mydives.divetracker;
 
-import org.cjc.mydives.divetracker.actionbar.ActionBarActivity;
-
+import android.app.TabActivity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.widget.TabHost;
 
 /**
  * Launch activity
  * @author JuanCarlos
  *
  */
-public class DiveTrackerActivity extends ActionBarActivity {	
+public class DiveTrackerActivity extends TabActivity {	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,52 +19,39 @@ public class DiveTrackerActivity extends ActionBarActivity {
         setContentView(R.layout.main);
         setTitle(R.string.app_name);
         
-        // User button
-        ((Button)findViewById(R.id.main_menu_button_user)).setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-		    	startActivity(new Intent(v.getContext(), UserDetailsActivity.class));
-			}
-		});
+        Resources res = getResources();	// Resources object to get access to strings and graphic resources
+        TabHost tabHost = getTabHost();	// The TabHost defined in the layout used as content view for this activity
+        TabHost.TabSpec tabSpec;		// Reusable TabSpec to define each of the tabs in this activity's TabHost
+        Intent tabIntent;				// Reusable Intent to launch the activity for each of the tabs
         
-        // Dives button
-        ((Button)findViewById(R.id.main_menu_button_dives)).setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-		    	startActivity(new Intent(v.getContext(), DiveListActivity.class));
-			}
-		});
+        // Home tab
+        // Create an intent to launch the HomeActivity
+        tabIntent = new Intent().setClass(this, HomeActivity.class);
+        // Create a TabSpec for the Home tab and add it to the TabHos
+        tabSpec = tabHost.newTabSpec(res.getString(R.string.main_menu_tab_tag_home))
+        		.setIndicator(res.getString(R.string.main_menu_tab_home), res.getDrawable(R.drawable.ic_tab_home))
+        		.setContent(tabIntent);
+        tabHost.addTab(tabSpec);
+        
+        // Dives tab
+        // Create an intent to launch the DiveListActivity
+        tabIntent = new Intent().setClass(this, DiveListActivity.class);
+        // Create a TabSpec for the Dives tab and add it to the TabHos
+        tabSpec = tabHost.newTabSpec(res.getString(R.string.main_menu_tab_tag_dives))
+        		.setIndicator(res.getString(R.string.main_menu_tab_dives), res.getDrawable(R.drawable.ic_tab_dives))
+        		.setContent(tabIntent);
+        tabHost.addTab(tabSpec);        
+
+        // User tab
+        // Create an intent to launch the UserDetailsActivity
+        tabIntent = new Intent().setClass(this, UserDetailsActivity.class);
+        // Create a TabSpec for the User tab and add it to the TabHos
+        tabSpec = tabHost.newTabSpec(res.getString(R.string.main_menu_tab_tag_user))
+        		.setIndicator(res.getString(R.string.main_menu_tab_user), res.getDrawable(R.drawable.ic_tab_user))
+        		.setContent(tabIntent);
+        tabHost.addTab(tabSpec);     
+        
+        // Set Home as the current tab
+        tabHost.setCurrentTab(0);
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.dive_list, menu);
-
-        // Calling super after populating the menu is necessary here to ensure that the
-        // action bar helpers have a chance to handle this event.
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Toast.makeText(this, "Tapped home", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.menu_refresh:
-                Toast.makeText(this, "Fake refreshing...", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.menu_create:
-				// Edit the new dive
-				Intent i = new Intent(getBaseContext(), DiveEditActivity.class);
-				startActivity(i);
-                break;
-
-        }
-        return super.onOptionsItemSelected(item);
-    }    
 }

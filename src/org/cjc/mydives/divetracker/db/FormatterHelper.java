@@ -17,28 +17,12 @@ public abstract class FormatterHelper {
 	public static final String DATE_FORMAT_DB = "yyyyMMdd";
 	public static final String TIME_FORMAT_DB = "HH:mm";
 	public static final String DATETIME_FORMATDB = "yyyyMMddHHmm";
-	
-	private static SimpleDateFormat df2db = new SimpleDateFormat(DATE_FORMAT_DB);
 
 	private static DateFormat df2scr = SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM);	// Haciendo caso al locale	
 	private static DateFormat tf2scr = SimpleDateFormat.getTimeInstance(SimpleDateFormat.SHORT);	// Haciendo caso al locale
 	
 	/* Hide the default constructor. */
 	private FormatterHelper() {}
-
-	@Deprecated
-	public static String packDate(Date date) {
-		return df2db.format(date);
-	}
-	
-	@Deprecated
-	public static Date unPackDate(String dateStr) {
-		try {
-			return df2db.parse(dateStr);
-		} catch (ParseException e) {
-			return null;
-		}
-	}
 
 	/**
 	 * Format a date string from the database into a string to be presented in the screen.

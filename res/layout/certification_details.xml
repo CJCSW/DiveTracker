@@ -58,6 +58,13 @@
 		        android:layout_height="wrap_content"
 		        android:text="@string/certification_details_label_date"
 		        android:textSize="20dp"/>
+		    <Button
+		        android:id="@+id/certification_details_button_certification_date"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:text=""
+		        android:textSize="20dp"/>
+		    <!-- 
 		    <DatePicker 
 		        android:id="@+id/certification_details_field_date"
 		        android:layout_width="fill_parent"
@@ -65,6 +72,7 @@
 		        android:startYear="1960"
 		        android:hint="@string/certification_details_hint_date"
 		        android:textSize="20dp"/>
+		     -->
 		    <!-- Certifying instructor -->
 		    <TextView 
 		        android:layout_width="fill_parent"
@@ -80,25 +88,19 @@
 	    </LinearLayout>
     </ScrollView>
     
-    <!-- Confirm/Cancel buttons -->
+    <!-- Confirm button -->
     <LinearLayout 
         android:id="@+id/certification_details_buttons"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+       	android:paddingLeft="10dp"
+	    android:paddingRight="10dp"
         android:orientation="horizontal">
         <Button 
             android:id="@+id/certification_details_button_confirm"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:text="@string/certification_details_button_confirm"
-        	android:textSize="20dp"/>
-        <Button 
-            android:id="@+id/certification_details_button_cancel"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/certification_details_button_cancel"
         	android:textSize="20dp"/>
     </LinearLayout>
 </LinearLayout>
