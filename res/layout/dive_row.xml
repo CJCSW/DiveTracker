@@ -8,32 +8,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-	<TextView 
-	    style="@style/row.primary"
-	    android:id="@+id/dive_row_date"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_weight="0.6"
-	    android:layout_marginTop = "4dp"
-	    android:layout_marginLeft="8dp"
-	    android:text="dd/mm/yyyy"/>
-	<TextView 
-	    style="@style/row.primary"
-	    android:id="@+id/dive_row_time"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_weight="0.4"
-	    android:layout_marginTop = "4dp"
-	    android:layout_marginLeft="8dp"
-	    android:text="HH:MM"/>
-    </LinearLayout>
-    
 	<TextView
-	    style="@style/row.secondary" 
+	    style="@style/row.primary" 
 	    android:id="@+id/dive_row_name"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    android:layout_marginTop = "4dp"
+	    android:layout_weight="0.4"
 	    android:layout_marginLeft="8dp"
-	    android:text="Dive name"/>	
+	    android:text="Dive name"/>
+	<TextView 
+	    style="@style/row.secondary"
+	    android:id="@+id/dive_row_date"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="right"
+	    android:layout_weight="0.6"
+	    android:layout_marginLeft="8dp"
+	    android:text="dd/mm/yyyy"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView 
+		    style="@style/row.secondary"
+		    android:id="@+id/dive_row_time"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="right"
+		    android:layout_marginLeft="8dp"
+		    android:text="HH:MM"/>
+	</LinearLayout>
 </LinearLayout>

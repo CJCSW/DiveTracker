@@ -17,6 +17,7 @@ public class DiveTrackerActivity extends TabActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        setTitle(R.string.app_name);
         
         Resources res = getResources();	// Resources object to get access to strings and graphic resources
         TabHost tabHost = getTabHost();	// The TabHost defined in the layout used as content view for this activity
