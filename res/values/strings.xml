@@ -108,7 +108,10 @@
 	-->
     <!-- General -->
     <string name="btn_save">Save</string>
-
+	<string name="btn_confirmation_afirmative">Yes</string>
+	<string name="btn_confirmation_negative">No</string>
+	<!-- Mesages -->
+	<string name="msg_dive_deletion_confirmation">Are you sure you want to delete this dive?</string>
     <!-- COLORS -->
     <color name="listcolor">#2987BA</color>
     <color name="black">#000000</color>
@@ -118,4 +121,5 @@
     <string name="menu_create">Create</string>
     <string name="menu_edit">Edit</string>
     <string name="menu_save">Save</string>
+    <string name="menu_delete">Delete</string>
 </resources>

@@ -5,6 +5,8 @@ import org.cjc.mydives.divetracker.db.DiveDbAdapter;
 import org.cjc.mydives.divetracker.db.FormatterHelper;
 import org.cjc.mydives.divetracker.entity.Dive;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -32,6 +34,8 @@ public class DiveDetailsActivity extends ActionBarMapActivity {
 	private MapView mvMap;
 	private MapHelper mapHelper;
 	
+	private AlertDialog alertDialog ;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,7 +55,28 @@ public class DiveDetailsActivity extends ActionBarMapActivity {
 
 		// Title
 		setTitle(R.string.dive_details_title);
-	}
+		
+		// Create the alert dialog for deletion
+    	// Delete this dive
+    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    	builder.setMessage(R.string.msg_dive_deletion_confirmation)
+    		.setCancelable(false)
+    		.setPositiveButton(R.string.btn_confirmation_afirmative, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					deleteDive();
+					finish();
+				}
+			})
+			.setNegativeButton(R.string.btn_confirmation_negative, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.cancel();
+				}
+			});
+
+    	alertDialog = builder.create();
+    }
 
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -76,12 +101,14 @@ public class DiveDetailsActivity extends ActionBarMapActivity {
                 break;
 
             case R.id.menu_edit:
-				// Edit the new dive
+				// Edit the dive
             	Intent i = new Intent(getBaseContext(), DiveEditActivity.class);
 				i.putExtra("_ID", dive.get_id());
 				startActivity(i);
                 break;
-
+            case R.id.menu_delete:
+            	alertDialog.show();
+            	break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -127,6 +154,15 @@ public class DiveDetailsActivity extends ActionBarMapActivity {
 
 		// Close the DB
 		cursor.close();
+		diveDbAdapter.close();
+	}
+	
+	/**
+	 * Deletes the dive from the database
+	 */
+	private void deleteDive() {
+		diveDbAdapter.open();
+		diveDbAdapter.delete(dive.get_id());	// The actual deletion
 		diveDbAdapter.close();
 	}
 
