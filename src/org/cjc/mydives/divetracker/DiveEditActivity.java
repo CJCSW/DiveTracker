@@ -222,8 +222,11 @@ public class DiveEditActivity extends ActionBarMapActivity {
 		btnTimeOut.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (dive.getTimeOut() == 0)
+				if (dive.getTimeOut() == 0 && dive.getTimeIn() > 0) {
+					dive.setTimeOut(dive.getTimeIn());
+				} else {
 					dive.setTimeOut(System.currentTimeMillis());
+				}
 				showDialog(TIME_OUT_DIALOG_ID);
 			}
 		});
