@@ -68,14 +68,10 @@
     
     <!-- DIVE -->
     <string name="dive_name">Name</string>
-    <string name="dive_enterDate">Enter Date</string>
     <string name="dive_enterTime">In</string>
     <string name="dive_outTime">Out</string>
-    <string name="dive_bottomTime">Bottom time</string>
     <string name="dive_depth">Depth</string>
     <string name="dive_visibility">Visibility</string>
-    <string name="dive_latitude">Latitude</string>
-    <string name="dive_longitude">Longitude</string>
     <string name="dive_temperature">Temperature</string>
     <string name="dive_airTemp">Air</string>
     <string name="dive_waterTemp">Water</string>    
@@ -83,21 +79,19 @@
     <string name="dive_pgOut">PG-Out</string>
     <!-- Dive list -->
     <string name="dive_list_activity">My dives</string>
-    <string name="dive_list_title">My dives</string>
-    <string name="dive_list_button_add">Add dive</string>
     <string name="dive_no_dives">Go out and bring some good dives!</string>
     <!-- Dive details -->
     <string name="dive_details_activity">Dive</string>
     <string name="dive_details_title">Dive</string>
-    <string name="dive_edit_btn">Edit</string>
-
+    <string name="dive_gr_desc">Dive graphic</string>
     <!-- Dive edit -->
     <string name="dive_edit_activity">Dive edition</string>
     <string name="dive_edit_title">Dive edition</string>
-    <string name="dive_edit_hint_name">Location name</string>
-    <string name="dive_edit_hint_date">Enter date</string>
-    <string name="dive_edit_hint_time">Enter time</string>
-	<string name="dive_edit_gpin_prompt">Choose PG IN</string>    
+	<string name="dive_edit_gpin_prompt">Choose PG IN</string>
+	<string name="dive_edit_depth_initial_value">0.0</string>
+	<string name="dive_edit_visibility_initial_value">0.0</string>
+	<string name="dive_edit_water_temp_initial_value">0</string>
+	<string name="dive_edit_air_temp_initial_value">0</string>
 
     <!-- falutx -->
     <string name="maps_key">0pVsBO32kcBr2Ci4YoEIhaOZwMuadvWqrwbr_Vw</string> 
@@ -107,7 +101,6 @@
     <string name="maps_key">06iC7cbybRkBv8mw9OFixN44mjcI8ZaFS-snEYg</string>
 	-->
     <!-- General -->
-    <string name="btn_save">Save</string>
 	<string name="btn_confirmation_afirmative">Yes</string>
 	<string name="btn_confirmation_negative">No</string>
 	<!-- Mesages -->

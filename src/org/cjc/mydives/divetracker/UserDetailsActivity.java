@@ -37,8 +37,6 @@ public class UserDetailsActivity extends Activity {
 	private ImageView profilepic;
 	private String profilepic_path;
 	
-	private ImageView ivEdit;
-	private ImageView ivAdd;
 	private Button btEquipment;
 	private Button btCertifications;
 
@@ -56,9 +54,6 @@ public class UserDetailsActivity extends Activity {
         surname = (TextView)findViewById(R.id.user_details_field_surname);
         profilepic = (ImageView)findViewById(R.id.user_details_field_profilepic);
         
-        ivEdit = (ImageView) this.findViewById(R.id.header_button_edit);
-		ivAdd  = (ImageView) this.findViewById(R.id.header_button_add);
-
 		btEquipment = (Button)findViewById(R.id.user_details_button_equipment);
 		btCertifications = (Button)findViewById(R.id.user_details_button_certifications);
         
@@ -74,7 +69,7 @@ public class UserDetailsActivity extends Activity {
 		}
 		
 		// Set header text
-		((TextView) findViewById(R.id.header_title)).setText(R.string.user_details_title);
+		//((TextView) findViewById(R.id.header_title)).setText(R.string.user_details_title);
 		
 		// Add listeners
 		addListeners();
@@ -122,31 +117,31 @@ public class UserDetailsActivity extends Activity {
 	
 	private void addListeners(){
 		// Add button
-		ivAdd.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent userEditIntent = new Intent(v.getContext(), UserEditActivity.class);
-				if (rowId != null) {
-					userEditIntent.putExtra(FIELD_ROWID, rowId);
-				}
-				startActivityForResult(userEditIntent, ACTION_EDIT);
-			}
-		});
+//		ivAdd.setOnClickListener(new View.OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				Intent userEditIntent = new Intent(v.getContext(), UserEditActivity.class);
+//				if (rowId != null) {
+//					userEditIntent.putExtra(FIELD_ROWID, rowId);
+//				}
+//				startActivityForResult(userEditIntent, ACTION_EDIT);
+//			}
+//		});
 		
 		
 		// Edit button
-		ivEdit.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent userEditIntent = new Intent(v.getContext(), UserEditActivity.class);
-				if (rowId != null) {
-					userEditIntent.putExtra(FIELD_ROWID, rowId);
-				}
-				startActivityForResult(userEditIntent, ACTION_EDIT);
-			}
-		});
+//		ivEdit.setOnClickListener(new View.OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				Intent userEditIntent = new Intent(v.getContext(), UserEditActivity.class);
+//				if (rowId != null) {
+//					userEditIntent.putExtra(FIELD_ROWID, rowId);
+//				}
+//				startActivityForResult(userEditIntent, ACTION_EDIT);
+//			}
+//		});
 		
 
 		// Equipment button
@@ -206,13 +201,13 @@ public class UserDetailsActivity extends Activity {
     				profilepic.setImageBitmap(bitmap);
     			}
     		}
-     		ivAdd.setVisibility(View.GONE);
-     		ivEdit.setVisibility(View.VISIBLE);
+//     		ivAdd.setVisibility(View.GONE);
+//     		ivEdit.setVisibility(View.VISIBLE);
      		btEquipment.setEnabled(true);
      		btCertifications.setEnabled(true);
     	} else {
-     		ivAdd.setVisibility(View.VISIBLE);
-     		ivEdit.setVisibility(View.GONE);
+//     		ivAdd.setVisibility(View.VISIBLE);
+//     		ivEdit.setVisibility(View.GONE);
      		btEquipment.setEnabled(false);
      		btCertifications.setEnabled(false);
     	}
