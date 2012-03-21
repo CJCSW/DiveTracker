@@ -18,87 +18,95 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 
+/**
+ * Scenario for showing the list of dives. Currently this scenario is a fragment
+ * in the form of a tab in the main scenaro.
+ * @author carlos
+ *
+ */
 public class DiveListActivity extends Activity {
-	private DiveDbAdapter diveDbAdapter;
-	private TextView tvEmptyList;
-	private ListView lvDives;
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.dive_list);
+    private DiveDbAdapter diveDbAdapter;
+    private TextView tvEmptyList;
+    private ListView lvDives;
 
-		// Get the controls
-		diveDbAdapter = new DiveDbAdapter(this);
-		lvDives   = (ListView) this.findViewById(R.id.dive_list);
-		tvEmptyList = (TextView) this.findViewById(R.id.dive_list_tv_empty);
-		
-		// Title
-		//setTitle(R.string.dive_list_title);
-		addListeners();
-	}
-	
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.dive_list);
 
+        // Get the controls
+        diveDbAdapter = new DiveDbAdapter(this);
+        lvDives   = (ListView) this.findViewById(R.id.dive_list);
+        tvEmptyList = (TextView) this.findViewById(R.id.dive_list_tv_empty);
+
+        // Title
+        //setTitle(R.string.dive_list_title);
+        addListeners();
+    }
+
+    /**
+     * Adds the listeners for the various events in the scenario.
+     */
     public void addListeners() {
-		// DiveList OnClick 
-		lvDives.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
-				Intent i = new Intent(getBaseContext(), DiveDetailsActivity.class);
-				i.putExtra("_ID", new Long(id).intValue());
-		    	startActivity(i);
-			}
-		});	
-	}
-	
-	/**
-	 * Initializes the activity.
-	 */
-	public void populateFields() {		
-		diveDbAdapter.open();	// Open the DB
-		
-		Cursor cursor = diveDbAdapter.fetchAll();	// Fetch all the instances
-		if (cursor.moveToFirst()) {
-			// Hide the text for empty lists
-			tvEmptyList.setVisibility(TextView.INVISIBLE);
+        // DiveList OnClick
+        lvDives.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
+                Intent i = new Intent(getBaseContext(), DiveDetailsActivity.class);
+                i.putExtra("_ID", Long.valueOf(id).intValue());
+                startActivity(i);
+            }
+        });
+    }
 
-			// Populate the list
-			SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(this, R.layout.dive_row, cursor, 
-					new String[] {FIELD_NAME, FIELD_TIME_IN, FIELD_TIME_IN}, 
-					new int[] {R.id.dive_row_name, R.id.dive_row_date, R.id.dive_row_time});
-			
-			// Columns Conversion
-			listAdapter.setViewBinder(new ViewBinder() {
-				public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-					TextView tView = (TextView) view;
+    /**
+     * Initializes the activity with data from the database.
+     */
+    public void populateFields() {
+        diveDbAdapter.open();    // Open the DB
 
-					if (tView.getId() == R.id.dive_row_date) {	// DATE
-						long value = cursor.getLong(columnIndex);
-						tView.setText(FormatterHelper.formatDate(value));
-						return true;
-					} else if (tView.getId() == R.id.dive_row_time) {	// TIME
-						long value = cursor.getLong(columnIndex);
-						tView.setText(FormatterHelper.formatTime(value));
-						return true;
-					} else if (tView.getId() == R.id.dive_row_name) {	// NAME
-						tView.setText(cursor.getString(columnIndex));
-						return true;
-					}
-					return false;
-				}
-			});
-			lvDives.setAdapter(listAdapter);
-		}
+        Cursor cursor = diveDbAdapter.fetchAll();    // Fetch all the instances
+        if (cursor.moveToFirst()) {
+            // Hide the text for empty lists
+            tvEmptyList.setVisibility(TextView.INVISIBLE);
 
-		// Close the DB
-		diveDbAdapter.close();
-	}
+            // Populate the list
+            SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(this, R.layout.dive_row, cursor,
+                    new String[] {FIELD_NAME, FIELD_TIME_IN, FIELD_TIME_IN},
+                    new int[] {R.id.dive_row_name, R.id.dive_row_date, R.id.dive_row_time});
 
-	////////////////
-	// LIFECYCLE  //
-	////////////////
-	@Override
-	public void onResume() {
-		super.onResume();
-		populateFields();
-	}
+            // Columns Conversion
+            listAdapter.setViewBinder(new ViewBinder() {
+                public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
+                    TextView tView = (TextView) view;
+
+                    if (tView.getId() == R.id.dive_row_date) {    // DATE
+                        long value = cursor.getLong(columnIndex);
+                        tView.setText(FormatterHelper.formatDate(value));
+                        return true;
+                    } else if (tView.getId() == R.id.dive_row_time) {    // TIME
+                        long value = cursor.getLong(columnIndex);
+                        tView.setText(FormatterHelper.formatTime(value));
+                        return true;
+                    } else if (tView.getId() == R.id.dive_row_name) {    // NAME
+                        tView.setText(cursor.getString(columnIndex));
+                        return true;
+                    }
+                    return false;
+                }
+            });
+            lvDives.setAdapter(listAdapter);
+        }
+
+        // Close the DB
+        diveDbAdapter.close();
+    }
+
+    ////////////////
+    // LIFECYCLE  //
+    ////////////////
+    @Override
+    public void onResume() {
+        super.onResume();
+        populateFields();
+    }
 }
