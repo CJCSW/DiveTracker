@@ -18,70 +18,76 @@ import android.widget.Toast;
 
 import com.google.android.maps.MapView;
 
+/**
+ * Dive Details scenario class. It extends the {@link ActionBarMapActivity}
+ * to be able to use the ActionBar in a Map Activity.
+ * @author carlos
+ *
+ */
 public class DiveDetailsActivity extends ActionBarMapActivity {
-	private DiveDbAdapter diveDbAdapter = new DiveDbAdapter(this);
+    private final DiveDbAdapter diveDbAdapter = new DiveDbAdapter(this);
 
-	private Dive dive = new Dive();
+    private Dive dive = new Dive();
 
-	private TextView tvDate;
-	private TextView tvTime;
-	private TextView tvDepth;
-	private TextView tvBottomTime;
-	private TextView tvVisibility;
-	private TextView tvPgIn;
-	private TextView tvPgOut;
-	
-	private MapView mvMap;
-	private MapHelper mapHelper;
-	
-	private AlertDialog alertDialog ;
+    private TextView tvDate;
+    private TextView tvTime;
+    private TextView tvDepth;
+    private TextView tvBottomTime;
+    private TextView tvVisibility;
+    private TextView tvPgIn;
+    private TextView tvPgOut;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.dive_details);
+    private MapView mvMap;
+    private MapHelper mapHelper;
 
-		dive.set_id(getIntent().getExtras().getInt("_ID"));
+    private AlertDialog alertDialog ;
 
-		tvDate = (TextView) this.findViewById(R.id.dive_details_date);
-		tvTime = (TextView) this.findViewById(R.id.dive_details_time);
-		tvDepth = (TextView) this.findViewById(R.id.dive_details_maxDeep);
-		tvBottomTime = (TextView) this.findViewById(R.id.dive_details_bottomTime);
-		tvVisibility = (TextView) this.findViewById(R.id.dive_details_visibility);
-		tvPgIn  = (TextView) this.findViewById(R.id.dive_details_pgIn);
-		tvPgOut = (TextView) this.findViewById(R.id.dive_details_pgOut);
-		mvMap = (MapView) findViewById(R.id.dive_map);
-		mapHelper = new MapHelper(mvMap, getResources());
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.dive_details);
 
-		// Title
-		setTitle(R.string.dive_details_title);
-		
-		// Create the alert dialog for deletion
-    	// Delete this dive
-    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    	builder.setMessage(R.string.msg_dive_deletion_confirmation)
-    		.setCancelable(false)
-    		.setPositiveButton(R.string.btn_confirmation_afirmative, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					deleteDive();
-					finish();
-				}
-			})
-			.setNegativeButton(R.string.btn_confirmation_negative, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.cancel();
-				}
-			});
+        dive.set_id(getIntent().getExtras().getInt("_ID"));
 
-    	alertDialog = builder.create();
+        tvDate = (TextView) this.findViewById(R.id.dive_details_date);
+        tvTime = (TextView) this.findViewById(R.id.dive_details_time);
+        tvDepth = (TextView) this.findViewById(R.id.dive_details_maxDeep);
+        tvBottomTime = (TextView) this.findViewById(R.id.dive_details_bottomTime);
+        tvVisibility = (TextView) this.findViewById(R.id.dive_details_visibility);
+        tvPgIn  = (TextView) this.findViewById(R.id.dive_details_pgIn);
+        tvPgOut = (TextView) this.findViewById(R.id.dive_details_pgOut);
+        mvMap = (MapView) findViewById(R.id.dive_map);
+        mapHelper = new MapHelper(mvMap, getResources());
+
+        // Title
+        setTitle(R.string.dive_details_title);
+
+        // Create the alert dialog for deletion
+        // Delete this dive
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.msg_dive_deletion_confirmation)
+            .setCancelable(false)
+            .setPositiveButton(R.string.btn_confirmation_afirmative, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    deleteDive();
+                    finish();
+                }
+            })
+            .setNegativeButton(R.string.btn_confirmation_negative, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+        alertDialog = builder.create();
     }
 
-	@Override
-	protected boolean isRouteDisplayed() {
-		return false;
-	}
+    @Override
+    protected boolean isRouteDisplayed() {
+        return false;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -101,74 +107,74 @@ public class DiveDetailsActivity extends ActionBarMapActivity {
                 break;
 
             case R.id.menu_edit:
-				// Edit the dive
-            	Intent i = new Intent(getBaseContext(), DiveEditActivity.class);
-				i.putExtra("_ID", dive.get_id());
-				startActivity(i);
+                // Edit the dive
+                Intent i = new Intent(getBaseContext(), DiveEditActivity.class);
+                i.putExtra("_ID", dive.get_id());
+                startActivity(i);
                 break;
             case R.id.menu_delete:
-            	alertDialog.show();
-            	break;
+                alertDialog.show();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
-	
-	private void populateFields() {
 
-		// Get the data
-		diveDbAdapter.open();	// Open the DB
-		Cursor cursor = diveDbAdapter.fetchById(dive.get_id());		
-		if (cursor.moveToFirst()) {
-			diveDbAdapter.loadInstance(cursor, dive);	// Load the instance
-			if (dive.getName() != null && !dive.getName().isEmpty()) {
-				setTitle(dive.getName());
-			}
-			
-			tvDate.setText(FormatterHelper.formatDate(dive.getTimeIn()));
-			tvTime.setText(FormatterHelper.formatTime(dive.getTimeIn()));
+    private void populateFields() {
 
-			// PGs
-			tvPgIn.setText(dive.getGpIn());
-			tvPgOut.setText(dive.getGpOut());
-			
-			// Max Depth
-			double depth = dive.getDepth();
-			if (depth > 0.0f) {
-				tvDepth.setText(String.valueOf(depth));				
-			}
-			
-			// Visibility
-			double visibility = dive.getVisibility();
-			if (visibility > 0.0f) {
-				tvVisibility.setText(String.valueOf(visibility));
-			}
-			
-			// BottomTime
-			if (dive.getBottomTime() > 0) {
-				tvBottomTime.setText(FormatterHelper.formatTime(dive.getBottomTime()));
-			}
-		}
-		
-		// GPS
-		mapHelper.setMapPosition(dive.getLatitude(), dive.getLongitude());
+        // Get the data
+        diveDbAdapter.open();    // Open the DB
+        Cursor cursor = diveDbAdapter.fetchById(dive.get_id());
+        if (cursor.moveToFirst()) {
+            diveDbAdapter.loadInstance(cursor, dive);    // Load the instance
+            if (dive.getName() != null && !dive.getName().isEmpty()) {
+                setTitle(dive.getName());
+            }
 
-		// Close the DB
-		cursor.close();
-		diveDbAdapter.close();
-	}
-	
-	/**
-	 * Deletes the dive from the database
-	 */
-	private void deleteDive() {
-		diveDbAdapter.open();
-		diveDbAdapter.delete(dive.get_id());	// The actual deletion
-		diveDbAdapter.close();
-	}
+            tvDate.setText(FormatterHelper.formatDate(dive.getTimeIn()));
+            tvTime.setText(FormatterHelper.formatTime(dive.getTimeIn()));
 
-	@Override
-	public void onResume() {
-		populateFields();
-		super.onResume();
-	}	
+            // PGs
+            tvPgIn.setText(dive.getGpIn());
+            tvPgOut.setText(dive.getGpOut());
+
+            // Max Depth
+            double depth = dive.getDepth();
+            if (depth > 0.0f) {
+                tvDepth.setText(String.valueOf(depth));                
+            }
+
+            // Visibility
+            double visibility = dive.getVisibility();
+            if (visibility > 0.0f) {
+                tvVisibility.setText(String.valueOf(visibility));
+            }
+
+            // BottomTime
+            if (dive.getBottomTime() > 0) {
+                tvBottomTime.setText(FormatterHelper.formatTime(dive.getBottomTime()));
+            }
+        }
+
+        // GPS
+        mapHelper.setMapPosition(dive.getLatitude(), dive.getLongitude());
+
+        // Close the DB
+        cursor.close();
+        diveDbAdapter.close();
+    }
+
+    /**
+     * Deletes the dive from the database
+     */
+    private void deleteDive() {
+        diveDbAdapter.open();
+        diveDbAdapter.delete(dive.get_id());    // The actual deletion
+        diveDbAdapter.close();
+    }
+
+    @Override
+    public void onResume() {
+        populateFields();
+        super.onResume();
+    }
 }

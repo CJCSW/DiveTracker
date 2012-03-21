@@ -12,65 +12,48 @@
 		android:enabled="true"
 		android:apiKey="@string/maps_key"/> 
 
-	<!-- Date and Time -->
+	<!-- Date -->
+    <TextView 
+        style="@style/details_text"
+        android:id="@+id/dive_details_date"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
-        <TextView 
-            style="@style/details_text"
-            android:id="@+id/dive_details_date"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"/>
         <TextView 
             style="@style/details_text"
             android:id="@+id/dive_details_time"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"/>
-        <TextView
-            style="@style/details_label"
-            android:id="@+id/dive_details_bottomTime"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-            android:layout_weight="0.5"/>
-    </LinearLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 <!-- PGs -->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            style="@style/details_label"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="@string/dive_pgIn"/>
-        <TextView
-            style="@style/details_label"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="@string/dive_pgOut"/>
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
         <TextView 
             style="@style/details_text"
             android:id="@+id/dive_details_pgIn"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"/>
+            />
         <TextView 
             style="@style/details_text"
             android:id="@+id/dive_details_pgOut"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"/>
+            />
     </LinearLayout>
+	<ImageView 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_horizontal"
+		android:contentDescription="@string/dive_gr_desc"
+		android:src="@drawable/dive_gr"/>
+	<TextView
+		style="@style/details_text"
+		android:id="@+id/dive_details_bottomTime"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_horizontal"/>
 <!-- DEPTH and VISIBILITY -->
     <LinearLayout
         android:orientation="horizontal"
